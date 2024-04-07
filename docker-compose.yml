@@ -1,0 +1,48 @@
+services:
+  autumn-next:
+    build: ./leaf
+    container_name: autumn-next
+    # command: /bin/sh -c "bun install && bun --bun run dev"
+    command: /bin/sh -c "npm install && npm run dev"
+    depends_on:
+      - autumn-pg
+    volumes:
+      - ./leaf:/app
+    ports:
+      - 3000:3000
+      - 5555:5555 # prisma studio
+      - 587:587 # send mail by resend
+    tty: true
+    stdin_open: true
+    environment:
+      APP_STAGE: '${APP_STAGE}'
+      DATABASE_URL: '${DATABASE_URL}'
+      GOOGLE_CLIENT_ID: '${GOOGLE_CLIENT_ID}'
+      GOOGLE_CLIENT_SECRET: '${GOOGLE_CLIENT_SECRET}'
+      RESEND_API_KEY: '${RESEND_API_KEY}'
+      AUTH_SECRET: '${AUTH_SECRET}'
+
+  autumn-pg:
+    image: postgres
+    container_name: autumn-pg
+    volumes:
+      - ./root/trunk:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    tty: true
+    stdin_open: true
+    environment:
+      - POSTGRES_USER=leaf
+      - POSTGRES_PASSWORD=letmein
+      - POSTGRES_DB=hotel
+
+  autumn-province:
+    build: ./stick
+    container_name: autumn-province
+    command: /bin/sh /app/init.sh
+    volumes:
+      - ./stick:/app
+    tty: true
+    stdin_open: true
+    environment:
+      APP_STAGE: '${APP_STAGE}'

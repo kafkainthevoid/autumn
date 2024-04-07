@@ -1,0 +1,278 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  STAFF
+  USER
+}
+
+model User {
+  id                    String                 @id @default(cuid())
+  name                  String?
+  email                 String?                @unique
+  emailVerified         DateTime?
+  image                 String?
+  password              String?
+  role                  UserRole               @default(USER)
+  accounts              Account[]
+  isTwoFactorEnable     Boolean                @default(false)
+  twoFactorConfirmation TwoFactorConfirmation?
+
+  firstName String?
+  lastName  String?
+  sex       Sex       @default(UNKNOWN)
+  birthday  DateTime?
+
+  addressId String?
+  address   Address? @relation(fields: [addressId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bookings  Booking[]
+  votes     Vote[]
+  feedbacks Feedback[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model VerificationToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorConfirmation {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+}
+
+enum Sex {
+  MALE
+  FEMALE
+  UNKNOWN
+}
+
+model Address {
+  id          String  @id @default(uuid())
+  contactName String?
+  phone       String
+  coordinate  String?
+  ward        Int?
+  district    Int?
+  province    Int?
+  addressLine String
+
+  // TODO: Ward, district, province (int) only work with
+  // provinces.open-api.vn, maybe research another database design
+  // country         Int?
+
+  hotels Hotel[]
+  users  User[]
+}
+
+model Hotel {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  images      String[]
+  isArchived  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  addressId String
+  address   Address @relation(fields: [addressId], references: [id])
+
+  // TODO: location and trasportation: airport nearby, museum, shopping,
+  // airport: String // 'Samurai Museum,1.5;Imperial Palace,6.6' 
+  // nearby: String // data input must be sanitize: ;, 
+
+  roomTypes RoomType[]
+
+  amenity_Hotels Amenity_Hotel[]
+}
+
+model Room {
+  id         String     @id @default(uuid())
+  name       String
+  status     RoomStatus
+  isArchived Boolean    @default(false)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  roomTypeId String
+  roomType   RoomType @relation(fields: [roomTypeId], references: [id])
+
+  booking_rooms Booking_Room[]
+  votes         Vote[]
+}
+
+enum RoomStatus {
+  booking
+  empty
+  closed
+  repairing
+}
+
+model RoomType {
+  id            String   @id @default(uuid())
+  name          String   @unique
+  description   String
+  images        String[]
+  occupancy     Int
+  numBeg        Int
+  price         Int
+  maxBookingDay Int
+  isArchived    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  hotelId String
+  hotel   Hotel  @relation(fields: [hotelId], references: [id])
+
+  discountId String?
+  discount   Discount? @relation(fields: [discountId], references: [id])
+
+  rooms             Room[]
+  amenity_RoomTypes Amenity_RoomType[]
+}
+
+model Amenity {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  amenity_RoomTypes Amenity_RoomType[]
+  amenity_Hotels    Amenity_Hotel[]
+}
+
+model Amenity_RoomType {
+  amenityId  String
+  amenity    Amenity  @relation(fields: [amenityId], references: [id])
+  roomTypeId String
+  roomType   RoomType @relation(fields: [roomTypeId], references: [id])
+
+  @@id([amenityId, roomTypeId])
+}
+
+model Amenity_Hotel {
+  amenityId String
+  amenity   Amenity @relation(fields: [amenityId], references: [id])
+  hotelId   String
+  hotel     Hotel   @relation(fields: [hotelId], references: [id])
+
+  @@id([amenityId, hotelId])
+}
+
+model Booking_Room {
+  id        String  @id @default(uuid())
+  roomId    String
+  room      Room    @relation(fields: [roomId], references: [id])
+  bookingId String
+  booking   Booking @relation(fields: [bookingId], references: [id])
+  numAdults Int
+  numKids   Int
+}
+
+model Booking {
+  id         String   @id @default(cuid())
+  roomCharge Int
+  startDate  DateTime
+  endDate    DateTime
+  paymentId  String // payment id
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  booking_rooms Booking_Room[]
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  star      Int
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  roomId String
+  room   Room   @relation(fields: [roomId], references: [id])
+}
+
+model Discount {
+  id              String   @id @default(cuid())
+  name            String   @unique
+  description     String
+  discountPercent Int
+  startDate       DateTime
+  endDate         DateTime
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  roomTypes RoomType[]
+}
+
+model Feedback {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isViewed  Boolean  @default(false)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+}

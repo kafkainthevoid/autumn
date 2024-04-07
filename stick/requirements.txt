@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+lunr
+pydantic-settings
+logbook
+vietnam-provinces
+dataclasses  # Needed for Python versions below 3.7
