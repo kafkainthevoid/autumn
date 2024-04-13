@@ -4,14 +4,15 @@ import { SessionProvider } from "next-auth/react"
 
 import { auth } from "@/auth"
 import { Toaster } from "@/components/ui/sonner"
+import { ThemeProvider } from "@/components/admin/providers/ThemeProvider"
 
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Leaf Auth",
-  description: "Leaf Auth",
+  title: "Autumn",
+  description: "Autumn",
 }
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -21,8 +22,10 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <SessionProvider session={session}>
       <html lang="en">
         <body className={inter.className}>
-          <Toaster />
-          {children}
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <Toaster />
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </SessionProvider>

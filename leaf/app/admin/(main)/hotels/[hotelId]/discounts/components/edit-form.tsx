@@ -12,14 +12,7 @@ import { CalendarIcon, CheckIcon, ChevronLeftIcon, PlusCircleIcon } from "lucide
 import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/use-toast"
 import { Separator } from "@/components/ui/separator"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -119,9 +112,7 @@ const EditForm: FC<FormProps> = ({ initialData, roomTypes }) => {
   }
 
   const options = roomTypes
-  const [selectedValues, setSelectedValues] = useState<string[]>(
-    initialData?.roomTypes.map((item) => item.id) || []
-  )
+  const [selectedValues, setSelectedValues] = useState<string[]>(initialData?.roomTypes.map((item) => item.id) || [])
 
   return (
     <>
@@ -174,12 +165,7 @@ const EditForm: FC<FormProps> = ({ initialData, roomTypes }) => {
                 <FormItem>
                   <FormLabel>Discount Percent</FormLabel>
                   <FormControl>
-                    <Input
-                      type="number"
-                      disabled={loading}
-                      placeholder="Discount Percent"
-                      {...field}
-                    />
+                    <Input type="number" disabled={loading} placeholder="Discount Percent" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -279,25 +265,17 @@ const EditForm: FC<FormProps> = ({ initialData, roomTypes }) => {
                           {selectedValues.length > 0 && (
                             <>
                               <Separator orientation="vertical" className="mx-2 h-4" />
-                              <Badge
-                                variant="secondary"
-                                className="rounded-sm px-1 font-normal lg:hidden"
-                              >
+                              <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
                                 {selectedValues.length}
                               </Badge>
                               <div className="hidden space-x-1 lg:flex">
                                 {selectedValues.length > 3 ? (
-                                  <Badge
-                                    variant="secondary"
-                                    className="rounded-sm px-1 font-normal"
-                                  >
+                                  <Badge variant="secondary" className="rounded-sm px-1 font-normal">
                                     {selectedValues.length} selected
                                   </Badge>
                                 ) : (
                                   options
-                                    .filter((option) =>
-                                      selectedValues.find((item) => item === option.id)
-                                    )
+                                    .filter((option) => selectedValues.find((item) => item === option.id))
                                     .map((option) => (
                                       <Badge
                                         variant="secondary"
@@ -321,18 +299,14 @@ const EditForm: FC<FormProps> = ({ initialData, roomTypes }) => {
                             <CommandEmpty>No results found.</CommandEmpty>
                             <CommandGroup>
                               {options.map((option) => {
-                                let isSelected = selectedValues.find((item) => item === option.id)
-                                  ? true
-                                  : false
+                                let isSelected = selectedValues.find((item) => item === option.id) ? true : false
 
                                 return (
                                   <CommandItem
                                     key={option.id}
                                     onSelect={() => {
                                       if (isSelected) {
-                                        const newSV = [...selectedValues].filter(
-                                          (item) => item !== option.id
-                                        )
+                                        const newSV = [...selectedValues].filter((item) => item !== option.id)
                                         field.onChange(newSV)
                                         setSelectedValues(newSV)
                                       } else {

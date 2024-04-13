@@ -1,21 +1,27 @@
 import axios from "axios"
 
-// const PROVINCE_API_URL = 'https://provinces.open-api.vn/api'
-const PROVINCE_API_URL = "http://autumn-province:8000/api"
-
 const getProvinces = async () => {
-  const res = await axios.get(PROVINCE_API_URL + "/p/")
-  return res.data
+  const res = await fetch("/api/provinces/p/")
+  if (!res.ok) return []
+  const data = await res.json()
+  return data
 }
 
 const getDistricts = async (provinceCode: number) => {
-  const res = await axios.get(PROVINCE_API_URL + `/p/${provinceCode}?depth=2`)
-  return res.data.districts
+  const res = await fetch(`/api/provinces/p/${provinceCode}?depth=2`)
+
+  if (!res.ok) return []
+
+  const data = await res.json()
+
+  return data.districts
 }
 
 const getWards = async (districtCode: number) => {
-  const res = await axios.get(PROVINCE_API_URL + `/d/${districtCode}?depth=2`)
-  return res.data.wards
+  const res = await fetch(`/api/provinces/d/${districtCode}?depth=2`)
+  if (!res.ok) return []
+  const data = await res.json()
+  return data.wards
 }
 
 export { getDistricts, getProvinces, getWards }

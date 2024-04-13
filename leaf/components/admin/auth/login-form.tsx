@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 
 import { login } from "@/actions/login"
-import { LoginSchema } from "@/schemas"
+import { LoginSchema } from "@/schemas/auth.schema"
 import CardWrapper from "@/components/admin/auth/card-wrapper"
 import {
   Form,
@@ -73,7 +73,7 @@ const LoginForm = ({}: LoginFormProps) => {
   return (
     <CardWrapper
       headerLabel="Welcome back"
-      backButtonLabel="Don't have an account?"
+      backButtonLabel=""
       backButtonHref="/admin/register"
       showSocial
     >
@@ -131,7 +131,7 @@ const LoginForm = ({}: LoginFormProps) => {
                         />
                       </FormControl>
                       <Button variant="link" size="sm" asChild className="px-0 font-normal">
-                        <Link href="/auth/reset">Forgot password?</Link>
+                        <Link href="/admin/reset">Forgot your password?</Link>
                       </Button>
                       <FormMessage />
                     </FormItem>

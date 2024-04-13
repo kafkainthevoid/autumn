@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { ColumnDef } from '@tanstack/react-table'
-import { ArrowDown, ArrowUp } from 'lucide-react'
+import { ColumnDef } from "@tanstack/react-table"
+import { ArrowDown, ArrowUp } from "lucide-react"
 
-import { Button } from '@/components/ui/button'
-import CellAction from './cell-action'
+import { Button } from "@/components/ui/button"
+import CellAction from "./cell-action"
 
 export type Column = {
   id: string
@@ -19,80 +19,52 @@ export type Column = {
 
 export const columns: ColumnDef<Column>[] = [
   {
-    accessorKey: 'name',
+    accessorKey: "name",
     header: ({ column }) => (
-      <Button
-        variant='ghost'
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
         Name
-        {column.getIsSorted() === 'asc' ? (
-          <ArrowDown className='ml-2 h-4 w-4' />
-        ) : (
-          <ArrowUp className='ml-2 h-4 w-4' />
-        )}
+        {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
       </Button>
     ),
-    cell: ({ row }) => <div className='font-bold'>{row.original.name}</div>,
+    cell: ({ row }) => <div className="font-bold">{row.original.name}</div>,
   },
   {
-    accessorKey: 'description',
-    header: 'Description',
+    accessorKey: "description",
+    header: "Description",
   },
   {
-    accessorKey: 'discountPercent',
-    header: 'Discount percent',
+    accessorKey: "discountPercent",
+    header: "Discount percent",
   },
   {
-    accessorKey: 'startDate',
+    accessorKey: "startDate",
     header: ({ column }) => (
-      <Button
-        variant='ghost'
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
         Start date
-        {column.getIsSorted() === 'asc' ? (
-          <ArrowDown className='ml-2 h-4 w-4' />
-        ) : (
-          <ArrowUp className='ml-2 h-4 w-4' />
-        )}
+        {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
       </Button>
     ),
   },
   {
-    accessorKey: 'endDate',
+    accessorKey: "endDate",
     header: ({ column }) => (
-      <Button
-        variant='ghost'
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
         End date
-        {column.getIsSorted() === 'asc' ? (
-          <ArrowDown className='ml-2 h-4 w-4' />
-        ) : (
-          <ArrowUp className='ml-2 h-4 w-4' />
-        )}
+        {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
       </Button>
     ),
   },
   {
-    accessorKey: 'createdAt',
+    accessorKey: "createdAt",
     header: ({ column }) => (
-      <Button
-        variant='ghost'
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
         Create date
-        {column.getIsSorted() === 'asc' ? (
-          <ArrowDown className='ml-2 h-4 w-4' />
-        ) : (
-          <ArrowUp className='ml-2 h-4 w-4' />
-        )}
+        {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
       </Button>
     ),
   },
   {
-    id: 'actions',
+    id: "actions",
     cell: ({ row }) => <CellAction id={row.original.id} />,
   },
 ]

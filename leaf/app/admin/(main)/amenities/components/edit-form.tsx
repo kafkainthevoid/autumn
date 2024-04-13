@@ -1,31 +1,24 @@
-'use client'
+"use client"
 
-import { FC, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
-import { z } from 'zod'
-import axios from 'axios'
-import { ChevronLeftIcon } from 'lucide-react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Amenity } from '@prisma/client'
+import { FC, useState } from "react"
+import { useParams, useRouter } from "next/navigation"
+import { z } from "zod"
+import axios from "axios"
+import { ChevronLeftIcon } from "lucide-react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Amenity } from "@prisma/client"
 
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { toast } from '@/components/ui/use-toast'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import ImageUpload from '@/components/ui/image-upload'
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { toast } from "@/components/ui/use-toast"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import ImageUpload from "@/components/ui/image-upload"
 
 const formSchema = z.object({
-  name: z.string().min(1, 'Name length must be atleast 4 characters only'),
+  name: z.string().min(1, "Name length must be atleast 4 characters only"),
   description: z.string().min(1),
   image: z.string(),
 })
@@ -45,14 +38,14 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
   const title = initialData ? `Edit amenity` : `Create amenity`
   const description = initialData ? `Edit a amenity` : `Add a new amenity`
   const toastMessage = initialData ? `Amenity updated` : `Amenity created`
-  const action = initialData ? 'Save changes' : 'Create'
+  const action = initialData ? "Save changes" : "Create"
 
   const defaultValues = initialData
     ? initialData
     : {
-        name: '',
-        description: '',
-        image: '',
+        name: "",
+        description: "",
+        image: "",
       }
 
   const form = useForm<FormValues>({
@@ -69,11 +62,11 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
         await axios.post(`/api/amenities`, data)
       }
       router.refresh()
-      router.push('/amenities')
+      router.push("/admin/amenities")
       toast({ description: toastMessage })
     } catch (error: any) {
       console.log(error)
-      toast({ variant: 'destructive', title: 'Something went wrong' })
+      toast({ variant: "destructive", title: "Something went wrong" })
     } finally {
       setLoading(false)
     }
@@ -81,33 +74,28 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
 
   return (
     <>
-      <div className='flex items-center justify-between'>
+      <div className="flex items-center justify-between">
         <div>
-          <Button
-            variant='link'
-            className='mb-10 px-0'
-            size='sm'
-            onClick={() => router.back()}
-          >
-            <ChevronLeftIcon className='w-6 h-6' /> Back
+          <Button variant="link" className="mb-10 px-0" size="sm" onClick={() => router.back()}>
+            <ChevronLeftIcon className="w-6 h-6" /> Back
           </Button>
-          <h1 className='tracking-tight text-3xl font-semibold'>{title}</h1>
+          <h1 className="tracking-tight text-3xl font-semibold">{title}</h1>
           <p>{description}</p>
         </div>
       </div>
-      <Separator className='mt-2' />
+      <Separator className="mt-2" />
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className='mt-10 w-full space-y-10'>
+          <div className="mt-10 w-full space-y-10">
             <FormField
               control={form.control}
-              name='name'
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder='Name' {...field} />
+                    <Input disabled={loading} placeholder="Name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -116,17 +104,12 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
 
             <FormField
               control={form.control}
-              name='description'
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Textarea
-                      disabled={loading}
-                      placeholder='Description'
-                      rows={10}
-                      {...field}
-                    />
+                    <Textarea disabled={loading} placeholder="Description" rows={10} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -135,7 +118,7 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
 
             <FormField
               control={form.control}
-              name='image'
+              name="image"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Image</FormLabel>
@@ -144,7 +127,7 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
                       value={field.value ? [field.value] : []}
                       disabled={loading}
                       onChange={(url) => field.onChange(url)}
-                      onRemove={() => field.onChange('')}
+                      onRemove={() => field.onChange("")}
                     />
                   </FormControl>
                   <FormMessage />
@@ -153,12 +136,7 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
             />
           </div>
 
-          <Button
-            className='mt-10'
-            disabled={loading}
-            type='submit'
-            variant='blue'
-          >
+          <Button className="mt-10" disabled={loading} type="submit" variant="blue">
             {action}
           </Button>
         </form>

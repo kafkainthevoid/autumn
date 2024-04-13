@@ -12,14 +12,7 @@ import { CheckIcon, ChevronLeftIcon, PlusCircleIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/use-toast"
 import { Separator } from "@/components/ui/separator"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -39,6 +32,7 @@ import MapMarkerInput from "@/components/admin/map/MapMarkerInput"
 import { Combobox } from "@/components/ui/combobox-form"
 import * as AddressService from "../services/AddressService"
 import { DaNangLatLng } from "@/constants/DaNangLatLng"
+import { getProvinces } from "@/actions/province"
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -82,31 +76,44 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
   const [districts, setDistricts] = useState<AddressVm[]>([])
   const [wards, setWards] = useState<AddressVm[]>([])
 
-  const defaultValues = initialData
-    ? {
-        name: initialData.name,
-        description: initialData.description,
-        coordinate: initialData.address.coordinate as string,
-        addressLine: initialData.address.addressLine,
-        ward: initialData.address.ward!,
-        district: initialData.address.district!,
-        province: initialData.address.province!,
-        phoneNumber: initialData.address.phone,
-        images: initialData.images,
-        amenities: initialData.amenity_Hotels.map((ah) => ah.amenityId),
-      }
-    : {
-        name: "",
-        description: "",
-        coordinate: DaNangLatLng.join(","),
-        addressLine: "",
-        ward: -1,
-        district: -1,
-        province: -1,
-        phoneNumber: "",
-        images: [],
-        amenities: [],
-      }
+  // const defaultValues = initialData
+  //   ? {
+  //       name: initialData.name,
+  //       description: initialData.description,
+  //       coordinate: initialData.address.coordinate as string,
+  //       addressLine: initialData.address.addressLine,
+  //       ward: initialData.address.ward!,
+  //       district: initialData.address.district!,
+  //       province: initialData.address.province!,
+  //       phoneNumber: initialData.address.phone,
+  //       images: initialData.images,
+  //       amenities: initialData.amenity_Hotels.map((ah) => ah.amenityId),
+  //     }
+  //   : {
+  //       name: "",
+  //       description: "",
+  //       coordinate: DaNangLatLng.join(","),
+  //       addressLine: "",
+  //       ward: -1,
+  //       district: -1,
+  //       province: -1,
+  //       phoneNumber: "",
+  //       images: [],
+  //       amenities: [],
+  //     }
+
+  const defaultValues = {
+    name: "",
+    description: "",
+    coordinate: DaNangLatLng.join(","),
+    addressLine: "",
+    ward: -1,
+    district: -1,
+    province: -1,
+    phoneNumber: "",
+    images: [],
+    amenities: [],
+  }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -115,9 +122,10 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
 
   useEffect(() => {
     AddressService.getProvinces().then((data) => {
+      console.log(data)
+      console.log(Array.isArray(data))
       setProvinces(data)
     })
-
     if (initialData?.address.province) {
       if (initialData.address) {
         AddressService.getDistricts(initialData.address.province).then((data) => {
@@ -128,7 +136,7 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
         })
       }
     }
-  }, [initialData])
+  }, [initialData?.address])
 
   const onProvinceChange = (provinceCode: number) => {
     setWards([])
@@ -164,7 +172,7 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
       setLoading(true)
       await axios.delete(`/api/hotels/${params.hotelId}`)
       router.refresh()
-      router.push(`/hotels`)
+      router.push(`/admin/hotels`)
       toast({ description: `Hotel deleted` })
     } catch (err: any) {
       console.log(err)
@@ -250,7 +258,6 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                     </FormItem>
                   )}
                 />
-
                 <FormField
                   control={form.control}
                   name="district"
@@ -287,9 +294,7 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                           label: w.name,
                         }))}
                         label="Ward"
-                        onValueChange={(val) =>
-                          field.onChange(wards.find((w) => w.code === val)?.code)
-                        }
+                        onValueChange={(val) => field.onChange(wards.find((w) => w.code === val)?.code)}
                         value={field.value}
                       />
                       <FormMessage />
@@ -359,9 +364,7 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                       value={field.value.map((img) => img)}
                       disabled={loading}
                       onChange={(url) => field.onChange([...field.value, url])}
-                      onRemove={(url) =>
-                        field.onChange([...field.value.filter((item) => item !== url)])
-                      }
+                      onRemove={(url) => field.onChange([...field.value.filter((item) => item !== url)])}
                     />
                   </FormControl>
                   <FormMessage />
@@ -392,25 +395,17 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                           {selectedValues.length > 0 && (
                             <>
                               <Separator orientation="vertical" className="mx-2 h-4" />
-                              <Badge
-                                variant="secondary"
-                                className="rounded-sm px-1 font-normal lg:hidden"
-                              >
+                              <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
                                 {selectedValues.length}
                               </Badge>
                               <div className="hidden space-x-1 lg:flex">
                                 {selectedValues.length > 5 ? (
-                                  <Badge
-                                    variant="secondary"
-                                    className="rounded-sm px-1 font-normal"
-                                  >
+                                  <Badge variant="secondary" className="rounded-sm px-1 font-normal">
                                     {selectedValues.length} selected
                                   </Badge>
                                 ) : (
                                   options
-                                    .filter((option) =>
-                                      selectedValues.find((item) => item === option.id)
-                                    )
+                                    .filter((option) => selectedValues.find((item) => item === option.id))
                                     .map((option) => (
                                       <Badge
                                         variant="secondary"
@@ -434,18 +429,14 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                             <CommandEmpty>No results found.</CommandEmpty>
                             <CommandGroup>
                               {options.map((option) => {
-                                let isSelected = selectedValues.find((item) => item === option.id)
-                                  ? true
-                                  : false
+                                let isSelected = selectedValues.find((item) => item === option.id) ? true : false
 
                                 return (
                                   <CommandItem
                                     key={option.id}
                                     onSelect={() => {
                                       if (isSelected) {
-                                        const newSV = [...selectedValues].filter(
-                                          (item) => item !== option.id
-                                        )
+                                        const newSV = [...selectedValues].filter((item) => item !== option.id)
                                         field.onChange(newSV)
                                         setSelectedValues(newSV)
                                       } else {

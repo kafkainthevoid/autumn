@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs"
 
 import { db } from "@/lib/db"
 import { getUserByEmail } from "@/data/user"
-import { RegisterSchema } from "@/schemas"
+import { RegisterSchema } from "@/schemas/auth.schema"
 import { generateVerificationToken } from "@/lib/tokens"
 import { sendVerificationEmail } from "@/lib/mail"
 import { UserRole } from "@prisma/client"

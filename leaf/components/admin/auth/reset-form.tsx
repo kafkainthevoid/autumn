@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState, useTransition } from "react"
 
-import { ResetSchema } from "@/schemas"
+import { ResetSchema } from "@/schemas/auth.schema"
 import CardWrapper from "@/components/admin/auth/card-wrapper"
 import {
   Form,
@@ -51,7 +51,7 @@ const ResetForm = ({}: ResetFormProps) => {
     <CardWrapper
       headerLabel="Forgot your password"
       backButtonLabel="Back to login"
-      backButtonHref="/auth/login"
+      backButtonHref="/admin/login"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

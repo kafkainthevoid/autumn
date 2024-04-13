@@ -3,7 +3,7 @@
 import * as z from "zod"
 
 import { getUserByEmail } from "@/data/user"
-import { ResetSchema } from "@/schemas"
+import { ResetSchema } from "@/schemas/auth.schema"
 import { generatePasswordResetToken } from "@/lib/tokens"
 import { sendpasswordResetEmail } from "@/lib/mail"
 import { UserRole } from "@prisma/client"

@@ -7,7 +7,7 @@ import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 
 import { register } from "@/actions/register"
-import { RegisterSchema } from "@/schemas"
+import { RegisterSchema } from "@/schemas/auth.schema"
 import CardWrapper from "@/components/admin/auth/card-wrapper"
 import {
   Form,

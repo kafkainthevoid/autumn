@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useState, useTransition } from "react"
 import { useSearchParams } from "next/navigation"
 
-import { NewPasswordSchema } from "@/schemas"
+import { NewPasswordSchema } from "@/schemas/auth.schema"
 import CardWrapper from "@/components/admin/auth/card-wrapper"
 import {
   Form,
