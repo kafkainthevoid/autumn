@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 
 import { db } from "@/lib/db"
 import { currentUser } from "@/lib/auth"
+import { UserRole } from "@prisma/client"
 
 export async function GET(_: Request, { params }: { params: { userId: string } }) {
   try {
@@ -65,7 +66,7 @@ export async function POST(req: Request, { params }: { params: { userId: string 
 export async function PATCH(req: Request, { params }: { params: { userId: string } }) {
   try {
     const userAuth = await currentUser()
-    if (userAuth?.role !== "ADMIN")
+    if (userAuth?.role !== UserRole.ADMIN)
       return NextResponse.json({
         message: "User do not have permission to perform this action",
       })

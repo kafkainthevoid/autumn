@@ -5,10 +5,12 @@ import { Column, columns } from "./components/columns"
 import { DataTable } from "@/components/ui/data-table"
 import { UserRole } from "@prisma/client"
 
-const UsersPage = async () => {
+const StaffsPage = async () => {
   const users = await db.user.findMany({
     include: { address: true },
-    where: { role: UserRole.USER },
+    where: {
+      OR: [{ role: UserRole.STAFF }, { role: UserRole.ADMIN }],
+    },
     orderBy: { createdAt: "desc" },
   })
 
@@ -26,8 +28,8 @@ const UsersPage = async () => {
 
   return (
     <div className="p-10">
-      <h1 className="tracking-tight text-3xl font-semibold">Users ({formattedData.length})</h1>
-      <p>Manage User</p>
+      <h1 className="tracking-tight text-3xl font-semibold">Staffs ({formattedData.length})</h1>
+      <p>Manage Staff</p>
 
       <hr className="my-6" />
 
@@ -36,4 +38,4 @@ const UsersPage = async () => {
   )
 }
 
-export default UsersPage
+export default StaffsPage

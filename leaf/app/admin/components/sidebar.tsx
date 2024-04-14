@@ -16,6 +16,8 @@ import {
   UserIcon,
   Users2Icon,
 } from "lucide-react"
+import { FaUsersGear } from "react-icons/fa6"
+import type { IconType } from "react-icons"
 import Link from "next/link"
 import { useParams, usePathname } from "next/navigation"
 import { useEffect } from "react"
@@ -27,7 +29,7 @@ import { useSideBar } from "@/store/useSideBar"
 interface IRoute {
   href: string
   label: string
-  Icon: LucideIcon
+  Icon: LucideIcon | IconType
   active: Object | boolean | null
   subRoutes?: IRoute[]
 }
@@ -66,6 +68,12 @@ const Sidebar = () => {
       label: "User",
       active: pathname === "/admin/users",
       Icon: Users2Icon,
+    },
+    {
+      href: "/admin/staffs",
+      label: "Staff",
+      active: pathname === "/admin/staffs",
+      Icon: FaUsersGear,
     },
     {
       href: "/admin/hotels",
