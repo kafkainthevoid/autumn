@@ -1,52 +1,43 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server"
 
-import { db } from '@/lib/db'
-import { getAuthSession } from '@/lib/auth'
+import { db } from "@/lib/db"
+import { currentUser } from "@/lib/auth"
 
-export async function GET(
-  _: Request,
-  { params }: { params: { userId: string } }
-) {
+export async function GET(_: Request, { params }: { params: { userId: string } }) {
   try {
-    if (!params.userId)
-      return new NextResponse('User ID is missing', { status: 400 })
+    if (!params.userId) return new NextResponse("User ID is missing", { status: 400 })
 
     const user = await db.user.findUnique({
       where: { id: params.userId },
       include: { address: true },
     })
 
-    if (!user) return NextResponse.json({ message: 'No user found' })
+    if (!user) return NextResponse.json({ message: "No user found" })
 
     return NextResponse.json(user)
   } catch (err) {
-    console.log('[USER_ID_GET]', err)
-    return new NextResponse('Internal error', { status: 500 })
+    console.log("[USER_ID_GET]", err)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }
 
 // TODO: change to patch later
-export async function POST(
-  req: Request,
-  { params }: { params: { userId: string } }
-) {
+export async function POST(req: Request, { params }: { params: { userId: string } }) {
   try {
-    if (!params.userId)
-      return new NextResponse('User ID is missing', { status: 400 })
+    if (!params.userId) return new NextResponse("User ID is missing", { status: 400 })
     const user = await db.user.findUnique({
       where: { id: params.userId },
       include: { address: true },
     })
-    if (!user) return NextResponse.json({ message: 'No user found' })
+    if (!user) return NextResponse.json({ message: "No user found" })
 
     const body = await req.json()
 
-    const { email, firstName, lastName, gender, phoneNumber, dateOfBirth } =
-      body
+    console.log("[USER_ID_POST] body", body)
 
-    if (!email) return new NextResponse('Email is required', { status: 400 })
+    const { email, firstName, lastName, gender, phoneNumber, dateOfBirth, addressLine } = body
 
-    console.log({ gender, dateOfBirth })
+    if (!email) return new NextResponse("Email is required", { status: 400 })
 
     await db.user.update({
       where: { id: params.userId },
@@ -57,46 +48,42 @@ export async function POST(
         sex: gender,
         birthday: dateOfBirth,
         address: {
-          update: { data: { phone: phoneNumber } },
+          update: {
+            data: { phone: phoneNumber, addressLine },
+          },
         },
       },
     })
 
-    console.log(body)
-
-    return NextResponse.json({ message: 'Updated successfully' })
+    return NextResponse.json({ message: "Updated successfully" })
   } catch (err) {
-    console.log('[USER_ID_POST]', err)
-    return new NextResponse('Internal error', { status: 500 })
+    console.log("[USER_ID_POST]", err)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }
 
-export async function PATCH(
-  req: Request,
-  { params }: { params: { userId: string } }
-) {
+export async function PATCH(req: Request, { params }: { params: { userId: string } }) {
   try {
-    const userAuth = await getAuthSession()
-    if (userAuth?.user.role !== 'ADMIN')
+    const userAuth = await currentUser()
+    if (userAuth?.role !== "ADMIN")
       return NextResponse.json({
-        message: 'User do not have permission to perform this action',
+        message: "User do not have permission to perform this action",
       })
 
     const body = await req.json()
 
     const user = await db.user.findUnique({ where: { id: params.userId } })
 
-    if (!user || user.id === userAuth.user.id)
-      return NextResponse.json({ message: 'Invalid user' })
+    if (!user || user.id === userAuth.id) return NextResponse.json({ message: "Invalid user" })
 
     await db.user.update({
       where: { id: params.userId },
       data: { role: body.role },
     })
 
-    return NextResponse.json({ message: 'Updated successfully' })
+    return NextResponse.json({ message: "Updated successfully" })
   } catch (err) {
-    console.log('[USER_ID_PATCH]', err)
-    return new NextResponse('Internal error', { status: 500 })
+    console.log("[USER_ID_PATCH]", err)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }

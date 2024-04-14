@@ -1,5 +1,11 @@
+import ChangePassword from "@/app/admin/(main)/settings/components/change-password"
+
 const ChangePasswordPage = () => {
-  return <div>Change Password page</div>
+  return (
+    <div className="p-10">
+      <ChangePassword />
+    </div>
+  )
 }
 
 export default ChangePasswordPage

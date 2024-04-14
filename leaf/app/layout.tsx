@@ -23,8 +23,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <html lang="en">
         <body className={inter.className}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            <Toaster />
             {children}
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>

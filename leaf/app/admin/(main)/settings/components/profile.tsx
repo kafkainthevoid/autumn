@@ -1,13 +1,14 @@
 "use client"
 
-import { format } from "date-fns"
+import { formatInTimeZone } from "date-fns-tz"
 import { CalendarIcon } from "lucide-react"
-import { User as UserAuth } from "next-auth"
-import { FC, useEffect, useState } from "react"
+import { FC } from "react"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
+import * as z from "zod"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Address, Sex, User } from "@prisma/client"
+import axios from "axios"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar2"
@@ -15,13 +16,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { toast } from "@/components/ui/use-toast"
 import { cn } from "@/lib/utils"
-import { Address, Sex, User } from "@prisma/client"
-// import axios from "@/lib/axios"
+import { toast } from "sonner"
 
 interface ProfileProps {
-  user: User & { address: Address }
+  user: User & { address: Address | null }
 }
 
 const formSchema = z.object({
@@ -30,7 +29,8 @@ const formSchema = z.object({
   email: z.string().email(),
   dateOfBirth: z.coerce.date().optional(),
   gender: z.enum(["MALE", "FEMALE", "UNKNOWN"]),
-  phoneNumber: z.string().min(9).max(11).optional(),
+  phoneNumber: z.string().optional(),
+  addressLine: z.string().optional(),
 })
 
 type UserInfoFormValues = z.infer<typeof formSchema>
@@ -44,24 +44,20 @@ const Profile: FC<ProfileProps> = ({ user }) => {
       email: user?.email ?? "",
       firstName: user?.firstName ?? "",
       lastName: user?.lastName ?? "",
-      dateOfBirth: user?.birthday ?? undefined,
+      dateOfBirth: user?.birthday ?? new Date(),
       gender: user?.sex ?? Sex.UNKNOWN,
       phoneNumber: user?.address?.phone ?? "",
+      addressLine: user?.address?.addressLine ?? "",
     },
   })
 
   const onSubmit = async (data: UserInfoFormValues) => {
     try {
-      // await axios.post(`/api/users/${user?.id}`, data)
-
+      await axios.post(`/api/users/${user?.id}`, data)
       router.refresh()
-      toast({ description: "Updated user profile" })
+      toast.success("Updated user profile")
     } catch (err) {
-      toast({
-        title: "Error",
-        description: "Something went wrong, please try again.",
-        variant: "destructive",
-      })
+      toast.error("Somethign went wrong, please try again.")
     }
   }
 
@@ -109,7 +105,7 @@ const Profile: FC<ProfileProps> = ({ user }) => {
                   <FormItem className="flex items-center">
                     <FormLabel className="w-56 text-zinc-600">Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="Email" {...field} />
+                      <Input placeholder="Email" {...field} disabled />
                     </FormControl>
                   </FormItem>
                 )}
@@ -134,7 +130,9 @@ const Profile: FC<ProfileProps> = ({ user }) => {
                                 )}
                               >
                                 <CalendarIcon className="mr-2 h-4 w-4" />
-                                {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
+                                {field.value
+                                  ? formatInTimeZone(new Date(field.value), "Asia/Ho_Chi_Minh", "PPP")
+                                  : "Pick a date"}
                               </Button>
                             </PopoverTrigger>
                             <PopoverContent align="start" className=" w-auto p-0">
@@ -162,7 +160,7 @@ const Profile: FC<ProfileProps> = ({ user }) => {
                   <FormItem className="flex items-center">
                     <FormLabel className="w-56 text-zinc-600">Gender</FormLabel>
                     <FormControl>
-                      {/* <RadioGroup
+                      <RadioGroup
                         defaultValue={field.value}
                         onValueChange={field.onChange}
                         className="flex items-center w-full"
@@ -171,8 +169,9 @@ const Profile: FC<ProfileProps> = ({ user }) => {
                           <FormControl>
                             <RadioGroupItem
                               // take me the whole morning, never gonna use shadcn again
-                              checked={field.value === "MALE"}
-                              value="MALE"
+                              // wow,
+                              checked={field.value === Sex.MALE}
+                              value={Sex.MALE}
                             />
                           </FormControl>
                           <FormLabel className="font-normal">Male</FormLabel>
@@ -180,18 +179,18 @@ const Profile: FC<ProfileProps> = ({ user }) => {
 
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem checked={field.value === "FEMALE"} value="FEMALE" />
+                            <RadioGroupItem checked={field.value === Sex.FEMALE} value={Sex.FEMALE} />
                           </FormControl>
                           <FormLabel className="font-normal">Female</FormLabel>
                         </FormItem>
 
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem checked={field.value === "UNKNOWN"} value="UNKNOWN" />
+                            <RadioGroupItem checked={field.value === Sex.UNKNOWN} value={Sex.UNKNOWN} />
                           </FormControl>
                           <FormLabel className="font-normal">Prefer not to say</FormLabel>
                         </FormItem>
-                      </RadioGroup> */}
+                      </RadioGroup>
                     </FormControl>
                   </FormItem>
                 )}
@@ -214,7 +213,24 @@ const Profile: FC<ProfileProps> = ({ user }) => {
                 )}
               />
 
-              <Button className="ml-40" variant="teal" type="submit">
+              <FormField
+                control={form.control}
+                name="addressLine"
+                render={({ field }) => (
+                  <FormItem className="flex items-center">
+                    <FormLabel className="w-56 text-zinc-600">Address</FormLabel>
+
+                    <div className="w-full">
+                      <FormControl>
+                        <Input placeholder="Address" {...field} />
+                      </FormControl>
+                      <FormMessage className="block" />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              <Button className="ml-40" variant="blue" type="submit">
                 Save Info
               </Button>
             </div>

@@ -1,6 +1,6 @@
 import { currentUser } from "@/lib/auth"
-import Profile from "../change-password/components/profile"
 import { db } from "@/lib/db"
+import Profile from "@/app/admin/(main)/settings/components/profile"
 
 const ProfilePage = async () => {
   const userAuth = await currentUser()
