@@ -8,7 +8,7 @@ import { UserRole } from "@prisma/client"
 const UsersPage = async () => {
   const users = await db.user.findMany({
     include: { address: true },
-    where: { role: UserRole.USER },
+    where: { role: UserRole.USER, isArchived: false },
     orderBy: { createdAt: "desc" },
   })
 
@@ -31,7 +31,7 @@ const UsersPage = async () => {
 
       <hr className="my-6" />
 
-      <DataTable data={formattedData} columns={columns} searchKey="name" />
+      <DataTable data={formattedData} columns={columns} searchKey="name" newButton={false} />
     </div>
   )
 }

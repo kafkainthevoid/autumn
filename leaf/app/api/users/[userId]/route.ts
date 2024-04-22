@@ -22,8 +22,7 @@ export async function GET(_: Request, { params }: { params: { userId: string } }
   }
 }
 
-// TODO: change to patch later
-export async function POST(req: Request, { params }: { params: { userId: string } }) {
+export async function PUT(req: Request, { params }: { params: { userId: string } }) {
   try {
     if (!params.userId) return new NextResponse("User ID is missing", { status: 400 })
     const user = await db.user.findUnique({
@@ -33,8 +32,6 @@ export async function POST(req: Request, { params }: { params: { userId: string 
     if (!user) return NextResponse.json({ message: "No user found" })
 
     const body = await req.json()
-
-    console.log("[USER_ID_POST] body", body)
 
     const { email, firstName, lastName, gender, phoneNumber, dateOfBirth, addressLine } = body
 
@@ -58,7 +55,7 @@ export async function POST(req: Request, { params }: { params: { userId: string 
 
     return NextResponse.json({ message: "Updated successfully" })
   } catch (err) {
-    console.log("[USER_ID_POST]", err)
+    console.log("[USER_ID_PUT]", err)
     return new NextResponse("Internal error", { status: 500 })
   }
 }
@@ -85,6 +82,23 @@ export async function PATCH(req: Request, { params }: { params: { userId: string
     return NextResponse.json({ message: "Updated successfully" })
   } catch (err) {
     console.log("[USER_ID_PATCH]", err)
+    return new NextResponse("Internal error", { status: 500 })
+  }
+}
+
+export async function DELETE(_: Request, { params }: { params: { userId: string } }) {
+  try {
+    const userAuth = await currentUser()
+    if (userAuth?.role === UserRole.USER)
+      return NextResponse.json({
+        message: "User do not have permission to perform this action",
+      })
+
+    await db.user.delete({ where: { id: params.userId } })
+
+    return NextResponse.json({ message: "Deleted successfully" })
+  } catch (err) {
+    console.log("[USER_ID_DELETE]", err)
     return new NextResponse("Internal error", { status: 500 })
   }
 }

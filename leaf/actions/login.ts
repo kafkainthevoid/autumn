@@ -3,7 +3,7 @@
 import * as z from "zod"
 import { AuthError } from "next-auth"
 
-import { LoginSchema } from "@/schemas/auth.schema"
+import { LoginSchema } from "@/app/admin/schemas/auth"
 import { signIn } from "@/auth"
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 import { getUserByEmail } from "@/data/user"

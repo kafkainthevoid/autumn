@@ -24,6 +24,7 @@ model User {
   accounts              Account[]
   isTwoFactorEnable     Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
+  isArchived            Boolean                @default(false)
 
   firstName String?
   lastName  String?
@@ -169,7 +170,7 @@ model RoomType {
   images        String[]
   occupancy     Int
   numBeg        Int
-  price         Int
+  price         Decimal
   maxBookingDay Int
   isArchived    Boolean  @default(false)
   createdAt     DateTime @default(now())
@@ -186,15 +187,22 @@ model RoomType {
 }
 
 model Amenity {
-  id          String   @id @default(uuid())
-  name        String   @unique
+  id          String      @id @default(uuid())
+  name        String      @unique
   description String
   image       String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  type        AmenityType @default(DISPLAY)
+  price       Int?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
   amenity_RoomTypes Amenity_RoomType[]
   amenity_Hotels    Amenity_Hotel[]
+}
+
+enum AmenityType {
+  DISPLAY
+  PURCHASABLE
 }
 
 model Amenity_RoomType {

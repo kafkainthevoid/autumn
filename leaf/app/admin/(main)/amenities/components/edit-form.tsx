@@ -20,6 +20,7 @@ import ImageUpload from "@/components/ui/image-upload"
 const formSchema = z.object({
   name: z.string().min(1, "Name length must be atleast 4 characters only"),
   description: z.string().min(1),
+  price: z.number(),
   image: z.string(),
 })
 
@@ -45,6 +46,7 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
     : {
         name: "",
         description: "",
+        price: 0,
         image: "",
       }
 
@@ -115,6 +117,34 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
                 </FormItem>
               )}
             />
+
+            {/* <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Price</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} placeholder="Price" {...field} type="number" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            /> */}
+
+            {/* <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Type</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} placeholder="Type" {...field} type="number" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            /> */}
 
             <FormField
               control={form.control}

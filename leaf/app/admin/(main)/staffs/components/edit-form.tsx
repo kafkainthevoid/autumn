@@ -1,35 +1,24 @@
 "use client"
 
-import { Address, Discount, RoomType, Sex, User } from "@prisma/client"
+import { Address, Sex, User, UserRole } from "@prisma/client"
 import { useParams, usePathname, useRouter } from "next/navigation"
 import { FC, useState } from "react"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
-import { CalendarIcon, CheckIcon, ChevronLeftIcon, PlusCircleIcon } from "lucide-react"
+import { CalendarIcon, ChevronLeftIcon } from "lucide-react"
+import { formatInTimeZone } from "date-fns-tz"
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
-import { toast } from "@/components/ui/use-toast"
 import { Separator } from "@/components/ui/separator"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { Calendar } from "@/components/ui/calendar2"
-import { Badge } from "@/components/ui/badge"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "@/components/ui/command"
-import { formatDate } from "date-fns"
-import { formatInTimeZone } from "date-fns-tz"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 const formSchema = z.object({
   firstName: z.string().optional(),
@@ -39,6 +28,7 @@ const formSchema = z.object({
   gender: z.enum(["MALE", "FEMALE", "UNKNOWN"]),
   phoneNumber: z.string().optional(),
   addressLine: z.string().optional(),
+  password: z.string().optional(),
 })
 
 interface FormProps {
@@ -50,7 +40,6 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
   const pathname = usePathname()
   const router = useRouter()
 
-  const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const title = initialData ? `Edit staff info` : `Create staff`
@@ -66,6 +55,7 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
     gender: initialData?.sex ?? Sex.UNKNOWN,
     phoneNumber: initialData?.address?.phone ?? "",
     addressLine: initialData?.address?.addressLine ?? "",
+    password: "",
   }
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -78,16 +68,16 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
       setLoading(true)
 
       if (initialData) {
-        await axios.patch(`/api/staffs/${params.staffId}`, data)
+        await axios.patch(`/api/user/${params.staffId}`, { ...data, role: UserRole.STAFF })
       } else {
         await axios.post(`/api/staffs`, data)
       }
       router.refresh()
       router.push(pathname.slice(0, pathname.lastIndexOf("/")))
-      toast({ description: toastMessage })
+      toast.success(toastMessage)
     } catch (err: any) {
       console.log(err)
-      toast({ variant: "destructive", title: err.response.data })
+      toast.error(err?.response?.data)
     } finally {
       setLoading(false)
     }
@@ -99,13 +89,12 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
       await axios.delete(`/api/staffs/${params.staffId}`)
       router.refresh()
       router.push(pathname.slice(0, pathname.lastIndexOf("/")))
-      toast({ description: `Staff deleted` })
+      toast.success("Staff deleted")
     } catch (err: any) {
       console.log(err)
-      toast({ variant: "destructive", description: err?.response?.data })
+      toast.error(err?.response?.data)
     } finally {
       setLoading(false)
-      setOpen(false)
     }
   }
 
@@ -207,6 +196,105 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
                   </FormItem>
                 )
               }}
+            />
+
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Gender</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      defaultValue={field.value}
+                      onValueChange={field.onChange}
+                      className="flex items-center w-full"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem
+                            // take me the whole morning, never gonna use shadcn again
+                            // wow,
+                            checked={field.value === Sex.MALE}
+                            value={Sex.MALE}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">Male</FormLabel>
+                      </FormItem>
+
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem checked={field.value === Sex.FEMALE} value={Sex.FEMALE} />
+                        </FormControl>
+                        <FormLabel className="font-normal">Female</FormLabel>
+                      </FormItem>
+
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem checked={field.value === Sex.UNKNOWN} value={Sex.UNKNOWN} />
+                        </FormControl>
+                        <FormLabel className="font-normal">Prefer not to say</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Phone number" {...field} />
+                  </FormControl>
+                  <FormMessage className="block" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="addressLine"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Address</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Address" {...field} />
+                  </FormControl>
+                  <FormMessage className="block" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Password" {...field} />
+                  </FormControl>
+                  <FormMessage className="block" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password Confirm</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Password Confirm" {...field} />
+                  </FormControl>
+                  <FormMessage className="block" />
+                </FormItem>
+              )}
             />
           </div>
 

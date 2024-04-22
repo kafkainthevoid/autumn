@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation"
 import { UserRole } from "@prisma/client"
 
+import { currentUser } from "@/lib/auth"
 import Sidebar from "@/app/admin/components/sidebar"
 import TopBar from "@/app/admin/components/top-bar"
 import PermissionError from "@/app/admin/components/permission-error"
-import { currentUser } from "@/lib/auth"
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await currentUser()

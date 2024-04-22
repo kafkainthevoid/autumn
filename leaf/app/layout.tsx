@@ -4,7 +4,7 @@ import { SessionProvider } from "next-auth/react"
 
 import { auth } from "@/auth"
 import { Toaster } from "@/components/ui/sonner"
-import { ThemeProvider } from "@/components/admin/providers/ThemeProvider"
+import { ThemeProvider } from "@/app/admin/components/providers/ThemeProvider"
 
 import "./globals.css"
 

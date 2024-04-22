@@ -1,4 +1,4 @@
-import LoginForm from "@/components/admin/auth/login-form"
+import LoginForm from "@/app/admin/components/auth/login-form"
 
 const LoginPage = () => {
   return <LoginForm />

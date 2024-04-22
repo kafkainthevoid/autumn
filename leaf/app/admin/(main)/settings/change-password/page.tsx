@@ -1,6 +1,6 @@
 import ChangePassword from "@/app/admin/(main)/settings/components/change-password"
 
-const ChangePasswordPage = () => {
+const ChangePasswordPage = async () => {
   return (
     <div className="p-10">
       <ChangePassword />

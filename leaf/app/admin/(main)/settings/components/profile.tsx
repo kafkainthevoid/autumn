@@ -4,11 +4,12 @@ import { formatInTimeZone } from "date-fns-tz"
 import { CalendarIcon } from "lucide-react"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Address, Sex, User } from "@prisma/client"
+import { toast } from "sonner"
 import axios from "axios"
+import * as z from "zod"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar2"
@@ -17,7 +18,6 @@ import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { cn } from "@/lib/utils"
-import { toast } from "sonner"
 
 interface ProfileProps {
   user: User & { address: Address | null }
@@ -53,7 +53,7 @@ const Profile: FC<ProfileProps> = ({ user }) => {
 
   const onSubmit = async (data: UserInfoFormValues) => {
     try {
-      await axios.post(`/api/users/${user?.id}`, data)
+      await axios.put(`/api/users/${user?.id}`, data)
       router.refresh()
       toast.success("Updated user profile")
     } catch (err) {
@@ -66,7 +66,6 @@ const Profile: FC<ProfileProps> = ({ user }) => {
       <h1 className="tracking-tight text-3xl font-bold">Profile Info</h1>
       <div className="border-[1px] rounded-2xl mt-6 p-9 px-16 flex">
         {/* TODO: add linked google, fb, etc... info like tiki */}
-        {/* add change password */}
         {/* <div className='w-3/5 border-r-[1px] space-y-8'> */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

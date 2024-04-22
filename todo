@@ -5,3 +5,11 @@
 5->user management
 6->staff management (create,update,delete)
 
+
+
+
+### new usecase
+1. cancel reservation
+2. add to table: RoomType:
+  + totalInventory
+  + totalReserved
