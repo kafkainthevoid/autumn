@@ -9,7 +9,7 @@ import PermissionError from "@/app/admin/components/permission-error"
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await currentUser()
 
-  if (!user) redirect("/admin/login")
+  if (!user) redirect("/login")
 
   if (user.role === UserRole.USER) return <PermissionError />
 

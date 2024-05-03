@@ -2,20 +2,20 @@
 
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import Header from "@/app/admin/components/auth/header"
-import Social from "@/app/admin/components/auth/social"
 import BackButton from "@/app/admin/components/auth/back-button"
+import Social from "@/components/auth/social"
 
 interface CardWrapperProps {
   children: React.ReactNode
   headerLabel: string
-  backButtonLabel: string
-  backButtonHref: string
+  backButtonLabel?: string
+  backButtonHref?: string
   showSocial?: boolean
 }
 
 const CardWrapper = ({ children, backButtonHref, backButtonLabel, headerLabel, showSocial }: CardWrapperProps) => {
   return (
-    <Card className="w-[400px] shadow-md">
+    <Card className="w-[500px] mx-auto border-none">
       <CardHeader>
         <Header label={headerLabel} />
       </CardHeader>
@@ -25,9 +25,11 @@ const CardWrapper = ({ children, backButtonHref, backButtonLabel, headerLabel, s
           <Social />
         </CardFooter>
       )}
-      <CardFooter>
-        <BackButton href={backButtonHref} label={backButtonLabel} />
-      </CardFooter>
+      {backButtonHref && backButtonLabel && (
+        <CardFooter>
+          <BackButton href={backButtonHref} label={backButtonLabel} />
+        </CardFooter>
+      )}
     </Card>
   )
 }

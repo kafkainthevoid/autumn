@@ -1,11 +1,13 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server"
 
-import { db } from '@/lib/db'
-import { requiredRoleApi } from '@/helpers/requiredRoleApi'
+import { db } from "@/lib/db"
+import { requiredRoleApi } from "@/helpers/requiredRoleApi"
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
-  const p = searchParams.get('p')
+  const p = searchParams.get("p")
+
+  console.log("getting hotels", { p })
 
   try {
     if (!p) return NextResponse.json([])
@@ -23,28 +25,18 @@ export async function GET(req: Request) {
 
     return NextResponse.json(hotels)
   } catch (err) {
-    console.log('[HOTEL_GET]', err)
-    return new NextResponse('Internal error', { status: 500 })
+    console.log("[HOTEL_GET]", err)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }
 
 export async function POST(req: Request) {
   try {
-    await requiredRoleApi(['ADMIN', 'STAFF'])
+    await requiredRoleApi(["ADMIN", "STAFF"])
 
     const body = await req.json()
-    const {
-      name,
-      description,
-      phoneNumber,
-      ward,
-      district,
-      province,
-      coordinate,
-      addressLine,
-      images,
-      amenities,
-    } = body
+    const { name, description, phoneNumber, ward, district, province, coordinate, addressLine, images, amenities } =
+      body
 
     if (
       !name ||
@@ -59,7 +51,7 @@ export async function POST(req: Request) {
       !images.length ||
       !amenities.length
     ) {
-      return new NextResponse('All fields are required', { status: 400 })
+      return new NextResponse("All fields are required", { status: 400 })
     }
 
     const hotel = await db.hotel.create({
@@ -88,7 +80,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(hotel)
   } catch (err) {
-    console.log('[HOTEL_POST]', err)
-    return new NextResponse('Internal error', { status: 500 })
+    console.log("[HOTEL_POST]", err)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }

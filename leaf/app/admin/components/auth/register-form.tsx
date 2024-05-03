@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation"
 
 import { register } from "@/actions/register"
 import { RegisterSchema } from "@/schemas/auth.schema"
-import CardWrapper from "@/components/admin/auth/card-wrapper"
 import {
   Form,
   FormControl,
@@ -21,6 +20,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import FormError from "@/components/form-error"
 import FormSuccess from "@/components/form-success"
+import CardWrapper from "./card-wrapper"
 
 interface RegisterFormProps {}
 

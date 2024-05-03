@@ -15,8 +15,7 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
 }
 
 export const sendpasswordResetEmail = async (email: string, token: string, to: UserRole) => {
-  const sendTo = to === UserRole.ADMIN ? "/admin" : ""
-  const resetLink = `${APP_URL}${sendTo}/new-password?token=${token}`
+  const resetLink = `${APP_URL}/new-password?token=${token}`
 
   await resend.emails.send({
     from: "onboarding@resend.dev",
@@ -27,8 +26,7 @@ export const sendpasswordResetEmail = async (email: string, token: string, to: U
 }
 
 export const sendVerificationEmail = async (email: string, token: string, to: UserRole) => {
-  const sendTo = to === UserRole.ADMIN ? "/admin" : ""
-  const confirmLink = `${APP_URL}${sendTo}/new-verification?token=${token}`
+  const confirmLink = `${APP_URL}/new-verification?token=${token}`
 
   await resend.emails.send({
     from: "onboarding@resend.dev",

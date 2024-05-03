@@ -62,7 +62,7 @@ const LoginForm = ({}: LoginFormProps) => {
   }
 
   return (
-    <CardWrapper headerLabel="Welcome back" backButtonLabel="" backButtonHref="/admin/register" showSocial>
+    <CardWrapper headerLabel="Welcome back" showSocial>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">

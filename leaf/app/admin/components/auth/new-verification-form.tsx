@@ -4,10 +4,10 @@ import { BeatLoader } from "react-spinners"
 import { useSearchParams } from "next/navigation"
 import { useState, useCallback, useEffect } from "react"
 
-import CardWrapper from "@/components/admin/auth/card-wrapper"
 import { newVerification } from "@/actions/new-verification"
 import FormError from "@/components/form-error"
 import FormSuccess from "@/components/form-success"
+import CardWrapper from "./card-wrapper"
 
 interface NewVerificationFormProps {}
 

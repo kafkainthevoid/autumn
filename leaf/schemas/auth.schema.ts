@@ -41,8 +41,19 @@ export const LoginSchema = z.object({
   code: z.string().optional(),
 })
 
-export const RegisterSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6, { message: "Minimum 6 characters required" }),
-  name: z.string().min(1, { message: "Name is required" }),
-})
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
+export const RegisterSchema = z
+  .object({
+    firstName: z.string().min(3, "Firstname must be atleast 3 characters"),
+    lastName: z.string().min(3, "Lastname must be atleast 3 characters"),
+    phoneNumber: z.string().regex(phoneRegExp, "Invalid phone number"),
+    address: z.string().min(3, "Incorrect address").max(254),
+    email: z.string().max(320).email({ message: "Not a valid email" }),
+    password: z.string().min(8, "Password must be atleast 8 characters").max(32),
+    passwordConfirm: z.string(),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: "Password don't match",
+  })

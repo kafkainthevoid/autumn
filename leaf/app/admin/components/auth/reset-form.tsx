@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useState, useTransition } from "react"
 
 import { ResetSchema } from "@/schemas/auth.schema"
-import CardWrapper from "@/components/admin/auth/card-wrapper"
 import {
   Form,
   FormControl,
@@ -20,6 +19,7 @@ import { Button } from "@/components/ui/button"
 import FormError from "@/components/form-error"
 import FormSuccess from "@/components/form-success"
 import { reset } from "@/actions/reset"
+import CardWrapper from "@/app/admin/components/auth/card-wrapper"
 
 interface ResetFormProps {}
 

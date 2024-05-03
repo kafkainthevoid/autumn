@@ -28,11 +28,12 @@ import {
   CommandSeparator,
 } from "@/components/ui/command"
 import ImageUpload from "@/components/ui/image-upload"
-import MapMarkerInput from "@/components/admin/map/MapMarkerInput"
+// import MapMarkerInput from "@/components/admin/map/MapMarkerInput"
 import { Combobox } from "@/components/ui/combobox-form"
 import * as AddressService from "../services/AddressService"
 import { DaNangLatLng } from "@/constants/DaNangLatLng"
 import { getProvinces } from "@/actions/province"
+import MapMarkerInput from "@/app/(app)/modules/commons/map/MapMarkerInput"
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -76,44 +77,31 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
   const [districts, setDistricts] = useState<AddressVm[]>([])
   const [wards, setWards] = useState<AddressVm[]>([])
 
-  // const defaultValues = initialData
-  //   ? {
-  //       name: initialData.name,
-  //       description: initialData.description,
-  //       coordinate: initialData.address.coordinate as string,
-  //       addressLine: initialData.address.addressLine,
-  //       ward: initialData.address.ward!,
-  //       district: initialData.address.district!,
-  //       province: initialData.address.province!,
-  //       phoneNumber: initialData.address.phone,
-  //       images: initialData.images,
-  //       amenities: initialData.amenity_Hotels.map((ah) => ah.amenityId),
-  //     }
-  //   : {
-  //       name: "",
-  //       description: "",
-  //       coordinate: DaNangLatLng.join(","),
-  //       addressLine: "",
-  //       ward: -1,
-  //       district: -1,
-  //       province: -1,
-  //       phoneNumber: "",
-  //       images: [],
-  //       amenities: [],
-  //     }
-
-  const defaultValues = {
-    name: "",
-    description: "",
-    coordinate: DaNangLatLng.join(","),
-    addressLine: "",
-    ward: -1,
-    district: -1,
-    province: -1,
-    phoneNumber: "",
-    images: [],
-    amenities: [],
-  }
+  const defaultValues = initialData
+    ? {
+        name: initialData.name,
+        description: initialData.description,
+        coordinate: initialData.address.coordinate as string,
+        addressLine: initialData.address.addressLine,
+        ward: initialData.address.ward!,
+        district: initialData.address.district!,
+        province: initialData.address.province!,
+        phoneNumber: initialData.address.phone,
+        images: initialData.images,
+        amenities: initialData.amenity_Hotels.map((ah) => ah.amenityId),
+      }
+    : {
+        name: "",
+        description: "",
+        coordinate: DaNangLatLng.join(","),
+        addressLine: "",
+        ward: -1,
+        district: -1,
+        province: -1,
+        phoneNumber: "",
+        images: [],
+        amenities: [],
+      }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

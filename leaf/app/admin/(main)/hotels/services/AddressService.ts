@@ -1,5 +1,3 @@
-import axios from "axios"
-
 const getProvinces = async () => {
   const res = await fetch("/api/provinces/p/")
   if (!res.ok) return []
