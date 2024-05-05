@@ -1,5 +1,9 @@
 const SettingsPage = () => {
-  return <div>Settings Page</div>
+  return (
+    <div className="p-10">
+      <h1 className="tracking-tight text-3xl font-semibold">Settings</h1>
+    </div>
+  )
 }
 
 export default SettingsPage

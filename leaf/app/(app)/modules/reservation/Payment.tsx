@@ -71,6 +71,7 @@ const Payment: FC<PaymentProps> = ({ roomTypes, userId }) => {
   return (
     <div className="w-full flex justify-center items-center">
       <div className="w-[400px] mt-10">
+        <div>Hi ther</div>
         <PayPalButtons
           createOrder={(data, actions) => createOrder(data, actions)}
           onApprove={(data, actions) => onApprove(data, actions)}

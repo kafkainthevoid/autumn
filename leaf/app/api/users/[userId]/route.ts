@@ -32,8 +32,18 @@ export async function PUT(req: Request, { params }: { params: { userId: string }
     if (!user) return NextResponse.json({ message: "No user found" })
 
     const body = await req.json()
+    console.log("updating user", { body })
 
     const { email, firstName, lastName, gender, phoneNumber, dateOfBirth, addressLine } = body
+
+    if (!user.addressId) {
+      await db.user.update({
+        where: { id: params.userId },
+        data: {
+          address: { create: { addressLine, phone: phoneNumber } },
+        },
+      })
+    }
 
     if (!email) return new NextResponse("Email is required", { status: 400 })
 

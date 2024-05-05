@@ -10,6 +10,7 @@ import {
   HotelIcon,
   KeyIcon,
   LucideIcon,
+  MessageSquareDotIcon,
   MonitorIcon,
   PercentIcon,
   SettingsIcon,
@@ -86,6 +87,12 @@ const Sidebar = () => {
       label: "Amenities",
       active: pathname.match("/admin/amenities*"),
       Icon: MonitorIcon,
+    },
+    {
+      href: "/admin/feedbacks",
+      label: "Feedbacks",
+      active: pathname.match("/admin/feedbacks*"),
+      Icon: MessageSquareDotIcon,
     },
     {
       href: "/admin/settings",

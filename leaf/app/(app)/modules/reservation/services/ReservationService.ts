@@ -8,10 +8,13 @@ export type RoomTypeVm = RoomType & {
 }
 
 export async function getRoomTypes(hotelId: string): Promise<RoomTypeVm[]> {
-  const res = await fetch("/api/roomtypes?hotelId=" + hotelId)
+  const res = await fetch("/api/roomTypes?hotelId=" + hotelId)
 
-  if (!res.ok) return []
+  if (!res.ok) {
+    return []
+  }
   const data = await res.json()
+  console.log("getRoomTypes", { data })
 
   return data
 }

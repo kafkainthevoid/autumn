@@ -36,9 +36,9 @@ const DateBox: React.FC<DateBoxProps> = ({ setIsCorrectDate }) => {
           <div className="flex gap-3 cursor-pointer">
             <div className="flex gap-3">
               <div className="border-r-[1px] pr-3">
-                <DateBoxItem date={date?.from} />
+                <DateBoxItem date={date?.from ?? new Date()} />
               </div>
-              <DateBoxItem date={date?.to} />
+              <DateBoxItem date={date?.to ?? new Date()} />
             </div>
           </div>
         </PopoverTrigger>
@@ -59,9 +59,7 @@ const DateBox: React.FC<DateBoxProps> = ({ setIsCorrectDate }) => {
   )
 }
 
-const DateBoxItem = ({ date }: { date: Date | undefined }) => {
-  if (!date) date = new Date()
-
+const DateBoxItem = ({ date }: { date: Date }) => {
   return (
     <div className="flex gap-2 items-center">
       <div className="text-primary font-bold text-4xl text-teal-600">{format(date, "dd")}</div>

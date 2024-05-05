@@ -1,15 +1,13 @@
-1->fix redirect
-2->change password
-3->user profile
-4->add amenities type for hotel, user
-5->user management
-6->staff management (create,update,delete)
+1->user management
+2->staff management
+3->add feedback admin
+4->add amenities type for display,purchasable
+5->fix booking mechanisism
+6->add amenities site for client
+7->add order page for amenities
+8->add reviews room
+9->export receipt
+10->news management
+11->news page (client)
+12->bao cao thong ke
 
-
-
-
-### new usecase
-1. cancel reservation
-2. add to table: RoomType:
-  + totalInventory
-  + totalReserved

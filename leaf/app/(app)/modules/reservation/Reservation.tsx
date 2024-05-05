@@ -4,16 +4,6 @@ import { FC, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 
 import * as queryConvert from "@/lib/query"
-// import SearchInfo from '@/modules/search-input/components/SearchInfo'
-// import SearchBar from '@/modules/search-input/components/searchBar/SearchBar'
-// import { useLocation } from '@/modules/search-input/context/location'
-// import { useDateRange } from '@/modules/search-input/context/dateRange'
-// import { useReservation } from '@/modules/search-input/context/reservation'
-// import * as ReservationService from '@/modules/reservation/services/ReservationService'
-// import * as HotelService from '@/modules/hotel/services/HotelService'
-// import { useFirstLoad } from '@/shared/store/useFirstLoad'
-// import { HotelVm } from '@/modules/hotel/models/HotelModel'
-// import { RoomTypeVm } from '@/modules/reservation/models/RoomTypeVm'
 import SelectRoom from "./SelectRoom"
 import { HotelVm } from "../hotel/services/HotelService"
 import { useFirstLoad } from "@/store/app/useFirstLoad"

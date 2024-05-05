@@ -20,7 +20,7 @@ const Client: FC<ClientProps> = ({ data }) => {
       </div>
 
       <hr className="my-6" />
-      <DataTable columns={columns} data={data} searchKey="name" />
+      <DataTable columns={columns} data={data} searchKey="name" newButton={false} />
     </div>
   )
 }

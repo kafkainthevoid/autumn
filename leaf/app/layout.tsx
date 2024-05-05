@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react"
 import { auth } from "@/auth"
 import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from "@/app/admin/components/providers/ThemeProvider"
+import { ChatboxProvider } from "./admin/components/providers/ChatboxProvider"
 
 import "./globals.css"
 
@@ -22,10 +23,12 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <SessionProvider session={session}>
       <html lang="en">
         <body className={inter.className}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            {children}
-            <Toaster />
-          </ThemeProvider>
+          <ChatboxProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+              {children}
+              <Toaster />
+            </ThemeProvider>
+          </ChatboxProvider>
         </body>
       </html>
     </SessionProvider>

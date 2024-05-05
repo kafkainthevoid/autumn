@@ -1,38 +1,32 @@
-'use client'
+"use client"
 
-import { FC, useEffect, useState } from 'react'
-import { format } from 'date-fns'
+import { FC, useEffect, useState } from "react"
+import { format } from "date-fns"
 
-import { BookingVm } from '@/modules/booking/models/BookingModel'
-import * as BookingService from '@/modules/booking/services/BookingService'
-import Client from './client'
-import { Column } from './columns'
+import Client from "./client"
+import { Column } from "./columns"
+import { Booking as BookingVm, Booking_Room, Room, RoomType } from "@prisma/client"
 
 interface BookingProps {
-  userId: string
+  bookings: (BookingVm & {
+    booking_rooms: (Booking_Room & {
+      room: Room & { roomType: RoomType }
+      booking: BookingVm
+    })[]
+  })[]
 }
 
 // TODO: add reviews, vote, complain, feedback,....
-const Booking: FC<BookingProps> = ({ userId }) => {
-  const [bookings, setBookings] = useState<BookingVm[]>([])
-
-  useEffect(() => {
-    BookingService.getCurrentUserBooking(userId).then((data) => {
-      setBookings(data)
-    })
-  }, [userId])
-
+const Booking: FC<BookingProps> = ({ bookings }) => {
   const formattedBookings: Column[] = bookings.map((item) => {
     return {
       id: item.id,
-      startDate: format(new Date(item.startDate), 'MMMM do, yyyy'),
-      endDate: format(new Date(item.endDate), 'MMMM do, yyyy'),
-      roomName: item.booking_rooms.map((b) => b.room.name).join(', '),
+      startDate: format(new Date(item.startDate), "MMMM do, yyyy"),
+      endDate: format(new Date(item.endDate), "MMMM do, yyyy"),
+      roomName: item.booking_rooms.map((b) => b.room.name).join(", "),
       roomCharge: item.roomCharge,
     }
   })
-
-  if (!userId) return
 
   return (
     <div>
