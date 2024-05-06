@@ -2,7 +2,15 @@
 
 import { FC } from "react"
 import { User as UserAuth } from "next-auth"
-import { CalendarRangeIcon, KeyRoundIcon, LucideIcon, MailPlusIcon, UserIcon } from "lucide-react"
+import {
+  CalendarRangeIcon,
+  ConciergeBellIcon,
+  HandPlatterIcon,
+  KeyRoundIcon,
+  LucideIcon,
+  MailPlusIcon,
+  UserIcon,
+} from "lucide-react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 
@@ -42,6 +50,18 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
       label: "Booking Room",
       active: pathname === "/user/booking",
       Icon: CalendarRangeIcon,
+    },
+    {
+      href: "/user/amenities",
+      label: "Amenities",
+      active: pathname.includes("/user/amenities"),
+      Icon: HandPlatterIcon,
+    },
+    {
+      href: "/user/orders",
+      label: "Orders",
+      active: pathname.includes("/user/orders"),
+      Icon: ConciergeBellIcon,
     },
     {
       href: "/user/feedback",

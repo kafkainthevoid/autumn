@@ -10,6 +10,8 @@ const ProfilePage = async () => {
     include: { address: true },
   })
 
+  if (!user) return
+
   return (
     <div className="p-10">
       <Profile user={user} />

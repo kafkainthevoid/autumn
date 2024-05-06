@@ -14,17 +14,24 @@ const StaffsPage = async () => {
     orderBy: { createdAt: "desc" },
   })
 
-  const formattedData: Column[] = users.map((item) => ({
-    id: item.id,
-    name: item.name ?? "",
-    email: item.email ?? "",
-    sex: item.sex.toLowerCase(),
-    birthday: item.birthday ? format(new Date(item.birthday), "MMMM do, yyyy") : "",
-    phoneNo: item.address?.phone ?? "",
-    address: item.address?.addressLine ?? "",
-    role: item.role,
-    createdAt: format(new Date(item.createdAt), "MMMM do, yyyy"),
-  }))
+  const formattedData: Column[] = users.map((item) => {
+    let name = item.name ?? ""
+    if (item.firstName && item.lastName) {
+      name = item.firstName + " " + item.lastName
+    }
+
+    return {
+      id: item.id,
+      name,
+      email: item.email ?? "",
+      sex: item.sex.toLowerCase(),
+      birthday: item.birthday ? format(new Date(item.birthday), "MMMM do, yyyy") : "",
+      phoneNo: item.address?.phone ?? "",
+      address: item.address?.addressLine ?? "",
+      role: item.role,
+      createdAt: format(new Date(item.createdAt), "MMMM do, yyyy"),
+    }
+  })
 
   return (
     <div className="p-10">

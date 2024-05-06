@@ -1,7 +1,4 @@
-1->user management
-2->staff management
-3->add feedback admin
-4->add amenities type for display,purchasable
+in progress:
 5->fix booking mechanisism
 6->add amenities site for client
 7->add order page for amenities
@@ -11,3 +8,15 @@
 11->news page (client)
 12->bao cao thong ke
 
+
+
+done:
+1->user management
+2->staff management
+3->add feedback admin
+4->add amenities type for display,purchasable
+
+
+
+
+them button xoa nhan vien

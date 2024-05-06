@@ -47,8 +47,8 @@ export const columns: ColumnDef<Column>[] = [
     accessorKey: "createdAt",
     header: "Created At",
   },
-  {
-    id: "actions",
-    cell: ({ row }) => <CellAction id={row.original.id} role={row.original.role} />,
-  },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => <CellAction id={row.original.id} role={row.original.role} />,
+  // },
 ]

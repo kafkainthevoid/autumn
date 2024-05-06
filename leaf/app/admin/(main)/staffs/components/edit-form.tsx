@@ -29,6 +29,7 @@ const formSchema = z.object({
   phoneNumber: z.string().optional(),
   addressLine: z.string().optional(),
   password: z.string().optional(),
+  passwordConfirm: z.string().optional(),
 })
 
 interface FormProps {
@@ -56,6 +57,7 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
     phoneNumber: initialData?.address?.phone ?? "",
     addressLine: initialData?.address?.addressLine ?? "",
     password: "",
+    passwordConfirm: "",
   }
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -70,7 +72,7 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
       if (initialData) {
         await axios.patch(`/api/user/${params.staffId}`, { ...data, role: UserRole.STAFF })
       } else {
-        await axios.post(`/api/staffs`, data)
+        await axios.post(`/api/users`, data)
       }
       router.refresh()
       router.push(pathname.slice(0, pathname.lastIndexOf("/")))
@@ -276,7 +278,7 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="Password" {...field} />
+                    <Input placeholder="Password" {...field} type="password" />
                   </FormControl>
                   <FormMessage className="block" />
                 </FormItem>
@@ -285,12 +287,12 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
 
             <FormField
               control={form.control}
-              name="password"
+              name="passwordConfirm"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password Confirm</FormLabel>
                   <FormControl>
-                    <Input placeholder="Password Confirm" {...field} />
+                    <Input placeholder="Password Confirm" {...field} type="password" />
                   </FormControl>
                   <FormMessage className="block" />
                 </FormItem>

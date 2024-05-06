@@ -40,6 +40,7 @@ model User {
   bookings  Booking[]
   votes     Vote[]
   feedbacks Feedback[]
+  orders    Order[]
 }
 
 model Account {
@@ -192,12 +193,13 @@ model Amenity {
   description String
   image       String
   type        AmenityType @default(DISPLAY)
-  price       Int?
+  price       Int
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
   amenity_RoomTypes Amenity_RoomType[]
   amenity_Hotels    Amenity_Hotel[]
+  order_Amenities   Order_Amenity[]
 }
 
 enum AmenityType {
@@ -246,6 +248,29 @@ model Booking {
   user   User   @relation(fields: [userId], references: [id])
 
   booking_rooms Booking_Room[]
+}
+
+model Order_Amenity {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  amenityId String
+  amenity   Amenity @relation(fields: [amenityId], references: [id])
+  price     Int
+  count     Int
+}
+
+model Order {
+  id         String @id @default(uuid())
+  totalMoney Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  order_amenities Order_Amenity[]
 }
 
 model Vote {

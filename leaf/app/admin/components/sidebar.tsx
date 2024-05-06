@@ -1,6 +1,6 @@
 "use client"
 
-import { Hotel } from "@prisma/client"
+import { Hotel, UserRole } from "@prisma/client"
 import {
   AlbumIcon,
   ArrowRightIcon,
@@ -13,6 +13,7 @@ import {
   MessageSquareDotIcon,
   MonitorIcon,
   PercentIcon,
+  ReceiptIcon,
   SettingsIcon,
   UserIcon,
   Users2Icon,
@@ -26,6 +27,7 @@ import { useEffect } from "react"
 import { cn } from "@/lib/utils"
 import { useHotel } from "@/store/useHotel"
 import { useSideBar } from "@/store/useSideBar"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
 interface IRoute {
   href: string
@@ -41,6 +43,8 @@ const Sidebar = () => {
 
   const params = useParams()
   const pathname = usePathname()
+
+  const userAuth = useCurrentUser()
 
   useEffect(() => {
     const getHotel = async (): Promise<Hotel | null> => {
@@ -71,12 +75,6 @@ const Sidebar = () => {
       Icon: Users2Icon,
     },
     {
-      href: "/admin/staffs",
-      label: "Staff",
-      active: pathname === "/admin/staffs",
-      Icon: FaUsersGear,
-    },
-    {
       href: "/admin/hotels",
       label: "Hotel",
       active: pathname.match("/admin/hotels"),
@@ -87,6 +85,12 @@ const Sidebar = () => {
       label: "Amenities",
       active: pathname.match("/admin/amenities*"),
       Icon: MonitorIcon,
+    },
+    {
+      href: "/admin/orders",
+      label: "Orders",
+      active: pathname.match("/admin/orders*"),
+      Icon: ReceiptIcon,
     },
     {
       href: "/admin/feedbacks",
@@ -101,6 +105,15 @@ const Sidebar = () => {
       Icon: SettingsIcon,
     },
   ]
+
+  if (userAuth?.role === UserRole.ADMIN) {
+    routers.splice(2, 0, {
+      href: "/admin/staffs",
+      label: "Staff",
+      active: pathname === "/admin/staffs",
+      Icon: FaUsersGear,
+    })
+  }
 
   if (hotel) {
     routers.find((route) => route.label === "Hotel")!.subRoutes = [

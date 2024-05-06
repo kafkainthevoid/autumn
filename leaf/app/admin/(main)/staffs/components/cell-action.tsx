@@ -58,6 +58,17 @@ const CellAction: FC<CellActionProps> = ({ id, role }) => {
             <AlertDialogTitle>Change user role</AlertDialogTitle>
             <AlertDialogDescription>
               <div className="flex gap-9">
+                {/* <div
+                  className={cn(
+                    "flex items-center font-bold gap-3 px-3 py-2 rounded-3xl border-rose-500 border-2 text-rose-500 cursor-pointer",
+                    selectedRole === UserRole.ADMIN && "bg-rose-600 text-white"
+                  )}
+                  onClick={() => setSelectedRole(UserRole.ADMIN)}
+                >
+                  <UserIcon className="w-4 h-4" />
+                  <p>Admin</p>
+                  {selectedRole === UserRole.USER && <CheckCheckIcon className="w-4 h-4 ml-2" />}
+                </div> */}
                 <div
                   className={cn(
                     "flex items-center font-bold gap-3 px-3 py-2 rounded-3xl border-yellow-500 border-2 text-yellow-500 cursor-pointer",

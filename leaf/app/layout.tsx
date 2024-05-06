@@ -24,7 +24,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <html lang="en">
         <body className={inter.className}>
           <ChatboxProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
               {children}
               <Toaster />
             </ThemeProvider>

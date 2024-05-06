@@ -7,21 +7,23 @@ import axios from "axios"
 import { ChevronLeftIcon } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Amenity } from "@prisma/client"
+import { Amenity, AmenityType } from "@prisma/client"
 
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import ImageUpload from "@/components/ui/image-upload"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { toast } from "sonner"
 
 const formSchema = z.object({
   name: z.string().min(1, "Name length must be atleast 4 characters only"),
   description: z.string().min(1),
-  price: z.number(),
+  price: z.coerce.number(),
   image: z.string(),
+  type: z.enum([AmenityType.DISPLAY, AmenityType.PURCHASABLE]),
 })
 
 type FormValues = z.infer<typeof formSchema>
@@ -41,12 +43,15 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
   const toastMessage = initialData ? `Amenity updated` : `Amenity created`
   const action = initialData ? "Save changes" : "Create"
 
+  console.log("\n\n\ninitialData", initialData)
+
   const defaultValues = initialData
     ? initialData
     : {
         name: "",
         description: "",
         price: 0,
+        type: AmenityType.DISPLAY,
         image: "",
       }
 
@@ -65,10 +70,9 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
       }
       router.refresh()
       router.push("/admin/amenities")
-      toast({ description: toastMessage })
+      toast.success(toastMessage)
     } catch (error: any) {
-      console.log(error)
-      toast({ variant: "destructive", title: "Something went wrong" })
+      toast.error("Something went wrong")
     } finally {
       setLoading(false)
     }
@@ -118,33 +122,60 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               )}
             />
 
-            {/* <FormField
+            <FormField
               control={form.control}
-              name="price"
+              name="type"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Price</FormLabel>
+                <FormItem className="flex items-center">
+                  <FormLabel className="w-56 text-zinc-600">Type</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Price" {...field} type="number" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
+                    <RadioGroup
+                      defaultValue={field.value}
+                      onValueChange={field.onChange}
+                      className="flex items-center w-full"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem
+                            // take me the whole morning, never gonna use shadcn again
+                            // wow,
+                            checked={field.value === AmenityType.DISPLAY}
+                            value={AmenityType.DISPLAY}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">Display</FormLabel>
+                      </FormItem>
 
-            {/* <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Type</FormLabel>
-                  <FormControl>
-                    <Input disabled={loading} placeholder="Type" {...field} type="number" />
+                      <FormItem className="flex items-center space-x-3 space-y-0 ml-10">
+                        <FormControl>
+                          <RadioGroupItem
+                            checked={field.value === AmenityType.PURCHASABLE}
+                            value={AmenityType.PURCHASABLE}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">Purchasable</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
-            /> */}
+            />
+
+            {form.getValues().type === AmenityType.PURCHASABLE && (
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Price</FormLabel>
+                    <FormControl>
+                      <Input disabled={loading} placeholder="Price" {...field} type="number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
             <FormField
               control={form.control}

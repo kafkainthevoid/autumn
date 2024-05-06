@@ -20,7 +20,6 @@ interface UserAccountNavProps {
 }
 
 const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
-  console.log("useraccountnav", { user })
   if (!user) return
 
   return (

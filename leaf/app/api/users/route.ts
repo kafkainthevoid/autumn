@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { UserRole } from "@prisma/client"
+import bcrypt from "bcryptjs"
 
 import { currentUser } from "@/lib/auth"
 import { db } from "@/lib/db"
@@ -13,9 +14,21 @@ export async function POST(req: Request) {
 
     const body = await req.json()
 
-    const { email, firstName, lastName, gender, phoneNumber, dateOfBirth, addressLine, role = UserRole.STAFF } = body
+    const {
+      email,
+      firstName,
+      lastName,
+      gender,
+      phoneNumber,
+      dateOfBirth,
+      addressLine,
+      role = UserRole.STAFF,
+      password,
+    } = body
 
     if (!email) return new NextResponse("Email is required", { status: 400 })
+
+    const hashedPassword = await bcrypt.hash(password, 10)
 
     const dbUser = await db.user.findUnique({
       where: { email },
@@ -30,6 +43,8 @@ export async function POST(req: Request) {
         lastName,
         sex: gender,
         birthday: dateOfBirth,
+        emailVerified: new Date(),
+        password: hashedPassword,
         role,
         address: {
           create: { addressLine, phone: phoneNumber },
