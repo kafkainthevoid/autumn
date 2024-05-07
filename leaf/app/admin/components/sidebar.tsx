@@ -15,6 +15,7 @@ import {
   PercentIcon,
   ReceiptIcon,
   SettingsIcon,
+  StickyNoteIcon,
   UserIcon,
   Users2Icon,
 } from "lucide-react"
@@ -91,6 +92,12 @@ const Sidebar = () => {
       label: "Orders",
       active: pathname.match("/admin/orders*"),
       Icon: ReceiptIcon,
+    },
+    {
+      href: "/admin/posts",
+      label: "Posts",
+      active: pathname.match("/admin/posts*"),
+      Icon: StickyNoteIcon,
     },
     {
       href: "/admin/feedbacks",

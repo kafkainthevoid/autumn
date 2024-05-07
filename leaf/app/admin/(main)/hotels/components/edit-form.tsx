@@ -145,7 +145,7 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
         await axios.post(`/api/hotels`, data)
       }
       router.refresh()
-      router.push(`/hotels`)
+      router.push(`/admin/hotels`)
       toast({ description: toastMessage })
     } catch (err: any) {
       console.log(err)

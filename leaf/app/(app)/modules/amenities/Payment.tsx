@@ -26,6 +26,7 @@ const Payment: FC<PaymentProps> = ({ items }) => {
     })
     return total
   }
+  console.log(calTotalMoney())
 
   const createOrder = async (data: CreateOrderData, actions: CreateOrderActions) => {
     try {
