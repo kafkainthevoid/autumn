@@ -30,8 +30,8 @@ export const CellAction: React.FC<CellActionProps> = ({ id }) => {
 
   const onConfirm = async () => {
     try {
-      await axios.delete(`/api/amenities/${id}`)
-      toast({ description: `Amenity deleted` })
+      await axios.delete(`/api/posts/${id}`)
+      toast({ description: `Post deleted` })
       router.refresh()
     } catch (error) {
       toast({

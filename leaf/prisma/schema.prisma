@@ -311,10 +311,12 @@ model Feedback {
 }
 
 model Post {
-  id        String   @id @default(uuid())
-  title     String
-  author    String
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  title       String
+  author      String
+  description String?
+  content     String
+  banner      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

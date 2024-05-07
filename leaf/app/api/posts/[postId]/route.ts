@@ -7,7 +7,7 @@ export async function PATCH(req: Request, { params }: { params: { postId: string
   try {
     await requiredRoleApi(["ADMIN", "STAFF"])
 
-    const { title, author, content } = await req.json()
+    const { title, author, banner, content } = await req.json()
 
     if (!params.postId) return new NextResponse("Post ID missing", { status: 400 })
 
@@ -19,12 +19,27 @@ export async function PATCH(req: Request, { params }: { params: { postId: string
 
     const post = await db.post.update({
       where: { id: params.postId },
-      data: { title, author, content },
+      data: { title, author, content, banner },
     })
 
     return NextResponse.json(post)
   } catch (err) {
     console.log("[AMENITY_ID_PATCH]", err)
+    return new NextResponse("Internal error", { status: 500 })
+  }
+}
+
+export async function DELETE(req: Request, { params }: { params: { postId: string } }) {
+  try {
+    await requiredRoleApi(["ADMIN", "STAFF"])
+
+    await db.post.delete({
+      where: { id: params.postId },
+    })
+
+    return NextResponse.json("DELETED")
+  } catch (err) {
+    console.log("[POST_ID_DELETE]", err)
     return new NextResponse("Internal error", { status: 500 })
   }
 }

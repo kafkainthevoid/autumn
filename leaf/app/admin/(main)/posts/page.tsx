@@ -5,16 +5,14 @@ import { db } from "@/lib/db"
 import { DataTable } from "@/components/ui/data-table"
 
 const PostsPage = async () => {
-  const amenities = await db.amenity.findMany({
-    orderBy: { name: "asc" },
+  const posts = await db.post.findMany({
+    orderBy: { createdAt: "asc" },
   })
 
-  const formattedData: Column[] = amenities.map((item) => ({
+  const formattedData: Column[] = posts.map((item) => ({
     id: item.id,
-    name: item.name,
-    description: item.description,
-    type: item.type,
-    price: item.price,
+    title: item.title,
+    author: item.author,
     createdAt: format(item.createdAt, "MMM do, yyyy"),
   }))
 

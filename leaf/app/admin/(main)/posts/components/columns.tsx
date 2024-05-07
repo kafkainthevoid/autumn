@@ -9,35 +9,19 @@ import { AmenityType } from "@prisma/client"
 
 export type Column = {
   id: string
-  name: string
-  description: string
-  price: number
-  type: string
+  title: string
+  author: string
   createdAt: string
 }
 
 export const columns: ColumnDef<Column>[] = [
   {
-    accessorKey: "name",
-    header: ({ column }) => (
-      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-        Name
-        {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
-      </Button>
-    ),
-    cell: ({ row }) => <div className="font-bold">{row.original.name}</div>,
+    accessorKey: "title",
+    header: "Title",
   },
   {
-    accessorKey: "description",
-    header: "Description",
-  },
-  {
-    accessorKey: "type",
-    header: "Type",
-  },
-  {
-    accessorKey: "price",
-    cell: ({ row }) => <div>{row.original.type === AmenityType.PURCHASABLE && row.original.price}</div>,
+    accessorKey: "author",
+    header: "Author",
   },
   {
     accessorKey: "createdAt",

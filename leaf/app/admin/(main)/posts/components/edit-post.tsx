@@ -1,14 +1,13 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { LegacyRef, useRef, useState } from "react"
 import ReactQuill, { Quill } from "react-quill"
 import "react-quill/dist/quill.snow.css"
 // @ts-ignore
-import ImageResize from "quill-image-resize-module-react"
 import { Button } from "@/components/ui/button"
 import { Post } from "@prisma/client"
 import { ChevronLeftIcon } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -17,7 +16,8 @@ import { toast } from "sonner"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-Quill.register("modules/imageResize", ImageResize)
+// import ImageResize from "quill-image-resize-module-react"
+// Quill.register("modules/imageResize", ImageResize)
 
 interface EditPostProps {
   post: Post | null
@@ -26,11 +26,15 @@ interface EditPostProps {
 const formSchema = z.object({
   title: z.string().min(1),
   author: z.string().min(1),
+  description: z.string().optional(),
+  banner: z.string(),
   // TODO: change to 200 later
   content: z.string().min(10),
 })
 
 const modules = {
+  imageActions: {},
+  imageFormats: {},
   toolbar: [
     [{ header: "1" }, { header: "2" }, { header: "3" }, { font: [] }],
     [{ size: [] }],
@@ -40,9 +44,6 @@ const modules = {
     ["link", "image", "video"],
     ["clean"],
   ],
-  imageResize: {
-    parchment: Quill.import("parchment"),
-  },
 }
 
 const formats = [
@@ -56,11 +57,20 @@ const formats = [
   "bullet",
   "indent",
   "align",
+  "float",
   "link",
   "image",
 ]
 
+import { ImageActions } from "@xeger/quill-image-actions"
+import { ImageFormats } from "@xeger/quill-image-formats"
+import ImageUpload from "@/components/ui/image-upload"
+
+Quill.register("modules/imageActions", ImageActions, true)
+Quill.register("modules/imageFormats", ImageFormats, true)
+
 const EditPost = ({ post }: EditPostProps) => {
+  const params = useParams()
   const router = useRouter()
 
   const [open, setOpen] = useState(false)
@@ -71,18 +81,13 @@ const EditPost = ({ post }: EditPostProps) => {
   const toastMessage = post ? `Post updated` : `Post created`
   const action = post ? "Save changes" : "Create"
 
-  const defaultValues = post
-    ? post
-    : //  {
-      //   title: post.title,
-      //   author: post.author,
-      //   content: post.content,
-      //  }
-      {
-        title: "",
-        author: "",
-        content: "",
-      }
+  const defaultValues = post ?? {
+    title: "",
+    author: "",
+    content: "",
+    banner: "",
+    description: "",
+  }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -91,16 +96,21 @@ const EditPost = ({ post }: EditPostProps) => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
+      let description = quillRef.current?.editor?.getText() ?? ""
+      description = description.replace(/\s{6,}|\n/g, " ")
+      data = { ...data, description }
+
       console.log("submitting data", data)
+
       setLoading(true)
       if (post) {
-        await axios.patch("/api/posts", data)
+        await axios.patch(`/api/posts/${params.postId}`, data)
       } else {
         await axios.post("/api/posts", data)
       }
       router.refresh()
       router.push(`/admin/posts`)
-      toast.success("Post created")
+      toast.success(toastMessage)
     } catch (err: any) {
       toast.error("Something went wrong")
     } finally {
@@ -108,8 +118,22 @@ const EditPost = ({ post }: EditPostProps) => {
     }
   }
 
+  const quillRef = useRef<ReactQuill | null>(null)
+
+  // TODO: continue here 07-05
+  const getTextContent = () => {
+    const plainText = quillRef.current?.editor?.getText()
+    if (plainText) {
+      console.log("Plain Text Content:", plainText.replace(/\s{6,}|\n/g, " "))
+      // You can use the plainText variable for your purposes (e.g., post description)
+    } else {
+      console.log("Editor content is empty")
+    }
+  }
+
   return (
     <>
+      <button onClick={getTextContent}>get text</button>
       <div className="flex items-center justify-between">
         <div>
           <Button variant="link" className="mb-10 px-0" size="sm" onClick={() => router.back()}>
@@ -154,17 +178,40 @@ const EditPost = ({ post }: EditPostProps) => {
 
           <FormField
             control={form.control}
+            name="banner"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Image</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value ? [field.value] : []}
+                    disabled={loading}
+                    onChange={(url) => field.onChange(url)}
+                    onRemove={() => field.onChange("")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="content"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Content</FormLabel>
                 <FormControl>
                   <ReactQuill
+                    ref={quillRef}
                     theme="snow"
                     modules={modules}
                     formats={formats}
                     value={field.value}
-                    onChange={field.onChange}
+                    onChange={(v) => {
+                      field.onChange(v)
+                      console.log(v)
+                    }}
                   />
                 </FormControl>
                 <FormMessage />

@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   try {
     await requiredRoleApi(["ADMIN", "STAFF"])
 
-    const { title, author, content } = await req.json()
+    const { title, author, banner, content } = await req.json()
     if (!title || !author || !content) return new NextResponse("All fields are required", { status: 400 })
 
     const post = await db.post.create({
@@ -15,6 +15,7 @@ export async function POST(req: Request) {
         title,
         author,
         content,
+        banner,
       },
     })
 
