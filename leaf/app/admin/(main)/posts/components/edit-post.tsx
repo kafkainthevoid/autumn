@@ -120,20 +120,8 @@ const EditPost = ({ post }: EditPostProps) => {
 
   const quillRef = useRef<ReactQuill | null>(null)
 
-  // TODO: continue here 07-05
-  const getTextContent = () => {
-    const plainText = quillRef.current?.editor?.getText()
-    if (plainText) {
-      console.log("Plain Text Content:", plainText.replace(/\s{6,}|\n/g, " "))
-      // You can use the plainText variable for your purposes (e.g., post description)
-    } else {
-      console.log("Editor content is empty")
-    }
-  }
-
   return (
     <>
-      <button onClick={getTextContent}>get text</button>
       <div className="flex items-center justify-between">
         <div>
           <Button variant="link" className="mb-10 px-0" size="sm" onClick={() => router.back()}>

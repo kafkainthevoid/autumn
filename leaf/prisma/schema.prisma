@@ -314,7 +314,7 @@ model Post {
   id          String   @id @default(uuid())
   title       String
   author      String
-  description String?
+  description String
   content     String
   banner      String
   createdAt   DateTime @default(now())

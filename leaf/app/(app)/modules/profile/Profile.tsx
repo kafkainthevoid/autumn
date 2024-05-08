@@ -26,13 +26,16 @@ interface ProfileProps {
   user: User & { address: Address | null }
 }
 
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
 const formSchema = z.object({
   firstName: z.string().optional(),
   lastName: z.string().optional(),
   email: z.string().email(),
   dateOfBirth: z.coerce.date().optional(),
   gender: z.enum(["MALE", "FEMALE", "UNKNOWN"]),
-  phoneNumber: z.string().optional(),
+  phoneNumber: z.string().regex(phoneRegExp, "Invalid phone number"),
   addressLine: z.string().optional(),
 })
 

@@ -7,7 +7,7 @@ export async function PATCH(req: Request, { params }: { params: { postId: string
   try {
     await requiredRoleApi(["ADMIN", "STAFF"])
 
-    const { title, author, banner, content } = await req.json()
+    const { title, author, banner, content, description } = await req.json()
 
     if (!params.postId) return new NextResponse("Post ID missing", { status: 400 })
 
@@ -19,7 +19,7 @@ export async function PATCH(req: Request, { params }: { params: { postId: string
 
     const post = await db.post.update({
       where: { id: params.postId },
-      data: { title, author, content, banner },
+      data: { title, author, content, banner, description },
     })
 
     return NextResponse.json(post)

@@ -20,11 +20,11 @@ export default async function Home() {
         {posts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
-        <div>shit</div>
-        <div>shit</div>
-        <div>shit</div>
-        <div>shit</div>
-        <div>shit</div>
+        <PostCard key={posts[0].id} post={posts[0]} />
+        <PostCard key={posts[0].id} post={posts[0]} />
+        <PostCard key={posts[0].id} post={posts[0]} />
+        <PostCard key={posts[0].id} post={posts[0]} />
+        <PostCard key={posts[0].id} post={posts[0]} />
       </div>
     </div>
   )
