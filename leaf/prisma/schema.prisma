@@ -137,9 +137,11 @@ model Hotel {
   // airport: String // 'Samurai Museum,1.5;Imperial Palace,6.6' 
   // nearby: String // data input must be sanitize: ;, 
 
-  roomTypes RoomType[]
-
+  roomTypes      RoomType[]
   amenity_Hotels Amenity_Hotel[]
+
+  // TODO: add vote for hotel if have time
+  // votes          Vote[]
 }
 
 model Room {
@@ -283,6 +285,10 @@ model Vote {
   user   User   @relation(fields: [userId], references: [id])
   roomId String
   room   Room   @relation(fields: [roomId], references: [id])
+
+  // TODO: add vote for hotel if have time
+  // hotelId String
+  // hotel   Hotel  @relation(fields: [hotelId], references: [id])
 }
 
 model Discount {
