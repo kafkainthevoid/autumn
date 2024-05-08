@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from "@/app/admin/components/providers/ThemeProvider"
 import { ChatboxProvider } from "./admin/components/providers/ChatboxProvider"
 
+import "react-quill/dist/quill.snow.css"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })

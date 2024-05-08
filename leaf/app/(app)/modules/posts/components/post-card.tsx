@@ -27,11 +27,11 @@ const PostCard = ({ post }: PostCardProps) => {
         <div className="text-sm mt-3">{post.description}</div>
       </div>
       <div
-        className="flex items-center gap-3 absolute bottom-3 left-3 text-teal-700 cursor-pointer"
+        className="flex w-full items-center justify-end gap-3 absolute bottom-3 right-3 cursor-pointer"
         onClick={() => router.push(`/posts/${post.id}`)}
       >
-        <CircleChevronRightIcon className="w-5 h-5" />
-        <p className="font-semibold">Read more</p>
+        <p className="font-semibold text-zinc-700 text-sm hover:underline underline-offset-4">Read more</p>
+        <CircleChevronRightIcon className="w-7 h-7 text-teal-600" />
       </div>
     </div>
   )
