@@ -1,6 +1,6 @@
 "use client"
 
-import { Address, Amenity, Amenity_Hotel, Hotel } from "@prisma/client"
+import { Address, Amenity, AmenityType, Amenity_Hotel, Hotel } from "@prisma/client"
 import { useParams, useRouter } from "next/navigation"
 import { FC, useEffect, useState } from "react"
 import { z } from "zod"
@@ -10,7 +10,6 @@ import axios from "axios"
 import { CheckIcon, ChevronLeftIcon, PlusCircleIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { toast } from "@/components/ui/use-toast"
 import { Separator } from "@/components/ui/separator"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -32,8 +31,8 @@ import ImageUpload from "@/components/ui/image-upload"
 import { Combobox } from "@/components/ui/combobox-form"
 import * as AddressService from "../services/AddressService"
 import { DaNangLatLng } from "@/constants/DaNangLatLng"
-import { getProvinces } from "@/actions/province"
 import MapMarkerInput from "@/app/(app)/modules/commons/map/MapMarkerInput"
+import { toast } from "sonner"
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -45,7 +44,8 @@ const formSchema = z.object({
   province: z.number(),
   phoneNumber: z.string(),
   images: z.string().array(),
-  amenities: z.string().array(),
+  displayAmenities: z.string().array(),
+  purchasableAmenities: z.string().array(),
 })
 
 interface FormProps {
@@ -77,6 +77,15 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
   const [districts, setDistricts] = useState<AddressVm[]>([])
   const [wards, setWards] = useState<AddressVm[]>([])
 
+  let initDisplayAmenities: Amenity[] = []
+  let initPurchasableAmenities: Amenity[] = []
+
+  if (initialData) {
+    const hotelAmenities = initialData.amenity_Hotels.map((ah) => ah.amenity)
+    initDisplayAmenities = hotelAmenities.filter((amenity) => amenity.type === AmenityType.DISPLAY)
+    initPurchasableAmenities = hotelAmenities.filter((amenity) => amenity.type === AmenityType.PURCHASABLE)
+  }
+
   const defaultValues = initialData
     ? {
         name: initialData.name,
@@ -88,7 +97,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
         province: initialData.address.province!,
         phoneNumber: initialData.address.phone,
         images: initialData.images,
-        amenities: initialData.amenity_Hotels.map((ah) => ah.amenityId),
+        displayAmenities: initDisplayAmenities.map((a) => a.id),
+        purchasableAmenities: initPurchasableAmenities.map((a) => a.id),
       }
     : {
         name: "",
@@ -100,7 +110,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
         province: -1,
         phoneNumber: "",
         images: [],
-        amenities: [],
+        displayAmenities: [],
+        purchasableAmenities: [],
       }
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -137,19 +148,27 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
+      console.log("onSubmit", { data })
       setLoading(true)
 
+      const formAmenities = [...data.purchasableAmenities, ...data.displayAmenities]
+
+      // TODO: fix this later
+      // data.hasOwnProperty("purchasableAmenities") && delete data.purchasableAmenities
+      // data.hasOwnProperty("displayAmenities") && delete data.displayAmenities
+      const payload = { ...data, amenities: formAmenities }
+
       if (initialData) {
-        await axios.patch(`/api/hotels/${params.hotelId}`, data)
+        await axios.patch(`/api/hotels/${params.hotelId}`, payload)
       } else {
-        await axios.post(`/api/hotels`, data)
+        await axios.post(`/api/hotels`, payload)
       }
       router.refresh()
       router.push(`/admin/hotels`)
-      toast({ description: toastMessage })
+      toast.success(toastMessage)
     } catch (err: any) {
       console.log(err)
-      toast({ variant: "destructive", title: err.response.data })
+      toast.error(err?.response?.data)
     } finally {
       setLoading(false)
     }
@@ -161,19 +180,23 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
       await axios.delete(`/api/hotels/${params.hotelId}`)
       router.refresh()
       router.push(`/admin/hotels`)
-      toast({ description: `Hotel deleted` })
+      toast.success("Hotel deleted")
     } catch (err: any) {
       console.log(err)
-      toast({ variant: "destructive", description: err?.response?.data })
+      toast.error(err?.response?.data)
     } finally {
       setLoading(false)
       setOpen(false)
     }
   }
 
-  const options = amenities
-  const [selectedValues, setSelectedValues] = useState<string[]>(
-    initialData?.amenity_Hotels.map((item) => item.amenityId) || []
+  const displayOptions = amenities.filter((a) => a.type === AmenityType.DISPLAY)
+  const purchasableOptions = amenities.filter((a) => a.type === AmenityType.PURCHASABLE)
+  const [selectedDisplayAmenities, setSelectedDisplayAmenities] = useState<string[]>(
+    initDisplayAmenities.map((a) => a.id)
+  )
+  const [selectedPurchasableAmenities, setSelectedPurchasableAmenities] = useState<string[]>(
+    initPurchasableAmenities.map((a) => a.id)
   )
 
   return (
@@ -363,11 +386,11 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
             {/* TODO: hmmm, this needs to refactorio*/}
             <FormField
               control={form.control}
-              name="amenities"
-              defaultValue={initialData?.amenity_Hotels.map((ar) => ar.amenityId) || []}
+              name="displayAmenities"
+              defaultValue={initDisplayAmenities.map((a) => a.id)}
               render={({ field }) => (
                 <FormItem className="flex items-center">
-                  <FormLabel className="w-32">Amenities</FormLabel>
+                  <FormLabel className="w-44">Display Amenities</FormLabel>
                   <FormControl>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -380,20 +403,20 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                             <PlusCircleIcon className="mr-2 h-4 w-4" />
                             Choose amenity
                           </div>
-                          {selectedValues.length > 0 && (
+                          {selectedDisplayAmenities.length > 0 && (
                             <>
                               <Separator orientation="vertical" className="mx-2 h-4" />
                               <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
-                                {selectedValues.length}
+                                {selectedDisplayAmenities.length}
                               </Badge>
                               <div className="hidden space-x-1 lg:flex">
-                                {selectedValues.length > 5 ? (
+                                {selectedDisplayAmenities.length > 5 ? (
                                   <Badge variant="secondary" className="rounded-sm px-1 font-normal">
-                                    {selectedValues.length} selected
+                                    {selectedDisplayAmenities.length} selected
                                   </Badge>
                                 ) : (
-                                  options
-                                    .filter((option) => selectedValues.find((item) => item === option.id))
+                                  displayOptions
+                                    .filter((option) => selectedDisplayAmenities.find((item) => item === option.id))
                                     .map((option) => (
                                       <Badge
                                         variant="secondary"
@@ -412,26 +435,28 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
 
                       <PopoverContent className="w-[300px] p-0" align="end">
                         <Command>
-                          <CommandInput placeholder={"Leaf"} />
+                          <CommandInput placeholder={"Choose amenity"} />
                           <CommandList>
                             <CommandEmpty>No results found.</CommandEmpty>
                             <CommandGroup>
-                              {options.map((option) => {
-                                let isSelected = selectedValues.find((item) => item === option.id) ? true : false
+                              {displayOptions.map((option) => {
+                                let isSelected = selectedDisplayAmenities.find((item) => item === option.id)
+                                  ? true
+                                  : false
 
                                 return (
                                   <CommandItem
                                     key={option.id}
                                     onSelect={() => {
                                       if (isSelected) {
-                                        const newSV = [...selectedValues].filter((item) => item !== option.id)
+                                        const newSV = [...selectedDisplayAmenities].filter((item) => item !== option.id)
                                         field.onChange(newSV)
-                                        setSelectedValues(newSV)
+                                        setSelectedDisplayAmenities(newSV)
                                       } else {
-                                        const newSV = [...selectedValues]
+                                        const newSV = [...selectedDisplayAmenities]
                                         newSV.push(option.id)
                                         field.onChange(newSV)
-                                        setSelectedValues(newSV)
+                                        setSelectedDisplayAmenities(newSV)
                                       }
                                     }}
                                   >
@@ -450,7 +475,123 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                                 )
                               })}
                             </CommandGroup>
-                            {selectedValues.length > 0 && (
+                            {selectedDisplayAmenities.length > 0 && (
+                              <>
+                                <CommandSeparator />
+                                <CommandGroup>
+                                  <CommandItem
+                                    // onSelect={() => column?.setFilterValue(undefined)}
+                                    className="justify-center text-center"
+                                  >
+                                    Clear filters
+                                  </CommandItem>
+                                </CommandGroup>
+                              </>
+                            )}
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="purchasableAmenities"
+              defaultValue={initPurchasableAmenities.map((a) => a.id)}
+              render={({ field }) => (
+                <FormItem className="flex items-center">
+                  <FormLabel className="w-44">Purchasable Amenities</FormLabel>
+                  <FormControl>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-8 border-dashed flex flex-wrap justify-between"
+                        >
+                          <div className="flex items-center">
+                            <PlusCircleIcon className="mr-2 h-4 w-4" />
+                            Choose amenity
+                          </div>
+                          {selectedPurchasableAmenities.length > 0 && (
+                            <>
+                              <Separator orientation="vertical" className="mx-2 h-4" />
+                              <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
+                                {selectedPurchasableAmenities.length}
+                              </Badge>
+                              <div className="hidden space-x-1 lg:flex">
+                                {selectedPurchasableAmenities.length > 5 ? (
+                                  <Badge variant="secondary" className="rounded-sm px-1 font-normal">
+                                    {selectedPurchasableAmenities.length} selected
+                                  </Badge>
+                                ) : (
+                                  purchasableOptions
+                                    .filter((option) => selectedPurchasableAmenities.find((item) => item === option.id))
+                                    .map((option) => (
+                                      <Badge
+                                        variant="secondary"
+                                        key={option.id}
+                                        className="rounded-sm px-1 font-normal"
+                                      >
+                                        {option.name}
+                                      </Badge>
+                                    ))
+                                )}
+                              </div>
+                            </>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+
+                      <PopoverContent className="w-[300px] p-0" align="end">
+                        <Command>
+                          <CommandInput placeholder={"Choose amenity"} />
+                          <CommandList>
+                            <CommandEmpty>No results found.</CommandEmpty>
+                            <CommandGroup>
+                              {purchasableOptions.map((option) => {
+                                let isSelected = selectedPurchasableAmenities.find((item) => item === option.id)
+                                  ? true
+                                  : false
+
+                                return (
+                                  <CommandItem
+                                    key={option.id}
+                                    onSelect={() => {
+                                      if (isSelected) {
+                                        const newSV = [...selectedPurchasableAmenities].filter(
+                                          (item) => item !== option.id
+                                        )
+                                        field.onChange(newSV)
+                                        setSelectedPurchasableAmenities(newSV)
+                                      } else {
+                                        const newSV = [...selectedPurchasableAmenities]
+                                        newSV.push(option.id)
+                                        field.onChange(newSV)
+                                        setSelectedPurchasableAmenities(newSV)
+                                      }
+                                    }}
+                                  >
+                                    <div
+                                      className={cn(
+                                        "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
+                                        isSelected
+                                          ? "bg-primary text-primary-foreground"
+                                          : "opacity-50 [&_svg]:invisible"
+                                      )}
+                                    >
+                                      <CheckIcon className={cn("h-4 w-4")} />
+                                    </div>
+                                    <span>{option.name}</span>
+                                  </CommandItem>
+                                )
+                              })}
+                            </CommandGroup>
+                            {selectedPurchasableAmenities.length > 0 && (
                               <>
                                 <CommandSeparator />
                                 <CommandGroup>

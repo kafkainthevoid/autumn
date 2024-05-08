@@ -36,7 +36,6 @@ const formSchema = z.object({
   occupancy: z.coerce.number().min(1),
   numBeg: z.coerce.number().min(1),
   price: z.coerce.number(),
-  maxBookingDay: z.coerce.number().min(1),
   amenities: z.string().array(),
 })
 
@@ -226,26 +225,6 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                   <FormLabel className="w-32">Price</FormLabel>
                   <FormControl>
                     <Input className="w-[280px]" type="number" disabled={loading} placeholder="Price" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="maxBookingDay"
-              render={({ field }) => (
-                <FormItem className="flex items-center">
-                  <FormLabel className="w-32">Max booking day</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="w-[280px]"
-                      type="number"
-                      disabled={loading}
-                      placeholder="Max booking day"
-                      {...field}
-                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

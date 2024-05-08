@@ -165,17 +165,16 @@ enum RoomStatus {
 }
 
 model RoomType {
-  id            String   @id @default(uuid())
-  name          String   @unique
-  description   String
-  images        String[]
-  occupancy     Int
-  numBeg        Int
-  price         Decimal
-  maxBookingDay Int
-  isArchived    Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String
+  images      String[]
+  occupancy   Int
+  numBeg      Int
+  price       Int
+  isArchived  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   hotelId String
   hotel   Hotel  @relation(fields: [hotelId], references: [id])

@@ -21,7 +21,7 @@ const PostsPage = async () => {
       <h1 className="tracking-tight text-3xl font-semibold">Post ({formattedData.length})</h1>
       <p>Manage Post</p>
       <hr className="my-6" />
-      <DataTable searchKey="name" columns={columns} data={formattedData} />
+      <DataTable searchKey="title" columns={columns} data={formattedData} />
     </div>
   )
 }

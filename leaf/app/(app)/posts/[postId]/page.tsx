@@ -1,6 +1,7 @@
 import { db } from "@/lib/db"
 import Image from "next/image"
-import "react-quill/dist/quill.snow.css"
+import PostContent from "../../modules/posts/components/post-content"
+import { formatInTimeZone } from "date-fns-tz"
 
 const Post = async ({ params }: { params: { postId: string } }) => {
   const post = await db.post.findUnique({
@@ -26,8 +27,13 @@ const Post = async ({ params }: { params: { postId: string } }) => {
       <div className="pt-[450px]">
         <h1 className="lg:ml-48 md:ml-40 ml-32 text-5xl text-white font-bold tracking-wider">{post?.title}</h1>
       </div>
-      <div className="container px-32 mt-36">
-        <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+
+      <div className="container mt-36 px-80">
+        <div className="text-sm font-semibold mb-8">
+          <div>Author: {post.author}</div>
+          <div className="mt-3">{formatInTimeZone(post.createdAt, "Asia/Ho_Chi_Minh", "PPP")}</div>
+        </div>
+        <PostContent content={post.content} />
       </div>
     </div>
   )

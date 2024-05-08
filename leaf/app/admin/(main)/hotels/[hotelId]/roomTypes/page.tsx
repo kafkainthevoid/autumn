@@ -1,13 +1,13 @@
-import { format } from 'date-fns'
+import { format } from "date-fns"
 
-import { db } from '@/lib/db'
-import { Column, columns } from './components/columns'
-import { DataTable } from '@/components/ui/data-table'
+import { db } from "@/lib/db"
+import { Column, columns } from "./components/columns"
+import { DataTable } from "@/components/ui/data-table"
 
 const RoomTypesPage = async ({ params }: { params: { hotelId: string } }) => {
   const roomTypes = await db.roomType.findMany({
     where: { hotelId: params.hotelId },
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: "desc" },
     include: { amenity_RoomTypes: { include: { amenity: true } } },
   })
 
@@ -17,22 +17,19 @@ const RoomTypesPage = async ({ params }: { params: { hotelId: string } }) => {
     description: item.description,
     images: item.images,
     occupancy: item.occupancy,
-    price: item.price,
-    maxBookingDay: item.maxBookingDay,
-    createdAt: format(item.createdAt, 'MMM do, yyyy'),
+    price: +item.price,
+    createdAt: format(item.createdAt, "MMM do, yyyy"),
     amenities: item.amenity_RoomTypes.map((ar) => ar.amenity.name),
   }))
 
   return (
-    <div className='p-10'>
-      <h1 className='tracking-tight text-3xl font-semibold'>
-        Room Type ({formattedData.length})
-      </h1>
+    <div className="p-10">
+      <h1 className="tracking-tight text-3xl font-semibold">Room Type ({formattedData.length})</h1>
       <p>Manage Room Type</p>
 
-      <hr className='my-6' />
+      <hr className="my-6" />
 
-      <DataTable data={formattedData} columns={columns} searchKey='name' />
+      <DataTable data={formattedData} columns={columns} searchKey="name" />
     </div>
   )
 }

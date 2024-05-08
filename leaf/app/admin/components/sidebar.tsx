@@ -222,7 +222,7 @@ const Sidebar = () => {
             <ArrowRightIcon className={cn("w-4 h-4 dark:text-zinc-400 transition-transform", open && "rotate-180")} />
           </div>
           <div className="text-xs font-semibold text-zinc-500 h-5">
-            {open ? `©${new Date().getFullYear()} Winterfall` : ""}
+            {open ? `©${new Date().getFullYear()} Autumn` : ""}
           </div>
         </nav>
       </div>

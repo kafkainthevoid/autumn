@@ -1,12 +1,6 @@
-import { Poppins } from "next/font/google"
-import SearchBar from "./modules/search-input/components/searchBar/SearchBar"
 import { db } from "@/lib/db"
+import SearchBar from "./modules/search-input/components/searchBar/SearchBar"
 import PostCard from "./modules/posts/components/post-card"
-
-const font = Poppins({
-  subsets: ["latin"],
-  weight: ["600"],
-})
 
 export default async function Home() {
   const posts = await db.post.findMany({})
@@ -20,11 +14,6 @@ export default async function Home() {
         {posts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
-        <PostCard key={posts[0].id} post={posts[0]} />
-        <PostCard key={posts[0].id} post={posts[0]} />
-        <PostCard key={posts[0].id} post={posts[0]} />
-        <PostCard key={posts[0].id} post={posts[0]} />
-        <PostCard key={posts[0].id} post={posts[0]} />
       </div>
     </div>
   )

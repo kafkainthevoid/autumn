@@ -1,12 +1,12 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server"
 
-import { db } from '@/lib/db'
-import { requiredRoleApi } from '@/helpers/requiredRoleApi'
+import { db } from "@/lib/db"
+import { requiredRoleApi } from "@/helpers/requiredRoleApi"
 
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url)
-    const hotelId = searchParams.get('hotelId')
+    const hotelId = searchParams.get("hotelId")
 
     if (!hotelId) return NextResponse.json([])
 
@@ -21,27 +21,17 @@ export async function GET(req: Request) {
 
     return NextResponse.json(roomTypes)
   } catch (err) {
-    console.log('[HOTEL_GET]', err)
-    return new NextResponse('Internal error', { status: 500 })
+    console.log("[HOTEL_GET]", err)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }
 
 export async function POST(req: Request) {
   try {
-    await requiredRoleApi(['ADMIN', 'STAFF'])
+    await requiredRoleApi(["ADMIN", "STAFF"])
 
     const body = await req.json()
-    const {
-      name,
-      description,
-      occupancy,
-      numBeg,
-      images,
-      price,
-      maxBookingDay,
-      amenities,
-      hotelId,
-    } = body
+    const { name, description, occupancy, numBeg, images, price, amenities, hotelId } = body
 
     console.log(body)
 
@@ -53,11 +43,10 @@ export async function POST(req: Request) {
       !images ||
       !images.length ||
       !price ||
-      !maxBookingDay ||
       !amenities.length ||
       !hotelId
     ) {
-      return new NextResponse('All fields are required', { status: 400 })
+      return new NextResponse("All fields are required", { status: 400 })
     }
 
     const roomTypes = await db.roomType.create({
@@ -68,7 +57,6 @@ export async function POST(req: Request) {
         numBeg,
         images,
         price,
-        maxBookingDay,
         hotelId,
         amenity_RoomTypes: {
           createMany: {
@@ -80,7 +68,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(roomTypes)
   } catch (err) {
-    console.log('[HOTEL_POST]', err)
-    return new NextResponse('Internal error', { status: 500 })
+    console.log("[HOTEL_POST]", err)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }
