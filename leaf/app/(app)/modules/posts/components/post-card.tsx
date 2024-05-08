@@ -1,7 +1,8 @@
 "use client"
 
 import { Post } from "@prisma/client"
-import { LeafIcon } from "lucide-react"
+import { formatInTimeZone } from "date-fns-tz"
+import { CircleChevronRightIcon, LeafIcon } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
@@ -13,15 +14,24 @@ const PostCard = ({ post }: PostCardProps) => {
   const router = useRouter()
 
   return (
-    <div
-      className="relative border border-zinc-300 cursor-pointer rounded-md overflow-hidden h-[350px]"
-      onClick={() => router.push(`/posts/${post.id}`)}
-    >
+    <div className="relative border border-zinc-300 rounded-sm overflow-hidden h-[450px] shadow-md">
       <Image src={post.banner} alt="banner" width={0} height={0} sizes="100vw" className="w-full h-56 absolute -z-10" />
-      <LeafIcon className="z-10 text-white w-10 h-10 mt-28 ml-4" />
-      <div className="mt-2 ml-8 text-white text-3xl z-10 font-extrabold tracking-widest">{post.title}</div>
-      <div className="mt-8 p-3">
-        <div className="font-semibold">{post.description}</div>
+      <div className="absolute top-3 left-3 font-extrabold text-teal-500 rounded-full border-[3px] text-sm border-teal-500 px-2 py-1">
+        NEWS
+      </div>
+      <div className="absolute top-40 ml-3 text-white text-2xl z-10 font-bold tracking-wide">{post.title}</div>
+      <div className="mt-56 p-3">
+        <div className="text-xs font-semibold">
+          {formatInTimeZone(new Date(post.createdAt), "Asia/Ho_Chi_Minh", "PPP")}
+        </div>
+        <div className="text-sm mt-3">{post.description}</div>
+      </div>
+      <div
+        className="flex items-center gap-3 absolute bottom-3 left-3 text-teal-700 cursor-pointer"
+        onClick={() => router.push(`/posts/${post.id}`)}
+      >
+        <CircleChevronRightIcon className="w-5 h-5" />
+        <p className="font-semibold">Read more</p>
       </div>
     </div>
   )

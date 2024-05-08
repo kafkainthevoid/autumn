@@ -16,7 +16,7 @@ export default async function Home() {
       <SearchBar variant="MAIN" />
 
       <div className="text-center mt-10 mb-6 font-semibold text-3xl text-zinc-800">News</div>
-      <div className="grid grid-cols-3 gap-6 container">
+      <div className="grid grid-cols-3 gap-20 container">
         {posts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}

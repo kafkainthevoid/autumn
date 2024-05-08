@@ -98,6 +98,9 @@ const EditPost = ({ post }: EditPostProps) => {
     try {
       let description = quillRef.current?.editor?.getText() ?? ""
       description = description.replace(/\s{6,}|\n/g, " ")
+
+      if (description.length > 150) description = description.slice(0, 147) + '...'
+
       data = { ...data, description }
 
       console.log("submitting data", data)

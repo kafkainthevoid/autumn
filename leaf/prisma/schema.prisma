@@ -320,3 +320,9 @@ model Post {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+// TODO: if i have more time, if i not a lazy ass :))
+// enum PostType {
+//   EVENT
+//   NEWS
+// }

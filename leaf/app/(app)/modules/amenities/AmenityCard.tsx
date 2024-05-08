@@ -2,10 +2,10 @@
 
 import Image from "next/image"
 import { FC } from "react"
-import { Check, PercentIcon } from "lucide-react"
+import { Check } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Amenity } from "@prisma/client"
 
 interface AmenityProps {
