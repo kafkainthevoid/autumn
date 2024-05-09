@@ -13,6 +13,8 @@
     "@hookform/resolvers": "^3.3.4",
     "@paypal/paypal-js": "^8.0.5",
     "@paypal/react-paypal-js": "^8.3.0",
+    "@pdfme/common": "^4.0.1",
+    "@pdfme/generator": "^4.0.1",
     "@prisma/client": "^5.12.1",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
