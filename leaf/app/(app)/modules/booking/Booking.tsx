@@ -5,13 +5,16 @@ import { format } from "date-fns"
 
 import Client from "./client"
 import { Column } from "./columns"
-import { Booking as BookingVm, Booking_Room, Room, RoomType } from "@prisma/client"
+import { Booking as BookingVm, Booking_Room, Review, Room, RoomType } from "@prisma/client"
 
 export type BookingCol = BookingVm & {
-  booking_rooms: (Booking_Room & {
-    room: Room & { roomType: RoomType }
-    booking: BookingVm
-  })[]
+  booking_rooms: BookingRoom[]
+}
+
+export type BookingRoom = Booking_Room & {
+  room: Room & { roomType: RoomType }
+  booking: BookingVm
+  reviews: Review[]
 }
 
 interface BookingProps {

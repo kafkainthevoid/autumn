@@ -38,7 +38,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   bookings  Booking[]
-  votes     Vote[]
+  reviews   Review[]
   feedbacks Feedback[]
   orders    Order[]
 }
@@ -156,7 +156,7 @@ model Room {
   roomType   RoomType @relation(fields: [roomTypeId], references: [id])
 
   booking_rooms Booking_Room[]
-  votes         Vote[]
+  reviews       Review[]
 }
 
 enum RoomStatus {
@@ -234,6 +234,8 @@ model Booking_Room {
   booking   Booking @relation(fields: [bookingId], references: [id])
   numAdults Int
   numKids   Int
+
+  review Review?
 }
 
 model Booking {
@@ -274,17 +276,19 @@ model Order {
   order_amenities Order_Amenity[]
 }
 
-model Vote {
+model Review {
   id        String   @id @default(cuid())
   star      Int
-  comment   String?
+  comment   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-  roomId String
-  room   Room   @relation(fields: [roomId], references: [id])
+  userId        String
+  user          User         @relation(fields: [userId], references: [id])
+  roomId        String
+  room          Room         @relation(fields: [roomId], references: [id])
+  bookingRoomId String       @unique
+  bookingRoom   Booking_Room @relation(fields: [bookingRoomId], references: [id])
 
   // TODO: add vote for hotel if have time
   // hotelId String
