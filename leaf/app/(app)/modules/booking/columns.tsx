@@ -2,6 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import CellAction from "./cell-action"
+import { BookingCol } from "./Booking"
 
 export type Column = {
   id: string
@@ -9,6 +10,7 @@ export type Column = {
   endDate: string
   roomName: string
   roomCharge: number
+  booking: BookingCol
 }
 
 export const columns: ColumnDef<Column>[] = [
@@ -30,12 +32,8 @@ export const columns: ColumnDef<Column>[] = [
     header: "Room Charge",
     cell: ({ row }) => <div className="text-bold">$ {row.original.roomCharge}</div>,
   },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => <CellAction id={row.original.id} />,
-  // },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => <CellAction id={row.original.id} />,
-  // },
+  {
+    id: "actions",
+    cell: ({ row }) => <CellAction id={row.original.id} booking={row.original.booking} />,
+  },
 ]

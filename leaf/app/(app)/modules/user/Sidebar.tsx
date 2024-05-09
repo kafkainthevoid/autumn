@@ -69,6 +69,12 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
       active: pathname === "/user/feedback",
       Icon: MailPlusIcon,
     },
+    {
+      href: "/user/go",
+      label: "Go",
+      active: pathname === "/user/go",
+      Icon: MailPlusIcon,
+    },
   ]
 
   return (

@@ -4,6 +4,7 @@ import { Hotel, UserRole } from "@prisma/client"
 import {
   AlbumIcon,
   ArrowRightIcon,
+  Building2Icon,
   DoorClosedIcon,
   DoorOpenIcon,
   HomeIcon,
@@ -125,6 +126,12 @@ const Sidebar = () => {
   if (hotel) {
     routers.find((route) => route.label === "Hotel")!.subRoutes = [
       {
+        href: "/",
+        label: "Hotel",
+        active: /^\/admin\/hotels\/[^\/]+$/.test(pathname),
+        Icon: Building2Icon,
+      },
+      {
         href: "/bookings",
         label: "Booking",
         active: /^\/admin\/hotels\/[^/]+\/bookings(?:\/.*)?$/.test(pathname),
@@ -142,12 +149,12 @@ const Sidebar = () => {
         active: /^\/admin\/hotels\/[^/]+\/roomTypes(?:\/.*)?$/.test(pathname),
         Icon: DoorClosedIcon,
       },
-      {
-        href: "/discounts",
-        label: "Discounts",
-        active: /^\/admin\/hotels\/[^/]+\/discounts(?:\/.*)?$/.test(pathname),
-        Icon: PercentIcon,
-      },
+      // {
+      //   href: "/discounts",
+      //   label: "Discounts",
+      //   active: /^\/admin\/hotels\/[^/]+\/discounts(?:\/.*)?$/.test(pathname),
+      //   Icon: PercentIcon,
+      // },
     ]
   }
 

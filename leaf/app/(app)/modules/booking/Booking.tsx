@@ -1,19 +1,21 @@
 "use client"
 
-import { FC, useEffect, useState } from "react"
+import { FC } from "react"
 import { format } from "date-fns"
 
 import Client from "./client"
 import { Column } from "./columns"
 import { Booking as BookingVm, Booking_Room, Room, RoomType } from "@prisma/client"
 
-interface BookingProps {
-  bookings: (BookingVm & {
-    booking_rooms: (Booking_Room & {
-      room: Room & { roomType: RoomType }
-      booking: BookingVm
-    })[]
+export type BookingCol = BookingVm & {
+  booking_rooms: (Booking_Room & {
+    room: Room & { roomType: RoomType }
+    booking: BookingVm
   })[]
+}
+
+interface BookingProps {
+  bookings: BookingCol[]
 }
 
 // TODO: add reviews, vote, complain, feedback,....
@@ -25,6 +27,7 @@ const Booking: FC<BookingProps> = ({ bookings }) => {
       endDate: format(new Date(item.endDate), "MMMM do, yyyy"),
       roomName: item.booking_rooms.map((b) => b.room.name).join(", "),
       roomCharge: item.roomCharge,
+      booking: item,
     }
   })
 

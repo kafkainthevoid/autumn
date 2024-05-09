@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   SortingState,
 } from "@tanstack/react-table"
-import { Plus, Sheet } from "lucide-react"
+import { Plus } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 
 import { Input } from "./input"
