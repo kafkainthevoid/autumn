@@ -1,6 +1,6 @@
 "use client"
 
-import React, { LegacyRef, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import ReactQuill, { Quill } from "react-quill"
 import "react-quill/dist/quill.snow.css"
 // @ts-ignore
@@ -99,7 +99,7 @@ const EditPost = ({ post }: EditPostProps) => {
       let description = quillRef.current?.editor?.getText() ?? ""
       description = description.replace(/\s{6,}|\n/g, " ")
 
-      if (description.length > 150) description = description.slice(0, 147) + '...'
+      if (description.length > 150) description = description.slice(0, 147) + "..."
 
       data = { ...data, description }
 
