@@ -6,7 +6,7 @@ const PROVINCE_DOMAIN = process.env.PROVINCE_DOMAIN
 
 // const hostname = window.location.hostname
 
-let APP_URL = `${HTTP_PROTOCOL}://${APP_DOMAIN}:3010`
+let APP_URL = `${HTTP_PROTOCOL}://${APP_DOMAIN}:3000`
 
 // if (hostname !== "localhost") {
 //   APP_URL = `https://vaguely-exciting-grouse.ngrok-free.app`

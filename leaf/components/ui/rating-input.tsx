@@ -6,8 +6,9 @@ import "@smastrom/react-rating/style.css"
 
 interface RatingInputProps {
   value: number
-  onChange: (val: number) => void
+  onChange?: (val: number) => void
   width?: number
+  disabled?: boolean
 }
 
 const StarDrawing = (
@@ -35,8 +36,16 @@ const customStyles = {
   inactiveFillColor: "#BBF7D0",
 }
 
-const RatingInput = ({ value, onChange, width = 100 }: RatingInputProps) => {
-  return <Rating style={{ maxWidth: width }} value={value} onChange={onChange} itemStyles={customStyles} />
+const RatingInput = ({ value, onChange, width = 100, disabled = false }: RatingInputProps) => {
+  return (
+    <Rating
+      isDisabled={disabled}
+      style={{ maxWidth: width }}
+      value={value}
+      onChange={onChange}
+      itemStyles={customStyles}
+    />
+  )
 }
 
 export default RatingInput

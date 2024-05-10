@@ -13,7 +13,8 @@ const PostsPage = async () => {
     id: item.id,
     title: item.title,
     author: item.author,
-    createdAt: format(item.createdAt, "MMM do, yyyy"),
+    // createdAt: format(item.createdAt, "MMM do, yyyy"),
+    createdAt: format(item.createdAt, "MM-dd-yyyy"),
   }))
 
   return (

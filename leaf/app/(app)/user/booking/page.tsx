@@ -14,6 +14,7 @@ const BookingPage = async () => {
         include: {
           room: { include: { roomType: true } },
           booking: true,
+          review: true,
         },
       },
     },

@@ -7,13 +7,6 @@ html,
   height: 100%;
 }
 
-.tudongchat-icon {
-  width: 45px;
-  height: 45px;
-  bottom: 30px !important;
-  right: -20px !important;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -85,4 +78,16 @@ html,
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.tudongchat-icon {
+  width: 45px;
+  height: 45px;
+  bottom: 30px !important;
+  right: -20px !important;
+}
+
+.rr--disabled {
+  opacity: 1 !important;
+  cursor: default !important;
 }

@@ -156,7 +156,6 @@ model Room {
   roomType   RoomType @relation(fields: [roomTypeId], references: [id])
 
   booking_rooms Booking_Room[]
-  reviews       Review[]
 }
 
 enum RoomStatus {
@@ -186,6 +185,7 @@ model RoomType {
 
   rooms             Room[]
   amenity_RoomTypes Amenity_RoomType[]
+  reviews           Review[]
 }
 
 model Amenity {
@@ -285,8 +285,8 @@ model Review {
 
   userId        String
   user          User         @relation(fields: [userId], references: [id])
-  roomId        String
-  room          Room         @relation(fields: [roomId], references: [id])
+  roomTypeId    String
+  roomType      RoomType     @relation(fields: [roomTypeId], references: [id])
   bookingRoomId String       @unique
   bookingRoom   Booking_Room @relation(fields: [bookingRoomId], references: [id])
 

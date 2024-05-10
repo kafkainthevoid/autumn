@@ -26,16 +26,15 @@ interface ProfileProps {
   user: User & { address: Address | null }
 }
 
-const phoneRegExp =
-  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+const phoneRegExp = /^\d{10,11}$/
 
 const formSchema = z.object({
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
+  firstName: z.string().min(1, "Không được để trống"),
+  lastName: z.string().min(1, "Không được để trống"),
   email: z.string().email(),
   dateOfBirth: z.coerce.date().optional(),
   gender: z.enum(["MALE", "FEMALE", "UNKNOWN"]),
-  phoneNumber: z.string().regex(phoneRegExp, "Invalid phone number"),
+  phoneNumber: z.string().regex(phoneRegExp, "Số điện thoại không chính xác"),
   addressLine: z.string().optional(),
 })
 
@@ -99,9 +98,11 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
                 render={({ field }) => (
                   <FormItem className="flex items-center">
                     <FormLabel className="w-56 text-zinc-600">Last name</FormLabel>
+                    {/** TODO: make formMessage at bottom **/}
                     <FormControl>
                       <Input placeholder="Last name" {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -112,9 +113,12 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
                 render={({ field }) => (
                   <FormItem className="flex items-center">
                     <FormLabel className="w-56 text-zinc-600">Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Email" {...field} disabled />
-                    </FormControl>
+                    <div>
+                      <FormControl>
+                        <Input placeholder="Email" {...field} disabled />
+                      </FormControl>
+                      <FormMessage />
+                    </div>
                   </FormItem>
                 )}
               />

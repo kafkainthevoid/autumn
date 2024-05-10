@@ -14,7 +14,7 @@ export type BookingCol = BookingVm & {
 export type BookingRoom = Booking_Room & {
   room: Room & { roomType: RoomType }
   booking: BookingVm
-  reviews: Review[]
+  review: Review | null
 }
 
 interface BookingProps {
