@@ -49,24 +49,25 @@ const RoomGuestBox: React.FC<RoomGuestBoxProps> = () => {
     <Popover onOpenChange={onPopoverChange}>
       <PopoverTrigger asChild>
         <Button variant="outline" className="text-xs">
-          {renderPluralNumber(rooms.length, "room")},{" "}
-          {renderPluralNumber(
+          {/* {renderPluralNumber(rooms.length, "room")},{" "} */}
+          {/* {renderPluralNumber(
             rooms.reduce((a, c) => c.adults + c.kids + a, 0),
-            "guest"
-          )}
+            "khách"
+          )} */}
+          {`${rooms.length} phòng`}, {`${rooms.reduce((a, c) => c.adults + c.kids + a, 0)} người`}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
         <div className="grid gap-4">
           <div className="space-y-2">
-            <h4 className="font-bold text-center text-sm leading-none">Rooms and Guests</h4>
+            <h4 className="font-bold text-center text-sm leading-none">Thông tin phòng</h4>
           </div>
           <Separator />
           <div className="grid gap-2">
             <div className="flex justify-between justify-items-end gap-4">
-              <p className="font-bold text-xs">Rooms</p>
-              <p className="font-bold text-xs">Adults</p>
-              <p className="font-bold text-xs">Kids</p>
+              <p className="font-bold text-xs">Phòng</p>
+              <p className="font-bold text-xs">Người lớn</p>
+              <p className="font-bold text-xs">Trẻ em</p>
             </div>
             {rooms.map((room, i) => (
               <RoomCountItem
@@ -81,7 +82,7 @@ const RoomGuestBox: React.FC<RoomGuestBoxProps> = () => {
           <Separator />
           <div className="flex gap-2 cursor-pointer" onClick={() => handleAddRoom()}>
             <PlusIcon width={20} height={20} fill="#94a3b8" />
-            <p className="font-medium text-sm text-left">Add room</p>
+            <p className="font-medium text-sm text-left">Thêm phòng</p>
           </div>
         </div>
       </PopoverContent>

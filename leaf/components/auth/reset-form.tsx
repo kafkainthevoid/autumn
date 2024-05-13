@@ -41,7 +41,7 @@ const ResetForm = ({}: ResetFormProps) => {
   }
 
   return (
-    <CardWrapper headerLabel="Forgot your password" backButtonLabel="Back to login" backButtonHref="/login">
+    <CardWrapper headerLabel="" backButtonLabel="Quay lại đăng nhập" backButtonHref="/login">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
@@ -64,7 +64,7 @@ const ResetForm = ({}: ResetFormProps) => {
           <FormSuccess message={success} />
 
           <Button type="submit" variant="teal" className="w-full" disabled={isPending}>
-            Sent reset email
+            Gửi
           </Button>
         </form>
       </Form>

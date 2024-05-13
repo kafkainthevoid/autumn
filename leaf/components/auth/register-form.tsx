@@ -57,8 +57,7 @@ const RegisterForm = ({}: RegisterFormProps) => {
   return (
     <div className="container mx-auto flex w-full flex-col justify-center space-y-6 ">
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Create new Account</h1>
-        <p className="text-sm max-w-xs mx-auto">All fields are required</p>
+        <h1 className="text-2xl font-semibold tracking-tight">Tạo tài khoản</h1>
       </div>
 
       <Form {...form}>
@@ -69,9 +68,9 @@ const RegisterForm = ({}: RegisterFormProps) => {
               name="firstName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>First Name</FormLabel>
+                  <FormLabel>Tên</FormLabel>
                   <FormControl>
-                    <Input disabled={isPending} placeholder="First name" {...field} />
+                    <Input disabled={isPending} placeholder="Tên" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -83,9 +82,9 @@ const RegisterForm = ({}: RegisterFormProps) => {
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last Name</FormLabel>
+                  <FormLabel>Họ</FormLabel>
                   <FormControl>
-                    <Input disabled={isPending} placeholder="Last name" {...field} />
+                    <Input disabled={isPending} placeholder="Họ" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -97,9 +96,9 @@ const RegisterForm = ({}: RegisterFormProps) => {
               name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone Nummber</FormLabel>
+                  <FormLabel>Số điện thoại</FormLabel>
                   <FormControl>
-                    <Input disabled={isPending} placeholder="Phone number" {...field} />
+                    <Input disabled={isPending} placeholder="Số điện thoại" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -125,9 +124,9 @@ const RegisterForm = ({}: RegisterFormProps) => {
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Address</FormLabel>
+                  <FormLabel>Địa chỉ</FormLabel>
                   <FormControl>
-                    <Input disabled={isPending} placeholder="Address" {...field} />
+                    <Input disabled={isPending} placeholder="Địa chỉ" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -139,9 +138,9 @@ const RegisterForm = ({}: RegisterFormProps) => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Mật khẩu</FormLabel>
                   <FormControl>
-                    <Input type="password" disabled={isPending} placeholder="Password" {...field} />
+                    <Input type="password" disabled={isPending} placeholder="Mật khẩu" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -149,10 +148,9 @@ const RegisterForm = ({}: RegisterFormProps) => {
             />
 
             <ul className="list-disc ml-8 text-xs mt-2 text-zinc-800">
-              <li>Must be between 8 and 32 characters</li>
-              <li>Contain one uppercase letter</li>
-              <li>Contain one lowercase letter</li>
-              <li>One number (0-9) or one special character</li>
+              <li>Chứa 8 đến 32 ký tự</li>
+              <li>Chứa ít nhất 1 ký tự hoa</li>
+              <li>Chứa ít nhất 1 ký tự số</li>
             </ul>
 
             <FormField
@@ -160,9 +158,9 @@ const RegisterForm = ({}: RegisterFormProps) => {
               name="passwordConfirm"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password Confirm</FormLabel>
+                  <FormLabel>Xác nhận mật khẩu</FormLabel>
                   <FormControl>
-                    <Input type="password" disabled={isPending} placeholder="Password confirm" {...field} />
+                    <Input type="password" disabled={isPending} placeholder="Xác nhận mật khẩu" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -173,19 +171,18 @@ const RegisterForm = ({}: RegisterFormProps) => {
             <FormSuccess message={success} />
 
             <Button disabled={isPending} size="sm" variant="teal" className="col-span-4" type="submit">
-              Create an account
+              Tạo tài khoản
             </Button>
           </div>
         </form>
       </Form>
 
-      <Label className="mt-4">Login with Google</Label>
       <Social />
 
       <p className="px-8 text-center text-sm text-muted-foreground">
-        Already have an account?{" "}
+        Bạn đã có tài khoản?{" "}
         <Link href="/login" className={cn(buttonVariants({ variant: "link" }), "text-teal-600")}>
-          Login
+          Đăng nhập
         </Link>
       </p>
     </div>

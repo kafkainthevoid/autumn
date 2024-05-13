@@ -39,10 +39,12 @@ const SearchResult: FC<SearchResultProps> = ({ hotels }) => {
 
   return (
     <div className="flex flex-col w-2/5 py-3">
-      <div className="font-bold text-lg">{location.name} Search Results</div>
+      {/* <div className="font-bold text-lg">{location.name} Search Results</div> */}
+      <div className="font-bold text-lg">Kết quả tìm kiếm: {location.name}</div>
 
       <div className="font-semibold text-sm my-5 text-teal-600">
-        Showing {startIdx + 1} - {endIdx} of {hotels.length} hotels
+        {/* Showing {startIdx + 1} - {endIdx} of {hotels.length} hotels */}
+        Hiển thị {startIdx + 1} - {endIdx} trong {hotels.length} khách sạn
       </div>
 
       <div className="divide-y-2 p-2">{renderPage()}</div>
@@ -54,7 +56,8 @@ const SearchResult: FC<SearchResultProps> = ({ hotels }) => {
           <ChevronLeftIcon className="w-4 h-4" />
         </Button>
         <div className="text-xs">
-          Page {page + 1} of {Math.floor(hotels.length / ITEM_PER_PAGE) + 1}
+          {/* Page {page + 1} of {Math.floor(hotels.length / ITEM_PER_PAGE) + 1} */}
+          Trang {page + 1} / {Math.floor(hotels.length / ITEM_PER_PAGE) + 1}
         </div>
         <Button variant="link" onClick={handleClickNextPage}>
           <ChevronRightIcon className="w-4 h-4" />

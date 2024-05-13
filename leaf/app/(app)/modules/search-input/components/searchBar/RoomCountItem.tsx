@@ -65,7 +65,7 @@ const RoomCountItem: React.FC<RoomCountItemProps> = ({ onChange, onRemoveRoom, r
         <div className="cursor-pointer" onClick={() => onRemoveRoom(room)}>
           <CloseIcon width={20} height={20} fill="#94a3b8" />
         </div>
-        <div className="whitespace-nowrap">Room {index + 1}</div>
+        <div className="whitespace-nowrap">Phòng {index + 1}</div>
       </div>
       <Counter
         label="adults"

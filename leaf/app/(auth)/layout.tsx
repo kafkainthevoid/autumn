@@ -4,7 +4,7 @@ export default async function AuthLayout({ children }: Readonly<{ children: Reac
   return (
     <>
       <Navbar />
-      <div className="w-[600px] h-full mx-auto mt-28">{children}</div>
+      <div className="w-[600px] h-full mx-auto mt-28 pb-32">{children}</div>
     </>
   )
 }

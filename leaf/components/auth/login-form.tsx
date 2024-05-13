@@ -6,7 +6,6 @@ import Link from "next/link"
 import { Button, buttonVariants } from "../ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
-import { Label } from "../ui/label"
 import { z } from "zod"
 import { useSearchParams } from "next/navigation"
 import { useState, useTransition } from "react"
@@ -21,7 +20,7 @@ import { LoginSchema } from "@/schemas/auth.schema"
 const LoginForm = () => {
   const searchParams = useSearchParams()
   const urlError =
-    searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different account" : ""
+    searchParams.get("error") === "OAuthAccountNotLinked" ? "Email đã được dùng với một tài khoản khác" : ""
 
   const [showTwoFactor, setShowTwoFactor] = useState(false)
   const [error, setError] = useState<string | undefined>("")
@@ -66,8 +65,7 @@ const LoginForm = () => {
       <div className="h-full max-w-xl mx-auto flex flex-col items-center justify-center">
         <div className="container mx-auto flex w-full flex-col justify-center space-y-6">
           <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">Sign In</h1>
-            <p className="text-sm max-w-xs mx-auto">All fields are required</p>
+            <h1 className="text-2xl font-semibold tracking-tight">Đăng nhập</h1>
           </div>
 
           <Form {...form}>
@@ -92,9 +90,9 @@ const LoginForm = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>Mật khẩu</FormLabel>
                       <FormControl>
-                        <Input disabled={isPending} placeholder="Password" type="password" {...field} />
+                        <Input disabled={isPending} placeholder="Mật khẩu" type="password" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -105,24 +103,24 @@ const LoginForm = () => {
                 <FormSuccess message={success} />
 
                 <Button disabled={isPending} size="sm" className={cn(buttonVariants({ variant: "teal" }), "mt-4")}>
-                  Sign In
+                  Đăng nhập
                 </Button>
               </div>
 
               <div className="space-y-3 mt-4">
-                <Label>Login with Google</Label>
+                {/* <Label>Đăng nhập với Google</Label> */}
                 <Social />
 
                 <p className="px-8 text-center text-sm text-muted-foreground">
-                  Dont have an account?
+                  Bạn chưa có tài khoản?
                   <Link href="/register" className={cn(buttonVariants({ variant: "link" }), "text-teal-600")}>
-                    Sign Up
+                    Đăng ký
                   </Link>
                 </p>
 
                 <p className="px-8 text-center text-sm text-muted-foreground">
                   <Link href="/reset" className={cn(buttonVariants({ variant: "link" }), "text-teal-600")}>
-                    Forget your password?
+                    Quên mật khẩu
                   </Link>
                 </p>
               </div>

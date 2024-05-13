@@ -43,7 +43,7 @@ const NewPasswordForm = () => {
   }
 
   return (
-    <CardWrapper headerLabel="Enter a new password" backButtonLabel="Back to login" backButtonHref="/login">
+    <CardWrapper headerLabel="Đặt lại mật khẩu" backButtonLabel="Quay lại đăng nhập" backButtonHref="/login">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
@@ -52,7 +52,7 @@ const NewPasswordForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Mật khẩu mới</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="******" type="password" disabled={isPending} />
                   </FormControl>
@@ -66,7 +66,7 @@ const NewPasswordForm = () => {
           <FormSuccess message={success} />
 
           <Button variant="teal" type="submit" className="w-full" disabled={isPending}>
-            Reset password
+            Xác nhận
           </Button>
         </form>
       </Form>

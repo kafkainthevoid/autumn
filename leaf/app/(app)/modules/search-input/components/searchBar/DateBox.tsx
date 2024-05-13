@@ -8,6 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils"
 import { Calendar } from "@/components/ui/calendar"
 import { useDateRange } from "../../context/dateRange"
+import { displayWeekday } from "@/lib/date-format"
 
 interface DateBoxProps {
   setIsCorrectDate: (val: boolean) => void
@@ -64,8 +65,8 @@ const DateBoxItem = ({ date }: { date: Date }) => {
     <div className="flex gap-2 items-center">
       <div className="text-primary font-bold text-4xl text-teal-600">{format(date, "dd")}</div>
       <div className="flex flex-col items-center justify-center gap-0">
-        <div className="font-semibold">{format(date, "LLL")}</div>
-        <div className="text-sm uppercase">{format(date, "E")}</div>
+        <div className="font-semibold">Tháng {format(date, "M")}</div>
+        <div className="text-sm">{displayWeekday(date)}</div>
       </div>
     </div>
   )

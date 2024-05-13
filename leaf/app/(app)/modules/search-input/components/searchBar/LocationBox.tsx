@@ -60,7 +60,7 @@ const LocationBox: React.FC<LocationBoxProps> = ({ setIsTyped }) => {
     <Popover open={open}>
       <PopoverTrigger>
         <Input
-          placeholder="Search for a location"
+          placeholder="Tìm kiếm địa điểm"
           ref={inputRef}
           value={comLocation}
           onChange={(e) => {
@@ -86,7 +86,7 @@ const LocationBox: React.FC<LocationBoxProps> = ({ setIsTyped }) => {
               </Button>
             ))
           ) : (
-            <div className="text-xs mx-auto">No results found</div>
+            <div className="text-xs mx-auto">Không tìm thấy kết quả</div>
           )}
         </div>
       </PopoverContent>

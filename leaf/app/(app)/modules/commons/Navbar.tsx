@@ -19,7 +19,7 @@ const Navbar = async () => {
         ) : (
           <div className="flex gap-4 items-center">
             <Link href="/register" className={buttonVariants({ size: "sm", variant: "teal" })}>
-              Join In
+              Đăng ký
             </Link>
             <Link
               href="/login"
@@ -28,7 +28,7 @@ const Navbar = async () => {
                 className: "bg-white text-teal-600 hover:bg-zinc-300",
               })}
             >
-              Sign In
+              Đăng nhập
             </Link>
           </div>
         )}

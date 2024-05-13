@@ -7,6 +7,7 @@ import { CityIcon } from "../../commons/icons/svg/CityIcon"
 import { CalendarIcon } from "../../commons/icons/svg/CalendarIcon"
 import { renderPluralNumber } from "../utils/renderPluralNumber"
 import { PeopleIcon } from "../../commons/icons/svg/PeopleIcon"
+import { vi } from "date-fns/locale/vi"
 
 interface SearchInfoProps {
   onOpen: () => void
@@ -22,7 +23,7 @@ const SearchInfo: FC<SearchInfoProps> = ({ onOpen }) => {
 
   return (
     <div className="flex items-center justify-center gap-3 h-14 py-1 border-b-[1px] mt-14">
-      <div className="font-bold">Your search</div>
+      <div className="font-bold">Tìm kiếm</div>
 
       <div className="flex gap-2 items-center text-sm border-neutral-300 border-r-[1px] pr-3 h-full">
         <CityIcon width={24} height={24} />
@@ -35,19 +36,23 @@ const SearchInfo: FC<SearchInfoProps> = ({ onOpen }) => {
       >
         <CalendarIcon width={24} height={24} />
         <div>
-          {format(dateRange.date?.from ? dateRange.date.from : new Date(), "LLL, E dd")}
+          {format(dateRange.date?.from ? dateRange.date.from : new Date(), "LLL, dd E", { locale: vi })}
           <span className="px-2">-</span>
-          {format(dateRange.date?.to ? dateRange.date.to : new Date(), "LLL, E dd, yyyy")}
+          {format(dateRange.date?.to ? dateRange.date.to : new Date(), "LLL, dd E, yyyy", { locale: vi })}
           <span className="text-neutral-500 text-xs pl-1">
-            (
-            {renderPluralNumber(
+            {/* {renderPluralNumber(
               // @ts-ignore
               differenceInCalendarDays(
                 dateRange.date?.to ? dateRange.date.to : new Date(),
                 dateRange.date?.from ? dateRange.date.from : new Date()
               ),
               "night"
-            )}
+            )} */}
+            (
+            {`${differenceInCalendarDays(
+              dateRange.date?.to ? dateRange.date.to : new Date(),
+              dateRange.date?.from ? dateRange.date.from : new Date()
+            )} ngày`}
             )
           </span>
         </div>
@@ -55,8 +60,11 @@ const SearchInfo: FC<SearchInfoProps> = ({ onOpen }) => {
 
       <div className="flex items-center gap-2 border-neutral-300 border-r-[1px] pr-3 h-full text-sm">
         <PeopleIcon width={24} height={24} />
-        {renderPluralNumber(reservation.rooms.length, "room")} for {renderPluralNumber(adults, "adult")}
-        {kids > 0 && `and ${renderPluralNumber(kids, "kid")}`}
+        {/* {renderPluralNumber(reservation.rooms.length, "room")} for {renderPluralNumber(adults, "adult")}
+        {kids > 0 && ` and ${renderPluralNumber(kids, "kid")}`} */}
+
+        {/* {`${reservation.rooms.length} phòng`} cho {`${adults} người lớn`}  */}
+        {`${reservation.rooms.length} phòng cho ${adults} người lớn và ${kids} trẻ em`}
       </div>
 
       {/* TODO: currently have to disable this feature because change search-data state will break the web, fix later */}

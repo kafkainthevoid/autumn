@@ -66,31 +66,32 @@ const Sidebar = () => {
   const routers: IRoute[] = [
     {
       href: "/admin",
-      label: "Home",
+      // label: "Home",
+      label: "Trang chủ",
       active: pathname === "/admin",
       Icon: HomeIcon,
     },
     {
       href: "/admin/users",
-      label: "User",
+      label: "Người dùng",
       active: pathname === "/admin/users",
       Icon: Users2Icon,
     },
     {
       href: "/admin/hotels",
-      label: "Hotel",
+      label: "Khách sạn",
       active: pathname.match("/admin/hotels"),
       Icon: HotelIcon,
     },
     {
       href: "/admin/amenities",
-      label: "Amenities",
+      label: "Tiện ích",
       active: pathname.match("/admin/amenities*"),
       Icon: MonitorIcon,
     },
     {
       href: "/admin/orders",
-      label: "Orders",
+      label: "",
       active: pathname.match("/admin/orders*"),
       Icon: ReceiptIcon,
     },
@@ -117,7 +118,7 @@ const Sidebar = () => {
   if (userAuth?.role === UserRole.ADMIN) {
     routers.splice(2, 0, {
       href: "/admin/staffs",
-      label: "Staff",
+      label: "Nhân sự",
       active: pathname === "/admin/staffs",
       Icon: FaUsersGear,
     })

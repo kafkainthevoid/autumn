@@ -32,7 +32,7 @@ export async function GET(req: Request) {
     console.log({ secureHash, signed })
 
     if (secureHash === signed) {
-      return NextResponse.redirect("http://localhost:3000/user/booking")
+      return NextResponse.redirect("http://localhost:3010/user/booking")
     }
     return NextResponse.json({ code: "97" })
   } catch (err) {

@@ -23,7 +23,7 @@ const NewVerificationForm = ({}: NewVerificationFormProps) => {
     if (success || error) return
 
     if (!token) {
-      setError("Missing token")
+      setError("Không tìm thấy token")
       return
     }
 
@@ -34,7 +34,7 @@ const NewVerificationForm = ({}: NewVerificationFormProps) => {
         setError(data.error)
       })
       .catch(() => {
-        setError("Something went wrong")
+        setError("Đã xảy ra lỗi")
       })
   }, [token, success, error])
 
@@ -43,7 +43,7 @@ const NewVerificationForm = ({}: NewVerificationFormProps) => {
   }, [onSubmit])
 
   return (
-    <CardWrapper headerLabel="Confirming your verification" backButtonLabel="Back to login" backButtonHref="/login">
+    <CardWrapper headerLabel="Xác nhận token" backButtonLabel="Quay lại đăng nhập" backButtonHref="/login">
       <div className="flex flex-col items-center w-full justify-center">
         {!success && !error && <BeatLoader />}
         <FormSuccess message={success} />

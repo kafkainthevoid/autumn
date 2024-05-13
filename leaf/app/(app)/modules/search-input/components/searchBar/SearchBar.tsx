@@ -57,11 +57,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose, variant }) => {
       <div className="font-bold text-xl">
         {variant === "MAIN" ? (
           <div>
-            <div>Where to</div>
-            <div className="text-zinc-800 text-xs font-light">(Required)</div>
+            <div>Địa điểm</div>
+            <div className="text-zinc-800 text-xs font-light">(Bắt buộc)</div>
           </div>
         ) : (
-          "Edit Stay"
+          "Sửa thông tin"
         )}
       </div>
 
@@ -70,7 +70,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose, variant }) => {
       <RoomGuestBox />
 
       <Button variant="teal" onClick={() => onSearch()}>
-        Find room
+        Tìm kiếm
       </Button>
 
       {/* TODO: improve the UX later */}

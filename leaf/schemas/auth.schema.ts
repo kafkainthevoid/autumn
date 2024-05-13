@@ -26,18 +26,16 @@ export const SettingSchema = z
   )
 
 export const NewPasswordSchema = z.object({
-  password: z.string().min(6, {
-    message: "Minimum of 6 characters required",
-  }),
+  password: z.string().regex(/^(?=.*\d)(?=.*[A-Z])[A-Za-z\d!@#$%^&*]{8,32}$/, "Mật khẩu không đúng định dạng"),
 })
 
 export const ResetSchema = z.object({
-  email: z.string().email(),
+  email: z.string().email("Email không chính xác"),
 })
 
 export const LoginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, { message: "Password is required" }),
+  email: z.string().email("Email không chính xác"),
+  password: z.string().regex(/^(?=.*\d)(?=.*[A-Z])[A-Za-z\d!@#$%^&*]{8,32}$/, "Mật khẩu không chính xác"),
   code: z.string().optional(),
 })
 
@@ -46,14 +44,14 @@ const phoneRegExp =
 
 export const RegisterSchema = z
   .object({
-    firstName: z.string().min(3, "Firstname must be atleast 3 characters"),
-    lastName: z.string().min(3, "Lastname must be atleast 3 characters"),
-    phoneNumber: z.string().regex(phoneRegExp, "Invalid phone number"),
-    address: z.string().min(3, "Incorrect address").max(254),
-    email: z.string().max(320).email({ message: "Not a valid email" }),
-    password: z.string().min(8, "Password must be atleast 8 characters").max(32),
+    firstName: z.string().min(1, "Tên phải chứa ít nhất 1 ký tự"),
+    lastName: z.string().min(1, "Họ phải chứa ít nhất 1 ký tự"),
+    phoneNumber: z.string().regex(phoneRegExp, "Số điện thoại không chính xác"),
+    address: z.string().min(1, "Địa chỉ phải chứa ít nhất 1 ký tự").max(254),
+    email: z.string().max(320).email({ message: "Email không đúng định dạng" }),
+    password: z.string().regex(/^(?=.*\d)(?=.*[A-Z])[A-Za-z\d!@#$%^&*]{8,32}$/, "Mật khẩu không đúng định dạng"),
     passwordConfirm: z.string(),
   })
   .refine((data) => data.password === data.passwordConfirm, {
-    message: "Password don't match",
+    message: "Mật khẩu không giống nhau",
   })
