@@ -1,15 +1,15 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server"
 
-import { db } from '@/lib/db'
-import { getAuthSession } from '@/lib/auth'
+import { db } from "@/lib/db"
+import { currentUser } from "@/lib/auth"
 
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url)
-    const userId = searchParams.get('userId')
+    const userId = searchParams.get("userId")
 
-    const role = await getAuthSession()
-    if (role?.user.role === 'ADMIN' || role?.user.role === 'STAFF' || !userId) {
+    const user = await currentUser()
+    if (user?.role === "ADMIN" || user?.role === "STAFF" || !userId) {
       const bookings = await db.booking.findMany({
         include: {
           booking_rooms: {
@@ -31,7 +31,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(bookings)
   } catch (err) {
-    console.log('[BOOKING_GET]', err)
-    return new NextResponse('Internal error', { status: 500 })
+    console.log("[BOOKING_GET]", err)
+    return new NextResponse("Internal error", { status: 500 })
   }
 }

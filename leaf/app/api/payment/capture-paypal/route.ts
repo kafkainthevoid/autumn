@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server'
-import { DateRange } from 'react-day-picker'
+import { NextResponse } from "next/server"
+import { DateRange } from "react-day-picker"
 
-import { db } from '@/lib/db'
-import * as paypal from '@/lib/paypal-api'
+import { db } from "@/lib/db"
+import * as paypal from "@/lib/paypal-api"
 
 type IRoom = {
   id: string
@@ -24,15 +24,14 @@ export async function POST(req: Request) {
 
     const captureData = await paypal.capturePayment(orderId)
 
-    if (!captureData.id)
-      return new NextResponse('Payment failed', { status: 500 })
+    if (!captureData.id) return new NextResponse("Payment failed", { status: 500 })
 
     // TODO: fix later
     reservation.forEach(async (res) => {
       const availableRoom = await db.room.findFirst({
-        where: { status: 'empty', roomType: { id: res.id } },
+        where: { status: "empty", roomType: { id: res.id } },
       })
-      if (availableRoom) return new NextResponse('Sold out', { status: 500 })
+      if (availableRoom) return new NextResponse("Sold out", { status: 500 })
     })
 
     const booking = await db.booking.create({
@@ -47,7 +46,7 @@ export async function POST(req: Request) {
 
     reservation.forEach(async (res) => {
       const availableRoom = await db.room.findFirst({
-        where: { status: 'empty', roomType: { id: res.roomTypeId } },
+        where: { status: "empty", roomType: { id: res.roomTypeId } },
       })
 
       if (availableRoom) {
@@ -62,14 +61,14 @@ export async function POST(req: Request) {
 
         await db.room.update({
           where: { id: availableRoom.id },
-          data: { status: 'booking' },
+          data: { status: "booking" },
         })
       }
     })
 
-    return NextResponse.json('OK')
+    return NextResponse.json("OK")
   } catch (err: any) {
-    console.log('API_PAYMENT_CAPTURE-PAYPAL', err)
+    console.log("API_PAYMENT_CAPTURE-PAYPAL", err)
     return new NextResponse(err.message, { status: 500 })
   }
 }

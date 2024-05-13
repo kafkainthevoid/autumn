@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import OrderItem from "./OrderItem"
 import Payment from "./Payment"
+import axios from "@/lib/axios"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
 interface AmenityProps {
   amenities: (AmenityVm & { isSelected?: boolean })[]
@@ -20,6 +22,7 @@ interface AmenityProps {
 const Amenity: FC<AmenityProps> = ({ amenities }) => {
   const { items, setItems } = useCart()
   const router = useRouter()
+  const user = useCurrentUser()
 
   amenities.forEach((amenity) => {
     if (items.find((item) => item.id === amenity.id)) amenity.isSelected = true
@@ -35,12 +38,26 @@ const Amenity: FC<AmenityProps> = ({ amenities }) => {
       setItems([...newItems])
     }
 
-    console.log(items)
-
     router.refresh()
   }
 
   const totalPrice = items.reduce((acc, cur) => cur.price * cur.count + acc, 0)
+
+  const createOrder = async () => {
+    try {
+      const payload = {
+        items,
+        userId: user?.id,
+      }
+
+      const data = (await axios.post("/api/vnpay/create_order_url", payload)).data
+
+      router.push(data.redirectUrl)
+    } catch (err) {
+      console.log(err)
+      toast.error("Something went wrong")
+    }
+  }
 
   return (
     <div>
@@ -65,8 +82,7 @@ const Amenity: FC<AmenityProps> = ({ amenities }) => {
 
       <hr className="mt-10 mb-3" />
       <div className="flex gap-3 items-center ">
-        <div className="font-semibold text-lg">Order with</div>
-        <Payment items={items} />
+        <Button onClick={() => createOrder()}>Thanh toán bằng VNPAY</Button>
       </div>
     </div>
   )

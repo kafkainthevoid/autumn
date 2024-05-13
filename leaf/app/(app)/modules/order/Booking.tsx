@@ -5,20 +5,24 @@ import { format } from "date-fns"
 
 import Client from "./client"
 import { Column } from "./columns"
-import { Booking as BookingVm, Booking_Room, Hotel, Review, Room, RoomType } from "@prisma/client"
+import { Amenity, Order as OrderVm, Order_Amenity } from "@prisma/client"
 
-export type BookingCol = BookingVm & {
-  booking_rooms: BookingRoom[]
+export type OrderCol = OrderVm & {
+  order_amenities: OrderAmenity[]
 }
 
-export type BookingRoom = Booking_Room & {
-  room: Room & { roomType: RoomType & { hotel: Hotel } }
-  booking: BookingVm
-  review: Review | null
+export type OrderAmenity = Order_Amenity & {
+  amenity: Amenity
 }
 
-interface BookingProps {
-  bookings: BookingCol[]
+// export type BookingRoom = Booking_Room & {
+//   room: Room & { roomType: RoomType & { hotel: Hotel } }
+//   booking: BookingVm
+//   review: Review | null
+// }
+
+interface OrderProps {
+  orders: OrderCol[]
 }
 
 // TODO: add reviews, vote, complain, feedback,....

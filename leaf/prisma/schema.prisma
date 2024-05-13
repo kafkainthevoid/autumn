@@ -239,18 +239,24 @@ model Booking_Room {
 }
 
 model Booking {
-  id         String   @id @default(cuid())
-  roomCharge Int
-  startDate  DateTime
-  endDate    DateTime
-  paymentId  String // payment id
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id            String        @id @default(cuid())
+  roomCharge    Int
+  startDate     DateTime
+  endDate       DateTime
+  paymentId     String // payment id
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  paymentStatus PaymentStatus @default(UNKNOWN)
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
   booking_rooms Booking_Room[]
+}
+
+enum PaymentStatus {
+  UNKNOWN
+  SUCCESS
 }
 
 model Order_Amenity {
@@ -264,8 +270,10 @@ model Order_Amenity {
 }
 
 model Order {
-  id         String @id @default(uuid())
-  totalMoney Int
+  id            String        @id @default(uuid())
+  totalMoney    Int
+  paymentId     String
+  paymentStatus PaymentStatus @default(UNKNOWN)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

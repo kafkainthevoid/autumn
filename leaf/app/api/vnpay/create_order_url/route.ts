@@ -8,6 +8,7 @@ import { DateRange } from "react-day-picker"
 import { db } from "@/lib/db"
 
 import { v4 as uuidv4 } from "uuid"
+import { AmenityCount } from "@/app/(app)/modules/amenities/context/cart"
 
 const VNPAY_URL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
 
@@ -18,49 +19,20 @@ export async function POST(req: Request) {
     console.log("\n\n\n\n\n", body)
 
     const userId: string = body.userId
-    const reservation: IRoom[] = body.reservation as IRoom[]
-    const dateRange: DateRange = body.dateRange as DateRange
-    const roomCharge: number = +body.roomCharge as number
+    const items: AmenityCount[] = body.items
+    const amount = items.reduce((acc, curr) => curr.count * curr.price + acc, 0)
 
-    // TODO: fix later
-    reservation.forEach(async (res) => {
-      const availableRoom = await db.room.findFirst({
-        where: { status: "empty", roomType: { id: res.id } },
-      })
-      if (availableRoom) return new NextResponse("Sold out", { status: 500 })
-    })
-
-    const booking = await db.booking.create({
+    const order = await db.order.create({
       data: {
         userId,
-        roomCharge: roomCharge,
         paymentId: uuidv4(),
-        startDate: dateRange.from!,
-        endDate: dateRange.to!,
-      },
-    })
-
-    reservation.forEach(async (res) => {
-      console.log("\n\nCREATING BOOKING_ROOM", res)
-      const availableRoom = await db.room.findFirst({
-        where: { status: "empty", roomType: { id: res.roomTypeId } },
-      })
-
-      if (availableRoom) {
-        await db.booking_Room.create({
-          data: {
-            bookingId: booking.id,
-            roomId: availableRoom.id,
-            numAdults: res.adults,
-            numKids: res.kids,
+        totalMoney: amount,
+        order_amenities: {
+          createMany: {
+            data: items.map((item) => ({ amenityId: item.id, count: item.count, price: item.price })),
           },
-        })
-
-        await db.room.update({
-          where: { id: availableRoom.id },
-          data: { status: "booking" },
-        })
-      }
+        },
+      },
     })
 
     const createDate = moment(new Date()).format("YYYYMMDDHHmmss")
@@ -76,8 +48,8 @@ export async function POST(req: Request) {
       vnp_TxnRef: orderId,
       vnp_OrderInfo: `Thanh toan cho ma GD:${orderId}`,
       vnp_OrderType: "other",
-      vnp_Amount: roomCharge * 10000,
-      vnp_ReturnUrl: "http://localhost:3000/api/vnpay/return",
+      vnp_Amount: amount * 10000,
+      vnp_ReturnUrl: "http://localhost:3000/api/vnpay/return_order",
       vnp_IpAddr: ipAddr,
       vnp_CreateDate: createDate,
       // vnp_BankCode: "", // TODO: add this later

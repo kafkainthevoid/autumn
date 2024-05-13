@@ -6,7 +6,6 @@ import UserAccountNav from "../user/UserAccountNav"
 
 const Navbar = async () => {
   const session = await currentUser()
-  console.log("[NAVBAR] session", session)
 
   return (
     <div className="fixed top-0 h-14 bg-white inset-x-0 w-full border-b border-zind-300 z-50">
