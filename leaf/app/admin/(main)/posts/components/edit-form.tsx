@@ -38,6 +38,10 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
 
   const [loading, setLoading] = useState(false)
 
+  // const title = initialData ? `Edit amenity` : `Create amenity`
+  // const description = initialData ? `Edit a amenity` : `Add a new amenity`
+  // const toastMessage = initialData ? `Amenity updated` : `Amenity created`
+  // const action = initialData ? "Save changes" : "Create"
   const title = initialData ? `Edit amenity` : `Create amenity`
   const description = initialData ? `Edit a amenity` : `Add a new amenity`
   const toastMessage = initialData ? `Amenity updated` : `Amenity created`

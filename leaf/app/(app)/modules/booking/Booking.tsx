@@ -26,8 +26,10 @@ const Booking: FC<BookingProps> = ({ bookings }) => {
   const formattedBookings: Column[] = bookings.map((item) => {
     return {
       id: item.id,
-      startDate: format(new Date(item.startDate), "MMMM do, yyyy"),
-      endDate: format(new Date(item.endDate), "MMMM do, yyyy"),
+      // startDate: format(new Date(item.startDate), "MMMM do, yyyy"),
+      // endDate: format(new Date(item.endDate), "MMMM do, yyyy"),
+      startDate: format(new Date(item.startDate), "dd-MM-yyyy"),
+      endDate: format(new Date(item.endDate), "dd-MM-yyyy"),
       roomName: item.booking_rooms.map((b) => b.room.name).join(", "),
       roomCharge: item.roomCharge,
       booking: item,

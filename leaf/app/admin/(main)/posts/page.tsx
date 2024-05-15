@@ -19,8 +19,10 @@ const PostsPage = async () => {
 
   return (
     <div className="p-10">
-      <h1 className="tracking-tight text-3xl font-semibold">Post ({formattedData.length})</h1>
-      <p>Manage Post</p>
+      {/* <h1 className="tracking-tight text-3xl font-semibold">Post ({formattedData.length})</h1>
+      <p>Manage Post</p> */}
+      <h1 className="tracking-tight text-3xl font-semibold">Tin tức ({formattedData.length})</h1>
+      <p>Quản lý tin tức</p>
       <hr className="my-6" />
       <DataTable searchKey="title" columns={columns} data={formattedData} />
     </div>

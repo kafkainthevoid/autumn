@@ -33,8 +33,10 @@ const UsersPage = async () => {
 
   return (
     <div className="p-10">
-      <h1 className="tracking-tight text-3xl font-semibold">Users ({formattedData.length})</h1>
-      <p>Manage User</p>
+      {/* <h1 className="tracking-tight text-3xl font-semibold">Users ({formattedData.length})</h1>
+      <p>Manage User</p> */}
+      <h1 className="tracking-tight text-3xl font-semibold">Người dùng ({formattedData.length})</h1>
+      <p>Quản lý người dùng</p>
 
       <hr className="my-6" />
 

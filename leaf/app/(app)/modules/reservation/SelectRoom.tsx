@@ -83,16 +83,18 @@ const SelectRoom: FC<SelectRoomProps> = ({ roomTypes, hotel, userId }) => {
               <p className="text-zinc-500">
                 {totalSlide > 1 ? (
                   <span>
-                    Room {slide === totalSlide ? slide - 1 : slide} of {totalSlide - 1}
+                    {/* Room {slide === totalSlide ? slide - 1 : slide} of {totalSlide - 1} */}
+                    Phòng {slide === totalSlide ? slide - 1 : slide} / {totalSlide - 1}
                   </span>
                 ) : null}
               </p>
-              <h1 className="font-extrabold text-4xl">Select a Room</h1>
+              {/* <h1 className="font-extrabold text-4xl">Select a Room</h1> */}
+              <h1 className="font-extrabold text-4xl">Chọn phòng</h1>
               <Progress className="h-1" value={(slide / totalSlide) * 100} />
               <SlideInfo slide={slide} totalSlide={totalSlide} setSlide={setSlide} />
 
               <div className="mt-2">
-                {hotel && <h2 className="font-bold">Your stay with {hotel.name} includes</h2>}
+                {/* {hotel && <h2 className="font-bold">Your stay with {hotel.name} includes</h2>} */}
                 <ul className="flex gap-x-4 flex-wrap overflow-hidden">
                   {hotel &&
                     hotel.amenity_Hotels.map((ah, i) => (
@@ -110,7 +112,8 @@ const SelectRoom: FC<SelectRoomProps> = ({ roomTypes, hotel, userId }) => {
               <div className="flex flex-col gap-3">
                 <p className="text-sm">
                   {/* TODO: */}
-                  {renderPluralNumber(roomTypes.length, "room")} found. We&apos;re showing the average price per night.
+                  {/* {renderPluralNumber(roomTypes.length, "room")} found. We&apos;re showing the average price per night. */}
+                  {roomTypes.length} phòng được tìm thấy.
                 </p>
                 <hr />
 

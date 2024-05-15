@@ -128,13 +128,14 @@ const CellAction: FC<CellActionProps> = ({ id, booking }) => {
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className="mb-4">Booking Info</AlertDialogTitle>
+            {/* <AlertDialogTitle className="mb-4">Booking Info</AlertDialogTitle> */}
+            <AlertDialogTitle className="mb-4">Thông tin đặt phòng</AlertDialogTitle>
             <AlertDialogDescription>
               <BookingDetail booking={booking} />
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-rose-500 text-white">Close</AlertDialogCancel>
+            <AlertDialogCancel className="bg-rose-500 text-white">Đóng</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

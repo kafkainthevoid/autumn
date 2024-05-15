@@ -12,6 +12,7 @@ import { RoomTypeVm } from "./services/ReservationService"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { format } from "date-fns"
+import { VNPayIcon } from "../commons/icons/svg/VNPayIcon"
 
 interface PaymentProps {
   roomTypes: RoomTypeVm[]
@@ -97,7 +98,11 @@ const Payment: FC<PaymentProps> = ({ roomTypes, userId }) => {
           createOrder={(data, actions) => createOrder(data, actions)}
           onApprove={(data, actions) => onApprove(data, actions)}
         /> */}
-        <Button onClick={() => createOrder()}>Thanh toán bằng VNPAY</Button>
+        {/* <Button onClick={() => createOrder()}>Thanh toán bằng VNPAY</Button> */}
+        <Button onClick={() => createOrder()} variant="teal" className="w-80">
+          Thanh toán bằng
+          <VNPayIcon className="w-24 h-24 ml-3" />
+        </Button>
       </div>
     </div>
   )

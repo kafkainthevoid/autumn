@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react"
 
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 interface SlideInfoProps {
   slide: number
@@ -24,7 +24,7 @@ const SlideInfo: FC<SlideInfoProps> = ({ slide, setSlide, totalSlide }) => {
   }
 
   return (
-    <ul className='mt-3'>
+    <ul className="mt-3">
       {Array(totalSlide)
         .fill(null)
         .map((_, i) => {
@@ -32,34 +32,34 @@ const SlideInfo: FC<SlideInfoProps> = ({ slide, setSlide, totalSlide }) => {
 
           if (currentSlide === totalSlide) {
             return (
-              <li key={i} className='inline-block mr-3'>
+              <li key={i} className="inline-block mr-3">
                 <Button
                   className={
-                    (cn('rounded-full bg-teal-600 hover:bg-teal-600/80'),
-                    'rounded-full bg-teal-600 hover:bg-teal-600/80 focus-visible:ring-teal-600')
+                    (cn("rounded-full bg-teal-600 hover:bg-teal-600/80"),
+                    "rounded-full bg-teal-600 hover:bg-teal-600/80 focus-visible:ring-teal-600")
                   }
                   disabled={currentSlide > availableSlide}
                   onClick={() => onSelectSlide(currentSlide)}
                 >
-                  Payment
+                  {/* Payment */}
+                  Thanh toán
                 </Button>
               </li>
             )
           }
 
           return (
-            <li key={i} className='inline-block mr-3'>
+            <li key={i} className="inline-block mr-3">
               <Button
                 className={cn(
-                  slide === currentSlide
-                    ? 'ring-2 ring-offset-2 ring-teal-600'
-                    : '',
-                  'rounded-full bg-teal-600  hover:bg-teal-600/80 focus-visible:ring-teal-600'
+                  slide === currentSlide ? "ring-2 ring-offset-2 ring-teal-600" : "",
+                  "rounded-full bg-teal-600  hover:bg-teal-600/80 focus-visible:ring-teal-600"
                 )}
                 disabled={currentSlide > availableSlide}
                 onClick={() => onSelectSlide(currentSlide)}
               >
-                Room {currentSlide}
+                {/* Room {currentSlide} */}
+                Phòng {currentSlide}
               </Button>
             </li>
           )

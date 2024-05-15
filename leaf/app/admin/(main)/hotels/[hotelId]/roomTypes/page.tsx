@@ -18,14 +18,17 @@ const RoomTypesPage = async ({ params }: { params: { hotelId: string } }) => {
     images: item.images,
     occupancy: item.occupancy,
     price: +item.price,
+    numBeg: item.numBeg,
     createdAt: format(item.createdAt, "MMM do, yyyy"),
     amenities: item.amenity_RoomTypes.map((ar) => ar.amenity.name),
   }))
 
   return (
     <div className="p-10">
-      <h1 className="tracking-tight text-3xl font-semibold">Room Type ({formattedData.length})</h1>
-      <p>Manage Room Type</p>
+      <h1 className="tracking-tight text-3xl font-semibold">Loại phòng ({formattedData.length})</h1>
+      <p>Quản lý loại phòng</p>
+      {/* <h1 className="tracking-tight text-3xl font-semibold">Room Type ({formattedData.length})</h1>
+      <p>Manage Room Type</p> */}
 
       <hr className="my-6" />
 

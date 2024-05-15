@@ -47,7 +47,8 @@ const HotelInfo: FC<HotelInfoProps> = ({ hotel }) => {
       </div>
       <HotelDetails hotel={hotel}>
         <Button variant="link" className="text-sm text-teal-600" size="inline">
-          Hotel Details
+          {/* Hotel Details */}
+          Chi tiết khách sạn
           <span aria-hidden="true">&nbsp;&gt;</span>
         </Button>
       </HotelDetails>

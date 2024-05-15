@@ -22,7 +22,8 @@ const ReservationSummary: FC<ReservationSummaryProps> = ({ slide, roomTypes }) =
     if (!rtId) return "$ 0.00"
     const rt = roomTypes.find((rt) => rt.id === rtId)
     const price = rt?.price
-    return `$ ${price} ${rt?.discount ? `-> $ ${((100 - rt.discount.discountPercent) * rt.price) / 100}` : ""}`
+    // return `$ ${price} ${rt?.discount ? `-> $ ${((100 - rt.discount.discountPercent) * rt.price) / 100}` : ""}`
+    return `${price} VND ${rt?.discount ? `-> ${((100 - rt.discount.discountPercent) * rt.price) / 100} VND` : ""}`
   }
 
   const calcTotalMoney = () => {
@@ -39,7 +40,8 @@ const ReservationSummary: FC<ReservationSummaryProps> = ({ slide, roomTypes }) =
 
   return (
     <div className="border border-zinc-300 rounded-lg flex flex-col">
-      <h2 className="font-bold p-5 text-center">Reservation summary</h2>
+      {/* <h2 className="font-bold p-5 text-center">Reservation summary</h2> */}
+      <h2 className="font-bold p-5 text-center">Thông tin đặt phòng</h2>
       <hr />
       {reservation.rooms.map((room, i) => (
         <div key={room.id}>
@@ -49,12 +51,15 @@ const ReservationSummary: FC<ReservationSummaryProps> = ({ slide, roomTypes }) =
             )}
           >
             <div className="flex flex-col gap-2">
-              <h2 className="font-bold text-sm">Room {i + 1}</h2>
+              {/* <h2 className="font-bold text-sm">Room {i + 1}</h2> */}
+              <h2 className="font-bold text-sm">Phòng {i + 1}</h2>
               <div></div>
               <div className="flex gap-3 text-sm text-zinc-600">
                 <PeopleIcon width="24" height="24" />
-                <span>{renderPluralNumber(room.adults, "adult")}</span>
-                <span>{renderPluralNumber(room.kids, "kid")}</span>
+                <span>{room.adults} người lớn</span>
+                <span>{room.kids} trẻ em</span>
+                {/* <span>{renderPluralNumber(room.adults, "adult")}</span>
+                <span>{renderPluralNumber(room.kids, "kid")}</span> */}
               </div>
             </div>
 
@@ -65,8 +70,10 @@ const ReservationSummary: FC<ReservationSummaryProps> = ({ slide, roomTypes }) =
         </div>
       ))}
       <div className="flex justify-between p-4">
-        <h2 className="font-bold text-sm">Total for stay:</h2>
-        <h2 className="font-bold text-sm">$ {calcTotalMoney()}</h2>
+        {/* <h2 className="font-bold text-sm">Total for stay:</h2>
+        <h2 className="font-bold text-sm">$ {calcTotalMoney()}</h2> */}
+        <h2 className="font-bold text-sm">Tổng tiền:</h2>
+        <h2 className="font-bold text-sm">{calcTotalMoney()} VND</h2>
       </div>
     </div>
   )

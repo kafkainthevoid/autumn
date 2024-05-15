@@ -20,7 +20,8 @@ const PostCard = ({ post }: PostCardProps) => {
       <div className="mt-56 p-3">
         <div className="flex justify-between items-center">
           <div className="text-xs font-semibold">
-            {formatInTimeZone(new Date(post.createdAt), "Asia/Ho_Chi_Minh", "PPP")}
+            {/* {formatInTimeZone(new Date(post.createdAt), "Asia/Ho_Chi_Minh", "PPP")} */}
+            {formatInTimeZone(new Date(post.createdAt), "Asia/Ho_Chi_Minh", "dd-MM-yyyy")}
           </div>
           <div className=" text-teal-600 rounded-sm border text-xs border-teal-500 px-2 py-1">NEWS</div>
         </div>
@@ -30,7 +31,8 @@ const PostCard = ({ post }: PostCardProps) => {
         className="flex w-full items-center justify-end gap-3 absolute bottom-3 right-3 cursor-pointer"
         onClick={() => router.push(`/posts/${post.id}`)}
       >
-        <p className="font-semibold text-zinc-700 text-sm hover:underline underline-offset-4">Read more</p>
+        {/* <p className="font-semibold text-zinc-700 text-sm hover:underline underline-offset-4">Read more</p> */}
+        <p className="font-semibold text-zinc-700 text-sm hover:underline underline-offset-4">Đọc thêm</p>
         <CircleChevronRightIcon className="w-7 h-7 text-teal-600" />
       </div>
     </div>

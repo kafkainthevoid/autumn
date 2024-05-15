@@ -17,17 +17,20 @@ export type Column = {
 export const columns: ColumnDef<Column>[] = [
   {
     accessorKey: "title",
-    header: "Title",
+    // header: "Title",
+    header: "Tiêu đề",
   },
   {
     accessorKey: "author",
-    header: "Author",
+    // header: "Author",
+    header: "Tác giả",
   },
   {
     accessorKey: "createdAt",
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-        Create date
+        {/* Create date */}
+        Ngày tạo
         {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
       </Button>
     ),

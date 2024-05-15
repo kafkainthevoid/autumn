@@ -12,6 +12,7 @@ import OrderItem from "./OrderItem"
 import Payment from "./Payment"
 import axios from "@/lib/axios"
 import { useCurrentUser } from "@/hooks/use-current-user"
+import { VNPayIcon } from "../commons/icons/svg/VNPayIcon"
 
 interface AmenityProps {
   amenities: (AmenityVm & { isSelected?: boolean })[]
@@ -50,6 +51,7 @@ const Amenity: FC<AmenityProps> = ({ amenities }) => {
         userId: user?.id,
       }
 
+      console.log({ payload })
       const data = (await axios.post("/api/vnpay/create_order_url", payload)).data
 
       router.push(data.redirectUrl)
@@ -62,7 +64,8 @@ const Amenity: FC<AmenityProps> = ({ amenities }) => {
   return (
     <div>
       <div className="flex justify-between">
-        <h1 className="tracking-tight text-3xl font-semibold">Choose your amenity</h1>
+        {/* <h1 className="tracking-tight text-3xl font-semibold">Choose your amenity</h1> */}
+        <h1 className="tracking-tight text-3xl font-semibold">Đặt dịch vụ</h1>
       </div>
 
       <div className="grid grid-cols-3 mt-10 gap-6">
@@ -72,17 +75,22 @@ const Amenity: FC<AmenityProps> = ({ amenities }) => {
       </div>
 
       <hr className="mt-10" />
-      <h1 className="tracking-tight text-xl font-semibold mt-3">Selected Amenities</h1>
+      {/* <h1 className="tracking-tight text-xl font-semibold mt-3">Selected Amenities</h1> */}
+      <h1 className="tracking-tight text-xl font-semibold mt-3">Dịch vụ đã chọn</h1>
 
       {items.map((item) => (
         <OrderItem key={item.id} item={item} />
       ))}
 
-      <div className="text-right mt-3 font-semibold">Total: {totalPrice} VND</div>
+      {/* <div className="text-right mt-3 font-semibold">Total: {totalPrice} VND</div> */}
+      <div className="text-right mt-3 font-semibold">Tổng: {totalPrice} VND</div>
 
       <hr className="mt-10 mb-3" />
       <div className="flex gap-3 items-center ">
-        <Button onClick={() => createOrder()}>Thanh toán bằng VNPAY</Button>
+        <Button onClick={() => createOrder()} variant="teal" className="w-80">
+          Thanh toán bằng
+          <VNPayIcon className="w-24 h-24 ml-3" />
+        </Button>
       </div>
     </div>
   )

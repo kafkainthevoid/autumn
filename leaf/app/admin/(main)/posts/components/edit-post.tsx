@@ -76,10 +76,15 @@ const EditPost = ({ post }: EditPostProps) => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const title = post ? `Edit post` : `Create post`
-  const description = post ? `Edit a post` : `Add a new post`
-  const toastMessage = post ? `Post updated` : `Post created`
-  const action = post ? "Save changes" : "Create"
+  // const title = post ? `Edit post` : `Create post`
+  // const description = post ? `Edit a post` : `Add a new post`
+  // const toastMessage = post ? `Post updated` : `Post created`
+  // const action = post ? "Save changes" : "Create"
+
+  const title = post ? `Sửa bài viết` : `Thêm bài viết`
+  const description = post ? `Sửa bài viết` : `Thêm bài viết mới`
+  const toastMessage = post ? `Đã cập nhật thành công` : `Đã tạo thành công`
+  const action = post ? "Cập nhật" : "Tạo"
 
   const defaultValues = post ?? {
     title: "",
@@ -103,8 +108,6 @@ const EditPost = ({ post }: EditPostProps) => {
 
       data = { ...data, description }
 
-      console.log("submitting data", data)
-
       setLoading(true)
       if (post) {
         await axios.patch(`/api/posts/${params.postId}`, data)
@@ -115,7 +118,7 @@ const EditPost = ({ post }: EditPostProps) => {
       router.push(`/admin/posts`)
       toast.success(toastMessage)
     } catch (err: any) {
-      toast.error("Something went wrong")
+      toast.error("Đã xảy ra lỗi")
     } finally {
       setLoading(false)
     }
@@ -144,9 +147,11 @@ const EditPost = ({ post }: EditPostProps) => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                {/* <FormLabel>Title</FormLabel> */}
+                <FormLabel>Tiêu đề</FormLabel>
                 <FormControl>
-                  <Input disabled={loading} placeholder="Title" {...field} />
+                  {/* <Input disabled={loading} placeholder="Title" {...field} /> */}
+                  <Input disabled={loading} placeholder="Tiêu đề" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -158,9 +163,11 @@ const EditPost = ({ post }: EditPostProps) => {
             name="author"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Author</FormLabel>
+                {/* <FormLabel>Author</FormLabel> */}
+                <FormLabel>Tác giả</FormLabel>
                 <FormControl>
-                  <Input disabled={loading} placeholder="Author" {...field} />
+                  {/* <Input disabled={loading} placeholder="Author" {...field} /> */}
+                  <Input disabled={loading} placeholder="Tác giả" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -172,7 +179,8 @@ const EditPost = ({ post }: EditPostProps) => {
             name="banner"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Image</FormLabel>
+                {/* <FormLabel>Image</FormLabel> */}
+                <FormLabel>Ảnh bìa</FormLabel>
                 <FormControl>
                   <ImageUpload
                     value={field.value ? [field.value] : []}
@@ -191,7 +199,8 @@ const EditPost = ({ post }: EditPostProps) => {
             name="content"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Content</FormLabel>
+                {/* <FormLabel>Content</FormLabel> */}
+                <FormLabel>Nội dung</FormLabel>
                 <FormControl>
                   <ReactQuill
                     ref={quillRef}

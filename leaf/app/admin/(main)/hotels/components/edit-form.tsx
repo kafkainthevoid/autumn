@@ -68,10 +68,14 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const title = initialData ? `Edit hotel` : `Create hotel`
-  const description = initialData ? `Edit a hotel` : `Add a new hotel`
-  const toastMessage = initialData ? `Hotel updated` : `Hotel created`
-  const action = initialData ? "Save changes" : "Create"
+  // const title = initialData ? `Edit hotel` : `Create hotel`
+  // const description = initialData ? `Edit a hotel` : `Add a new hotel`
+  // const toastMessage = initialData ? `Hotel updated` : `Hotel created`
+  // const action = initialData ? "Save changes" : "Create"
+
+  const title = initialData ? `Sửa khách sạn` : `Cập nhật khách sạn`
+  const toastMessage = initialData ? `Đã cập nhật thành công` : `Đã tạo thành công`
+  const action = initialData ? "Cập nhật" : "Tạo"
 
   const [provinces, setProvinces] = useState<AddressVm[]>([])
   const [districts, setDistricts] = useState<AddressVm[]>([])
@@ -204,10 +208,10 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
       <div className="flex items-center justify-between">
         <div>
           <Button variant="link" className="mb-10 px-0" size="sm" onClick={() => router.back()}>
-            <ChevronLeftIcon className="w-6 h-6" /> Back
+            <ChevronLeftIcon className="w-6 h-6" /> Trở về
           </Button>
           <h1 className="tracking-tight text-3xl font-semibold">{title}</h1>
-          <p>{description}</p>
+          {/* <p>{description}</p> */}
         </div>
       </div>
       <Separator className="mt-2" />
@@ -220,9 +224,11 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  {/* <FormLabel>Name</FormLabel> */}
+                  <FormLabel>Tên</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Name" {...field} />
+                    {/* <Input disabled={loading} placeholder="Name" {...field} /> */}
+                    <Input disabled={loading} placeholder="Tên" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -234,9 +240,11 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  {/* <FormLabel>Description</FormLabel> */}
+                  <FormLabel>Mô tả</FormLabel>
                   <FormControl>
-                    <Textarea rows={10} disabled={loading} placeholder="Description" {...field} />
+                    {/* <Textarea rows={10} disabled={loading} placeholder="Description" {...field} /> */}
+                    <Textarea rows={10} disabled={loading} placeholder="Mô tả" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -250,7 +258,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                   name="province"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Province</FormLabel>
+                      {/* <FormLabel>Province</FormLabel> */}
+                      <FormLabel>Tỉnh/Thành phố</FormLabel>
                       <Combobox
                         data={provinces.map((p) => ({
                           value: p.code,
@@ -274,7 +283,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                   name="district"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>District</FormLabel>
+                      {/* <FormLabel>District</FormLabel> */}
+                      <FormLabel>Quận/Huyện</FormLabel>
                       <Combobox
                         data={districts.map((d) => ({
                           value: d.code,
@@ -298,7 +308,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                   name="ward"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Ward</FormLabel>
+                      {/* <FormLabel>Ward</FormLabel> */}
+                      <FormLabel>Phường/Xã</FormLabel>
                       <Combobox
                         data={wards.map((w) => ({
                           value: w.code,
@@ -318,9 +329,11 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                   name="addressLine"
                   render={({ field }) => (
                     <FormItem className="w-full">
-                      <FormLabel>Address</FormLabel>
+                      {/* <FormLabel>Address</FormLabel> */}
+                      <FormLabel>Địa chỉ</FormLabel>
                       <FormControl>
-                        <Input disabled={loading} placeholder="Address" {...field} />
+                        {/* <Input disabled={loading} placeholder="Address" {...field} /> */}
+                        <Input disabled={loading} placeholder="Địa chỉ" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -332,9 +345,11 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                   name="phoneNumber"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Hotel Phone Number</FormLabel>
+                      {/* <FormLabel>Hotel Phone Number</FormLabel> */}
+                      <FormLabel>Số điện thoại khách sạn</FormLabel>
                       <FormControl>
-                        <Input disabled={loading} placeholder="Phone number" {...field} />
+                        {/* <Input disabled={loading} placeholder="Phone number" {...field} /> */}
+                        <Input disabled={loading} placeholder="Số điện thoại" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -347,7 +362,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                 name="coordinate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Coordinate</FormLabel>
+                    {/* <FormLabel>Coordinate</FormLabel> */}
+                    <FormLabel>Địa điểm trên bản đồ</FormLabel>
                     <FormControl>
                       <div className="w-[1000px] h-[600px]">
                         <MapMarkerInput
@@ -369,7 +385,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
               name="images"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Images</FormLabel>
+                  {/* <FormLabel>Images</FormLabel> */}
+                  <FormLabel>Ảnh</FormLabel>
                   <FormControl>
                     <ImageUpload
                       value={field.value.map((img) => img)}
@@ -390,7 +407,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
               defaultValue={initDisplayAmenities.map((a) => a.id)}
               render={({ field }) => (
                 <FormItem className="flex items-center">
-                  <FormLabel className="w-44">Display Amenities</FormLabel>
+                  {/* <FormLabel className="w-44">Display Amenities</FormLabel> */}
+                  <FormLabel className="w-44">Dịch vụ hiển thị</FormLabel>
                   <FormControl>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -401,7 +419,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                         >
                           <div className="flex items-center">
                             <PlusCircleIcon className="mr-2 h-4 w-4" />
-                            Choose amenity
+                            {/* Choose amenity */}
+                            Chọn dịch vụ
                           </div>
                           {selectedDisplayAmenities.length > 0 && (
                             <>
@@ -504,7 +523,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
               defaultValue={initPurchasableAmenities.map((a) => a.id)}
               render={({ field }) => (
                 <FormItem className="flex items-center">
-                  <FormLabel className="w-44">Purchasable Amenities</FormLabel>
+                  {/* <FormLabel className="w-44">Purchasable Amenities</FormLabel> */}
+                  <FormLabel className="w-44">Dịch vụ tính phí</FormLabel>
                   <FormControl>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -515,7 +535,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                         >
                           <div className="flex items-center">
                             <PlusCircleIcon className="mr-2 h-4 w-4" />
-                            Choose amenity
+                            {/* Choose amenity */}
+                            Chọn dịch vụ
                           </div>
                           {selectedPurchasableAmenities.length > 0 && (
                             <>

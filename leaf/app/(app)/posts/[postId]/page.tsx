@@ -30,8 +30,10 @@ const Post = async ({ params }: { params: { postId: string } }) => {
 
       <div className="container mt-36 px-80">
         <div className="text-sm font-semibold mb-8">
-          <div>Author: {post.author}</div>
-          <div className="mt-3">{formatInTimeZone(post.createdAt, "Asia/Ho_Chi_Minh", "PPP")}</div>
+          {/* <div>Author: {post.author}</div> */}
+          <div>Tác giả: {post.author}</div>
+          {/* <div className="mt-3">{formatInTimeZone(post.createdAt, "Asia/Ho_Chi_Minh", "PPP")}</div> */}
+          <div className="mt-3">{formatInTimeZone(post.createdAt, "Asia/Ho_Chi_Minh", "dd-MM-yyyy")}</div>
         </div>
         <PostContent content={post.content} />
       </div>

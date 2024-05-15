@@ -10,7 +10,6 @@ import axios from "axios"
 import { CheckIcon, ChevronLeftIcon, PlusCircleIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { toast } from "@/components/ui/use-toast"
 import { Separator } from "@/components/ui/separator"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -28,6 +27,7 @@ import {
   CommandSeparator,
 } from "@/components/ui/command"
 import ImageUpload from "@/components/ui/image-upload"
+import { toast } from "sonner"
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -56,10 +56,14 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const title = initialData ? `Edit Room Type` : `Create room type`
-  const description = initialData ? `Edit a room type` : `Add a new room type`
-  const toastMessage = initialData ? `Room type updated` : `Room type created`
-  const action = initialData ? "Save changes" : "Create"
+  // const title = initialData ? `Edit Room Type` : `Create room type`
+  // const description = initialData ? `Edit a room type` : `Add a new room type`
+  // const toastMessage = initialData ? `Room type updated` : `Room type created`
+  // const action = initialData ? "Save changes" : "Create"
+
+  const title = initialData ? `Sửa loại phòng` : `Tạo mới loại phòng`
+  const toastMessage = initialData ? `Đã cập nhật thành công` : `Đã tạo thành công`
+  const action = initialData ? "Cập nhật" : "Tạo"
 
   const defaultValues = initialData
     ? initialData
@@ -90,10 +94,12 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
       }
       router.refresh()
       router.push(pathname.slice(0, pathname.lastIndexOf("/")))
-      toast({ description: toastMessage })
+      // toast({ description: toastMessage })
+      toast.success(toastMessage)
     } catch (err: any) {
       console.log(err)
-      toast({ variant: "destructive", title: err.response.data })
+      // toast({ variant: "destructive", title: err.response.data })
+      toast.error(err?.response?.data)
     } finally {
       setLoading(false)
     }
@@ -105,10 +111,10 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
       await axios.delete(`/api/roomTypes/${params.roomTypeId}`)
       router.refresh()
       router.push(pathname.slice(0, pathname.lastIndexOf("/")))
-      toast({ description: `Room type deleted` })
+      // toast({ description: `Room type deleted` })
     } catch (err: any) {
       console.log(err)
-      toast({ variant: "destructive", description: err?.response?.data })
+      // toast({ variant: "destructive", description: err?.response?.data })
     } finally {
       setLoading(false)
       setOpen(false)
@@ -125,10 +131,11 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
       <div className="flex items-center justify-between">
         <div>
           <Button variant="link" className="mb-10 px-0" size="sm" onClick={() => router.back()}>
-            <ChevronLeftIcon className="w-6 h-6" /> Back
+            {/* <ChevronLeftIcon className="w-6 h-6" /> Back */}
+            <ChevronLeftIcon className="w-6 h-6" /> Trở về
           </Button>
           <h1 className="tracking-tight text-3xl font-semibold">{title}</h1>
-          <p>{description}</p>
+          {/* <p>{description}</p> */}
         </div>
       </div>
       <Separator className="mt-2" />
@@ -141,9 +148,11 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  {/* <FormLabel>Name</FormLabel> */}
+                  <FormLabel>Tên</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Name" {...field} />
+                    {/* <Input disabled={loading} placeholder="Name" {...field} /> */}
+                    <Input disabled={loading} placeholder="Tên" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -155,9 +164,11 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  {/* <FormLabel>Description</FormLabel> */}
+                  <FormLabel>Mô tả</FormLabel>
                   <FormControl>
-                    <Textarea rows={10} disabled={loading} placeholder="Description" {...field} />
+                    {/* <Textarea rows={10} disabled={loading} placeholder="Description" {...field} /> */}
+                    <Textarea rows={10} disabled={loading} placeholder="Mô tả" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -169,7 +180,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
               name="images"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Images</FormLabel>
+                  {/* <FormLabel>Images</FormLabel> */}
+                  <FormLabel>Hình ảnh</FormLabel>
                   <FormControl>
                     <ImageUpload
                       value={field.value.map((img) => img)}
@@ -183,7 +195,7 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
               )}
             />
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="occupancy"
               render={({ field }) => (
@@ -195,20 +207,22 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
             <FormField
               control={form.control}
               name="numBeg"
               render={({ field }) => (
                 <FormItem className="flex items-center">
-                  <FormLabel className="w-32">Number of beg</FormLabel>
+                  {/* <FormLabel className="w-32">Number of beg</FormLabel> */}
+                  <FormLabel className="w-32">Sô giường</FormLabel>
                   <FormControl>
                     <Input
                       className="w-[280px]"
                       type="number"
                       disabled={loading}
-                      placeholder="Number of beg"
+                      // placeholder="Number of beg"
+                      placeholder="Số giường"
                       {...field}
                     />
                   </FormControl>
@@ -222,9 +236,11 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
               name="price"
               render={({ field }) => (
                 <FormItem className="flex items-center">
-                  <FormLabel className="w-32">Price</FormLabel>
+                  {/* <FormLabel className="w-32">Price</FormLabel> */}
+                  <FormLabel className="w-32">Giá</FormLabel>
                   <FormControl>
-                    <Input className="w-[280px]" type="number" disabled={loading} placeholder="Price" {...field} />
+                    {/* <Input className="w-[280px]" type="number" disabled={loading} placeholder="Price" {...field} /> */}
+                    <Input className="w-[280px]" type="number" disabled={loading} placeholder="Giá" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -238,7 +254,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
               defaultValue={initialData?.amenity_RoomTypes.map((ar) => ar.amenityId) || []}
               render={({ field }) => (
                 <FormItem className="flex items-center">
-                  <FormLabel className="w-32">Amenities</FormLabel>
+                  {/* <FormLabel className="w-32">Amenities</FormLabel> */}
+                  <FormLabel className="w-32">Dịch vụ</FormLabel>
                   <FormControl>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -249,7 +266,8 @@ const EditForm: FC<FormProps> = ({ initialData, amenities }) => {
                         >
                           <div className="flex items-center">
                             <PlusCircleIcon className="mr-2 h-4 w-4" />
-                            Choose amenity
+                            {/* Choose amenity */}
+                            Chọn dịch vụ
                           </div>
                           {selectedValues.length > 0 && (
                             <>

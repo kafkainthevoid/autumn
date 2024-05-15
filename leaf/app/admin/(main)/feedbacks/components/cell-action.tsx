@@ -67,7 +67,8 @@ export const CellAction: React.FC<CellActionProps> = ({ id, feedback }) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction onClick={onConfirm} className="bg-rose-500 hover:bg-rose-500/90 text-white">
-              Close
+              {/* Close */}
+              Đóng
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

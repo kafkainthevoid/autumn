@@ -57,7 +57,8 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Search"
+          // placeholder="Search"
+          placeholder="Tìm kiếm"
           value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
           onChange={(event) => table.getColumn(searchKey)?.setFilterValue(event.target.value)}
           className="max-w-sm"
@@ -67,7 +68,8 @@ export function DataTable<TData, TValue>({
           <div className="space-x-4">
             <Button variant="blue" onClick={() => router.push(`${pathname}/new`)} size="sm">
               <Plus className="w-4 h-4 mr-2" />
-              Add new
+              {/* Add new */}
+              Thêm mới
             </Button>
 
             {/* <Button variant='blue' onClick={() => {}} size='sm'>
@@ -113,10 +115,12 @@ export function DataTable<TData, TValue>({
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-          Previous
+          {/* Previous */}
+          Trước
         </Button>
         <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-          Next
+          {/* Next */}
+          Sau
         </Button>
       </div>
     </div>

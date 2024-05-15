@@ -55,7 +55,8 @@ const CellAction: FC<CellActionProps> = ({ id, role }) => {
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Change user role</AlertDialogTitle>
+            {/* <AlertDialogTitle>Change user role</AlertDialogTitle> */}
+            <AlertDialogTitle>Thay đổi chức vụ</AlertDialogTitle>
             <AlertDialogDescription>
               <div className="flex gap-9">
                 {/* <div
@@ -77,7 +78,8 @@ const CellAction: FC<CellActionProps> = ({ id, role }) => {
                   onClick={() => setSelectedRole(UserRole.STAFF)}
                 >
                   <UserCog2Icon className="w-4 h-4" />
-                  <p>Staff</p>
+                  {/* <p>Staff</p> */}
+                  <p>Nhân viên</p>
                   {selectedRole === UserRole.STAFF && <CheckCheckIcon className="w-4 h-4 ml-2" />}
                 </div>
                 <div
@@ -88,16 +90,21 @@ const CellAction: FC<CellActionProps> = ({ id, role }) => {
                   onClick={() => setSelectedRole(UserRole.USER)}
                 >
                   <UserIcon className="w-4 h-4" />
-                  <p>Customer</p>
+                  {/* <p>Customer</p> */}
+                  <p>Khách hàng</p>
                   {selectedRole === UserRole.USER && <CheckCheckIcon className="w-4 h-4 ml-2" />}
                 </div>
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            {/* <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={onConfirm} disabled={selectedRole === role}>
               Update
+            </AlertDialogAction> */}
+            <AlertDialogCancel>Đóng</AlertDialogCancel>
+            <AlertDialogAction onClick={onConfirm} disabled={selectedRole === role}>
+              Cập nhật
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

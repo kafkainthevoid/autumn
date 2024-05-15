@@ -18,6 +18,8 @@ import { useCurrentUser } from "@/hooks/use-current-user"
 interface BookingCardProps {
   bookingRoom: BookingRoom
   roomCharge: number
+  startDate: Date
+  endDate: Date
 }
 
 const formSchema = z.object({
@@ -27,7 +29,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>
 
-const BookingCard = ({ bookingRoom, roomCharge }: BookingCardProps) => {
+const BookingCard = ({ bookingRoom, roomCharge, startDate, endDate }: BookingCardProps) => {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
@@ -62,7 +64,8 @@ const BookingCard = ({ bookingRoom, roomCharge }: BookingCardProps) => {
 
       await axios.post("/api/reviews", reqBody)
 
-      toast.success("Review submitted")
+      // toast.success("Review submitted")
+      toast.success("Đã tạo đánh giá")
       router.refresh()
     } catch (err: any) {
       toast.error(err?.response?.data)
@@ -77,13 +80,19 @@ const BookingCard = ({ bookingRoom, roomCharge }: BookingCardProps) => {
         <div>
           <div className="font-bold text-black mb-2">{bookingRoom.room.roomType.name}</div>
           <div className="font-semibold text-black">{bookingRoom.room.name}</div>
-          <div className="text-sm">Adult: {bookingRoom.numAdults}</div>
-          <div className="text-sm">Kid: {bookingRoom.numKids}</div>
+          {/* <div className="text-sm">Adult: {bookingRoom.numAdults}</div>
+          <div className="text-sm">Kid: {bookingRoom.numKids}</div> */}
+          <div className="text-sm">Người lớn: {bookingRoom.numAdults}</div>
+          <div className="text-sm">Trẻ em: {bookingRoom.numKids}</div>
         </div>
         <div className="flex flex-col justify-between items-end">
           <div className="font-semibold text-black">{roomCharge} VND</div>
           <div className="text-sm">
-            Booking time: {formatInTimeZone(bookingRoom.room.createdAt, "Asia/Ho_Chi_Minh", "HH:mm MMM do")}
+            {/* Booking time: {formatInTimeZone(bookingRoom.room.createdAt, "Asia/Ho_Chi_Minh", "HH:mm MMM do")} */}
+            Thời gian đặt phòng:
+            <br />
+            {formatInTimeZone(startDate, "Asia/Ho_Chi_Minh", "dd-MM")} đến{" "}
+            {formatInTimeZone(endDate, "Asia/Ho_Chi_Minh", "dd-MM")}
           </div>
         </div>
       </div>
@@ -102,7 +111,8 @@ const BookingCard = ({ bookingRoom, roomCharge }: BookingCardProps) => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="space-y-3">
-              <div className="text-zinc-700">Write your review:</div>
+              {/* <div className="text-zinc-700">Write your review:</div> */}
+              <div className="text-zinc-700">Đánh giá:</div>
               <div className="flex justify-center">
                 <FormField
                   control={form.control}
@@ -132,7 +142,8 @@ const BookingCard = ({ bookingRoom, roomCharge }: BookingCardProps) => {
               />
               <div className="text-right">
                 <Button className="bg-blue-500" disabled={loading}>
-                  Submit
+                  {/* Submit */}
+                  Gửi
                 </Button>
               </div>
             </div>

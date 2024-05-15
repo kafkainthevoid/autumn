@@ -28,7 +28,8 @@ const FeedbacksPage = async () => {
 
   return (
     <div className="p-10">
-      <h1 className="tracking-tight text-3xl font-semibold">Feedbacks ({formattedData.length})</h1>
+      {/* <h1 className="tracking-tight text-3xl font-semibold">Feedbacks ({formattedData.length})</h1> */}
+      <h1 className="tracking-tight text-3xl font-semibold">Phản hồi ({formattedData.length})</h1>
       <hr className="my-6" />
       <DataTable searchKey="username" columns={columns} data={formattedData} newButton={false} />
     </div>

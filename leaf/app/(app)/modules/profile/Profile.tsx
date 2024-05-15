@@ -70,7 +70,8 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
 
   return (
     <div>
-      <h1 className="tracking-tight text-3xl font-bold">Profile Info</h1>
+      {/* <h1 className="tracking-tight text-3xl font-bold">Profile Info</h1> */}
+      <h1 className="tracking-tight text-3xl font-bold">Thông tin cá nhân</h1>
       <div className="border-[1px] rounded-2xl mt-6 p-9 px-16 flex">
         {/* TODO: add linked google, fb, etc... info like tiki */}
         {/* add change password */}
@@ -83,9 +84,10 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
                 name="firstName"
                 render={({ field }) => (
                   <FormItem className="flex items-center">
-                    <FormLabel className="w-56 text-zinc-600">First name</FormLabel>
+                    {/* <FormLabel className="w-56 text-zinc-600">First name</FormLabel> */}
+                    <FormLabel className="w-56 text-zinc-600">Tên</FormLabel>
                     <FormControl>
-                      <Input placeholder="First name" {...field} />
+                      <Input placeholder="Tên" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -97,10 +99,12 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem className="flex items-center">
-                    <FormLabel className="w-56 text-zinc-600">Last name</FormLabel>
+                    {/* <FormLabel className="w-56 text-zinc-600">Last name</FormLabel> */}
+                    <FormLabel className="w-56 text-zinc-600">Họ</FormLabel>
                     {/** TODO: make formMessage at bottom **/}
                     <FormControl>
-                      <Input placeholder="Last name" {...field} />
+                      {/* <Input placeholder="Last name" {...field} /> */}
+                      <Input placeholder="Họ" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -113,12 +117,10 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
                 render={({ field }) => (
                   <FormItem className="flex items-center">
                     <FormLabel className="w-56 text-zinc-600">Email</FormLabel>
-                    <div>
-                      <FormControl>
-                        <Input placeholder="Email" {...field} disabled />
-                      </FormControl>
-                      <FormMessage />
-                    </div>
+                    <FormControl>
+                      <Input placeholder="Email" {...field} disabled />
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -129,7 +131,8 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
                 render={({ field }) => {
                   return (
                     <FormItem className="flex items-center">
-                      <FormLabel className="w-56 text-zinc-600">Date of birth</FormLabel>
+                      {/* <FormLabel className="w-56 text-zinc-600">Date of birth</FormLabel> */}
+                      <FormLabel className="w-56 text-zinc-600">Ngày sinh</FormLabel>
                       <div className="w-full">
                         <FormControl>
                           <Popover>
@@ -142,7 +145,8 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
                                 )}
                               >
                                 <CalendarIcon className="mr-2 h-4 w-4" />
-                                {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
+                                {/* {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>} */}
+                                {field.value ? format(new Date(field.value), "PPP") : <span>Chọn ngày sinh</span>}
                               </Button>
                             </PopoverTrigger>
                             <PopoverContent align="start" className=" w-auto p-0">
@@ -168,7 +172,8 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
                 name="gender"
                 render={({ field }) => (
                   <FormItem className="flex items-center">
-                    <FormLabel className="w-56 text-zinc-600">Gender</FormLabel>
+                    {/* <FormLabel className="w-56 text-zinc-600">Gender</FormLabel> */}
+                    <FormLabel className="w-56 text-zinc-600">Giới tính</FormLabel>
                     <FormControl>
                       <RadioGroup
                         defaultValue={field.value}
@@ -183,21 +188,24 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
                               value="MALE"
                             />
                           </FormControl>
-                          <FormLabel className="font-normal">Male</FormLabel>
+                          {/* <FormLabel className="font-normal">Male</FormLabel> */}
+                          <FormLabel className="font-normal">Nam</FormLabel>
                         </FormItem>
 
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
                             <RadioGroupItem checked={field.value === "FEMALE"} value="FEMALE" />
                           </FormControl>
-                          <FormLabel className="font-normal">Female</FormLabel>
+                          {/* <FormLabel className="font-normal">Female</FormLabel> */}
+                          <FormLabel className="font-normal">Nữ</FormLabel>
                         </FormItem>
 
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
                             <RadioGroupItem checked={field.value === "UNKNOWN"} value="UNKNOWN" />
                           </FormControl>
-                          <FormLabel className="font-normal">Prefer not to say</FormLabel>
+                          {/* <FormLabel className="font-normal">Prefer not to say</FormLabel> */}
+                          <FormLabel className="font-normal">Không chọn</FormLabel>
                         </FormItem>
                       </RadioGroup>
                     </FormControl>
@@ -210,11 +218,13 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
                 name="phoneNumber"
                 render={({ field }) => (
                   <FormItem className="flex items-center">
-                    <FormLabel className="w-56 text-zinc-600">Phone Number</FormLabel>
+                    {/* <FormLabel className="w-56 text-zinc-600">Phone Number</FormLabel> */}
+                    <FormLabel className="w-56 text-zinc-600">Số điện thoại</FormLabel>
 
                     <div className="w-full">
                       <FormControl>
-                        <Input placeholder="Phone number" {...field} />
+                        {/* <Input placeholder="Phone number" {...field} /> */}
+                        <Input placeholder="Số điện thoại" {...field} />
                       </FormControl>
                       <FormMessage className="block" />
                     </div>
@@ -227,11 +237,13 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
                 name="addressLine"
                 render={({ field }) => (
                   <FormItem className="flex items-center">
-                    <FormLabel className="w-56 text-zinc-600">Address</FormLabel>
+                    {/* <FormLabel className="w-56 text-zinc-600">Address</FormLabel> */}
+                    <FormLabel className="w-56 text-zinc-600">Địa chỉ</FormLabel>
 
                     <div className="w-full">
                       <FormControl>
-                        <Input placeholder="Address" {...field} />
+                        {/* <Input placeholder="Address" {...field} /> */}
+                        <Input placeholder="Địa chỉ" {...field} />
                       </FormControl>
                       <FormMessage className="block" />
                     </div>
@@ -240,7 +252,8 @@ const Profile: FC<ProfileProps> = ({ userAuth, user }) => {
               />
 
               <Button className="ml-40" variant="teal" type="submit">
-                Save Info
+                {/* Save Info */}
+                Cập nhật
               </Button>
             </div>
           </form>

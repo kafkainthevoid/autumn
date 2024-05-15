@@ -22,7 +22,8 @@ const formSchema = z
     newPasswordConfirm: z.string(),
   })
   .refine((data) => data.newPasswordConfirm === data.newPasswordConfirm, {
-    message: "Password do not match",
+    // message: "Password do not match",
+    message: "Mật khẩu không giống nhau",
     path: ["newPasswordConfirm"],
   })
 
@@ -57,13 +58,15 @@ const ChangePassword = ({ userAuth }: { userAuth: ExtendedUser }) => {
 
       router.refresh()
     } catch (err) {
-      toast.error("Something went wrong, please try again")
+      // toast.error("Something went wrong, please try again")
+      toast.error("Đã có lỗi xảy ra, hảy thử lại.")
     }
   }
 
   return (
     <div>
-      <h1 className="tracking-tight text-3xl font-bold">Change password</h1>
+      {/* <h1 className="tracking-tight text-3xl font-bold">Change password</h1> */}
+      <h1 className="tracking-tight text-3xl font-bold">Thay đổi mật khẩu</h1>
       {userAuth.isOAuth ? (
         <div className="mt-10">
           <FormSuccess message="OAuth account, can not change password" />
@@ -81,9 +84,11 @@ const ChangePassword = ({ userAuth }: { userAuth: ExtendedUser }) => {
                   name="oldPassword"
                   render={({ field }) => (
                     <FormItem className="flex items-center">
-                      <FormLabel className="w-56 text-zinc-600">Old Password</FormLabel>
+                      {/* <FormLabel className="w-56 text-zinc-600">Old Password</FormLabel> */}
+                      <FormLabel className="w-56 text-zinc-600">Mật khẩu cũ</FormLabel>
                       <FormControl>
-                        <Input placeholder="Old password" {...field} />
+                        {/* <Input placeholder="Old password" {...field} /> */}
+                        <Input placeholder="Mật khẩu cũ" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -95,9 +100,11 @@ const ChangePassword = ({ userAuth }: { userAuth: ExtendedUser }) => {
                   name="newPassword"
                   render={({ field }) => (
                     <FormItem className="flex items-center">
-                      <FormLabel className="w-56 text-zinc-600">New Password</FormLabel>
+                      {/* <FormLabel className="w-56 text-zinc-600">New Password</FormLabel> */}
+                      <FormLabel className="w-56 text-zinc-600">Mật khẩu mới</FormLabel>
                       <FormControl>
-                        <Input placeholder="New password" {...field} />
+                        {/* <Input placeholder="New password" {...field} /> */}
+                        <Input placeholder="Mật khẩu mới" {...field} />
                       </FormControl>
                     </FormItem>
                   )}
@@ -108,9 +115,11 @@ const ChangePassword = ({ userAuth }: { userAuth: ExtendedUser }) => {
                   name="newPasswordConfirm"
                   render={({ field }) => (
                     <FormItem className="flex items-center">
-                      <FormLabel className="w-56 text-zinc-600">New Password Confirm</FormLabel>
+                      {/* <FormLabel className="w-56 text-zinc-600">New Password Confirm</FormLabel> */}
+                      <FormLabel className="w-56 text-zinc-600">Xác nhận mật khẩu mới</FormLabel>
                       <FormControl>
-                        <Input placeholder="New password confirm" {...field} />
+                        {/* <Input placeholder="New password confirm" {...field} /> */}
+                        <Input placeholder="Xác nhận mật khẩu mới" {...field} />
                       </FormControl>
                     </FormItem>
                   )}
@@ -120,7 +129,8 @@ const ChangePassword = ({ userAuth }: { userAuth: ExtendedUser }) => {
                 <FormSuccess message={success} />
 
                 <Button className="ml-40" variant="teal" type="submit">
-                  Update password
+                  {/* Update password */}
+                  Cập nhật mật khẩu
                 </Button>
               </div>
             </form>

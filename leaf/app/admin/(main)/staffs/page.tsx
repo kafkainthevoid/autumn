@@ -25,18 +25,22 @@ const StaffsPage = async () => {
       name,
       email: item.email ?? "",
       sex: item.sex.toLowerCase(),
-      birthday: item.birthday ? format(new Date(item.birthday), "MMMM do, yyyy") : "",
+      // birthday: item.birthday ? format(new Date(item.birthday), "MMMM do, yyyy") : "",
+      birthday: item.birthday ? format(new Date(item.birthday), "dd-MM-yyyy") : "",
       phoneNo: item.address?.phone ?? "",
       address: item.address?.addressLine ?? "",
       role: item.role,
-      createdAt: format(new Date(item.createdAt), "MMMM do, yyyy"),
+      // createdAt: format(new Date(item.createdAt), "MMMM do, yyyy"),
+      createdAt: format(new Date(item.createdAt), "dd-MM-yyyy"),
     }
   })
 
   return (
     <div className="p-10">
-      <h1 className="tracking-tight text-3xl font-semibold">Staffs ({formattedData.length})</h1>
-      <p>Manage Staff</p>
+      {/* <h1 className="tracking-tight text-3xl font-semibold">Staffs ({formattedData.length})</h1>
+      <p>Manage Staff</p> */}
+      <h1 className="tracking-tight text-3xl font-semibold">Nhân sự ({formattedData.length})</h1>
+      <p>Quản lý nhân sự</p>
 
       <hr className="my-6" />
 

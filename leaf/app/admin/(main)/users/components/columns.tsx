@@ -20,7 +20,8 @@ export type Column = {
 export const columns: ColumnDef<Column>[] = [
   {
     accessorKey: "name",
-    header: "Username",
+    // header: "Username",
+    header: "Tên",
     cell: ({ row }) => <div className="font-bold">{row.original.name}</div>,
   },
   {
@@ -29,23 +30,28 @@ export const columns: ColumnDef<Column>[] = [
   },
   {
     accessorKey: "sex",
-    header: "Gender",
+    // header: "Gender",
+    header: "Giới tính",
   },
   {
     accessorKey: "phoneNo",
-    header: "Phone Number",
+    // header: "Phone Number",
+    header: "Số điện thoại",
   },
   {
     accessorKey: "address",
-    header: "Address",
+    // header: "Address",
+    header: "Địa chỉ",
   },
   {
     accessorKey: "role",
-    header: "Role",
+    // header: "Role",
+    header: "Quyền",
   },
   {
     accessorKey: "createdAt",
-    header: "Created At",
+    // header: "Created At",
+    header: "Ngày tạo",
   },
   // {
   //   id: "actions",

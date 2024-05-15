@@ -38,12 +38,15 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
 
   const [loading, setLoading] = useState(false)
 
-  const title = initialData ? `Edit amenity` : `Create amenity`
-  const description = initialData ? `Edit a amenity` : `Add a new amenity`
-  const toastMessage = initialData ? `Amenity updated` : `Amenity created`
-  const action = initialData ? "Save changes" : "Create"
+  // const title = initialData ? `Edit amenity` : `Create amenity`
+  // const description = initialData ? `Edit a amenity` : `Add a new amenity`
+  // const toastMessage = initialData ? `Amenity updated` : `Amenity created`
+  // const action = initialData ? "Save changes" : "Create"
 
-  console.log("\n\n\ninitialData", initialData)
+  const title = initialData ? `Sửa tiện ích` : `Tạo mới tiện ích`
+  // const description = initialData ? `Edit a amenity` : `Add a new amenity`
+  const toastMessage = initialData ? `Đã cập nhật thành công` : `Đã tạo thành công`
+  const action = initialData ? "Cập nhật" : "Tạo"
 
   const defaultValues = initialData
     ? initialData
@@ -72,7 +75,8 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
       router.push("/admin/amenities")
       toast.success(toastMessage)
     } catch (error: any) {
-      toast.error("Something went wrong")
+      // toast.error("Something went wrong")
+      toast.error("Đã xảy ra lỗi")
     } finally {
       setLoading(false)
     }
@@ -83,10 +87,11 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
       <div className="flex items-center justify-between">
         <div>
           <Button variant="link" className="mb-10 px-0" size="sm" onClick={() => router.back()}>
-            <ChevronLeftIcon className="w-6 h-6" /> Back
+            {/* <ChevronLeftIcon className="w-6 h-6" /> Back */}
+            <ChevronLeftIcon className="w-6 h-6" /> Trở về
           </Button>
           <h1 className="tracking-tight text-3xl font-semibold">{title}</h1>
-          <p>{description}</p>
+          {/* <p>{description}</p> */}
         </div>
       </div>
       <Separator className="mt-2" />
@@ -99,9 +104,11 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  {/* <FormLabel>Name</FormLabel> */}
+                  <FormLabel>Tên</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Name" {...field} />
+                    {/* <Input disabled={loading} placeholder="Name" {...field} /> */}
+                    <Input disabled={loading} placeholder="Tên" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -113,9 +120,11 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  {/* <FormLabel>Description</FormLabel> */}
+                  <FormLabel>Mô tả</FormLabel>
                   <FormControl>
-                    <Textarea disabled={loading} placeholder="Description" rows={10} {...field} />
+                    {/* <Textarea disabled={loading} placeholder="Description" rows={10} {...field} /> */}
+                    <Textarea disabled={loading} placeholder="Mô tả" rows={10} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -127,7 +136,8 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               name="type"
               render={({ field }) => (
                 <FormItem className="flex items-center">
-                  <FormLabel className="w-56 text-zinc-600">Type</FormLabel>
+                  {/* <FormLabel className="w-56 text-zinc-600">Type</FormLabel> */}
+                  <FormLabel className="w-56 text-zinc-600">Loại</FormLabel>
                   <FormControl>
                     <RadioGroup
                       defaultValue={field.value}
@@ -143,7 +153,8 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
                             value={AmenityType.DISPLAY}
                           />
                         </FormControl>
-                        <FormLabel className="font-normal">Display</FormLabel>
+                        {/* <FormLabel className="font-normal">Display</FormLabel> */}
+                        <FormLabel className="font-normal">Hiển thị</FormLabel>
                       </FormItem>
 
                       <FormItem className="flex items-center space-x-3 space-y-0 ml-10">
@@ -153,7 +164,8 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
                             value={AmenityType.PURCHASABLE}
                           />
                         </FormControl>
-                        <FormLabel className="font-normal">Purchasable</FormLabel>
+                        {/* <FormLabel className="font-normal">Purchasable</FormLabel> */}
+                        <FormLabel className="font-normal">Tính phí</FormLabel>
                       </FormItem>
                     </RadioGroup>
                   </FormControl>
@@ -167,9 +179,11 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Price</FormLabel>
+                    {/* <FormLabel>Price</FormLabel> */}
+                    <FormLabel>Giá</FormLabel>
                     <FormControl>
-                      <Input disabled={loading} placeholder="Price" {...field} type="number" />
+                      {/* <Input disabled={loading} placeholder="Price" {...field} type="number" /> */}
+                      <Input disabled={loading} placeholder="Giá" {...field} type="number" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -182,7 +196,8 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               name="image"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Image</FormLabel>
+                  {/* <FormLabel>Image</FormLabel> */}
+                  <FormLabel>Ảnh</FormLabel>
                   <FormControl>
                     <ImageUpload
                       value={field.value ? [field.value] : []}

@@ -15,7 +15,8 @@ interface FloorProps {
 const Floor: FC<FloorProps> = ({ name, rooms }) => {
   return (
     <div>
-      <h2 className="text-xl font-semibold">Floor {name}</h2>
+      {/* <h2 className="text-xl font-semibold">Floor {name}</h2> */}
+      <h2 className="text-xl font-semibold">Tầng {name}</h2>
 
       <div className="flex gap-3 flex-wrap mt-3">
         {rooms.map((room) => (

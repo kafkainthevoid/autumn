@@ -37,11 +37,12 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link href={`/user/profile`}>Profiles</Link>
+          {/* <Link href={`/user/profile`}>Profiles</Link> */}
+          <Link href={`/user/profile`}>Thông tin cá nhân</Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link href={`/user/booking`}>Booking</Link>
+          <Link href={`/user/booking`}>Danh sách đặt phòng</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
 
@@ -54,7 +55,8 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
             })
           }}
         >
-          Sign out
+          {/* Sign out */}
+          Đăng xuất
           <LogOutIcon className="w-3 h-3 text-white ml-auto mr-2" />
         </DropdownMenuItem>
       </DropdownMenuContent>

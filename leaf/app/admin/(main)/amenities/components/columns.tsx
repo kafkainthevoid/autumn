@@ -21,7 +21,8 @@ export const columns: ColumnDef<Column>[] = [
     accessorKey: "name",
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-        Name
+        {/* Name */}
+        Tên
         {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
       </Button>
     ),
@@ -29,21 +30,25 @@ export const columns: ColumnDef<Column>[] = [
   },
   {
     accessorKey: "description",
-    header: "Description",
+    // header: "Description",
+    header: "Mô tả",
   },
   {
     accessorKey: "type",
-    header: "Type",
+    // header: "Type",
+    header: "Loại",
   },
   {
     accessorKey: "price",
+    header: "Giá",
     cell: ({ row }) => <div>{row.original.type === AmenityType.PURCHASABLE && row.original.price}</div>,
   },
   {
     accessorKey: "createdAt",
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-        Create date
+        {/* Create date */}
+        Ngày tạo
         {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
       </Button>
     ),

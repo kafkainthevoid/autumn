@@ -13,7 +13,6 @@ import {
   LucideIcon,
   MessageSquareDotIcon,
   MonitorIcon,
-  PercentIcon,
   ReceiptIcon,
   SettingsIcon,
   StickyNoteIcon,
@@ -91,25 +90,26 @@ const Sidebar = () => {
     },
     {
       href: "/admin/orders",
-      label: "",
+      label: "Dịch vụ đã đặt",
       active: pathname.match("/admin/orders*"),
       Icon: ReceiptIcon,
     },
     {
       href: "/admin/posts",
-      label: "Posts",
+      // label: "Posts",
+      label: "Tin tức",
       active: pathname.match("/admin/posts*"),
       Icon: StickyNoteIcon,
     },
     {
       href: "/admin/feedbacks",
-      label: "Feedbacks",
+      label: "Phản hồi",
       active: pathname.match("/admin/feedbacks*"),
       Icon: MessageSquareDotIcon,
     },
     {
       href: "/admin/settings",
-      label: "Settings",
+      label: "Cài đặt",
       active: pathname.match("/admin/settings"),
       Icon: SettingsIcon,
     },
@@ -125,28 +125,28 @@ const Sidebar = () => {
   }
 
   if (hotel) {
-    routers.find((route) => route.label === "Hotel")!.subRoutes = [
+    routers.find((route) => route.href === "/admin/hotels")!.subRoutes = [
       {
         href: "/",
-        label: "Hotel",
+        label: "Khách sạn",
         active: /^\/admin\/hotels\/[^\/]+$/.test(pathname),
         Icon: Building2Icon,
       },
       {
         href: "/bookings",
-        label: "Booking",
+        label: "Đặt phòng",
         active: /^\/admin\/hotels\/[^/]+\/bookings(?:\/.*)?$/.test(pathname),
         Icon: AlbumIcon,
       },
       {
         href: "/rooms",
-        label: "Room",
+        label: "Phòng",
         active: /^\/admin\/hotels\/[^/]+\/rooms(?:\/.*)?$/.test(pathname),
         Icon: DoorOpenIcon,
       },
       {
         href: "/roomTypes",
-        label: "Room Type",
+        label: "Loại phòng",
         active: /^\/admin\/hotels\/[^/]+\/roomTypes(?:\/.*)?$/.test(pathname),
         Icon: DoorClosedIcon,
       },
@@ -160,7 +160,8 @@ const Sidebar = () => {
   }
 
   if (pathname.startsWith("/admin/settings"))
-    routers.find((route) => route.label === "Settings")!.subRoutes = [
+    // routers.find((route) => route.label === "Settings")!.subRoutes = [
+    routers.find((route) => route.href === "/admin/settings")!.subRoutes = [
       {
         href: "/profile",
         label: "Profile",

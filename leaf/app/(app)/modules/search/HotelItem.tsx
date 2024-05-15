@@ -45,28 +45,32 @@ const HotelItem: FC<HotelItemProps> = ({ hotel }) => {
         <div className="font-bold">{hotel.name}</div>
         <HotelDetails hotel={hotel}>
           <Button variant="link" className="text-xs text-teal-600" size="inline">
-            Hotel Details
+            {/* Hotel Details */}
+            Chi tiết khách sạn
             <span aria-hidden="true">&nbsp;&gt;</span>
           </Button>
         </HotelDetails>
 
         <div className="flex justify-between">
           <div>
-            <div className="text-xs text-zinc-700 font-bold">Rating 4.0 out of 5.0d</div>
+            {/* <div className="text-xs text-zinc-700 font-bold">Rating 4.0 out of 5.0d</div> */}
+            <div className="text-xs text-zinc-700 font-bold">Điểm 4.0 / 5.0</div>
             <Rating numberOfStars={5} starDimension="14px" starSpacing="0px" />
-            <div className="text-xs text-neutral-500">Based on 804 reviews</div>
+            {/* <div className="text-xs text-neutral-500">Based on 804 reviews</div> */}
+            <div className="text-xs text-neutral-500">Dụa trên 804 lượt đánh giá</div>
           </div>
 
           <div className="flex flex-col justify-end">
             <div>
-              <div className="inline-block text-xs font-medium mr-2 text-zinc-400">Start from</div>
+              {/* <div className="inline-block text-xs font-medium mr-2 text-zinc-400">Start from</div>
 
               <div className="inline-block font-bold text-right mb-2">
                 ${Math.min(...hotel.roomTypes.map((rt) => rt.price))}
-              </div>
+              </div> */}
             </div>
             <Button className="text-xs" size="sm" variant="teal" onClick={handleClickVewRate}>
-              View Rates
+              {/* View Rates */}
+              Xem
             </Button>
           </div>
         </div>

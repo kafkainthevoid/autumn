@@ -11,7 +11,13 @@ const BookingDetail = ({ booking }: BookingDetailProps) => {
   return (
     <>
       {booking.booking_rooms.map((br) => (
-        <BookingCard key={br.id} bookingRoom={br} roomCharge={booking.roomCharge} />
+        <BookingCard
+          key={br.id}
+          bookingRoom={br}
+          roomCharge={booking.roomCharge}
+          startDate={booking.startDate}
+          endDate={booking.endDate}
+        />
       ))}
     </>
   )

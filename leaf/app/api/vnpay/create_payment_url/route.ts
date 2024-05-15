@@ -77,7 +77,7 @@ export async function POST(req: Request) {
       vnp_OrderInfo: `Thanh toan cho ma GD:${orderId}`,
       vnp_OrderType: "other",
       vnp_Amount: roomCharge * 10000,
-      vnp_ReturnUrl: "http://localhost:3010/api/vnpay/return",
+      vnp_ReturnUrl: "http://localhost:3000/api/vnpay/return",
       vnp_IpAddr: ipAddr,
       vnp_CreateDate: createDate,
       // vnp_BankCode: "", // TODO: add this later

@@ -43,10 +43,14 @@ const FormComponent: FC<FormProps> = ({ initialData, roomTypes }) => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const title = initialData ? `Edit room` : `Create room`
-  const description = initialData ? `Edit a room` : `Add a new room`
-  const toastMessage = initialData ? `Room updated` : `Room created`
-  const action = initialData ? "Save changes" : "Create"
+  // const title = initialData ? `Edit room` : `Create room`
+  // const description = initialData ? `Edit a room` : `Add a new room`
+  // const toastMessage = initialData ? `Room updated` : `Room created`
+  // const action = initialData ? "Save changes" : "Create"
+
+  const title = initialData ? `Sửa phòng` : `Tạo mới phòng`
+  const toastMessage = initialData ? `Đã cập nhật thành công` : `Đã tạo thành công`
+  const action = initialData ? "Cập nhật" : "Tạo"
 
   const defaultValues = initialData
     ? initialData
@@ -108,10 +112,11 @@ const FormComponent: FC<FormProps> = ({ initialData, roomTypes }) => {
       <div className="flex items-center justify-between">
         <div>
           <Button variant="link" className="mb-10 px-0" size="sm" onClick={() => router.back()}>
-            <ChevronLeftIcon className="w-6 h-6" /> Back
+            {/* <ChevronLeftIcon className="w-6 h-6" /> Back */}
+            <ChevronLeftIcon className="w-6 h-6" /> Trở về
           </Button>
           <h1 className="tracking-tight text-3xl font-semibold">{title}</h1>
-          <p>{description}</p>
+          {/* <p>{description}</p> */}
         </div>
       </div>
       <Separator className="mt-2" />
@@ -124,9 +129,11 @@ const FormComponent: FC<FormProps> = ({ initialData, roomTypes }) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  {/* <FormLabel>Name</FormLabel> */}
+                  <FormLabel>Tên</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Room name" {...field} />
+                    {/* <Input disabled={loading} placeholder="Room name" {...field} /> */}
+                    <Input disabled={loading} placeholder="Tên phòng" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -138,11 +145,13 @@ const FormComponent: FC<FormProps> = ({ initialData, roomTypes }) => {
               name="status"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Select Room Status</FormLabel>
+                  {/* <FormLabel>Select Room Status</FormLabel> */}
+                  <FormLabel>Chọn tình trạng phòng</FormLabel>
                   <Select disabled={loading} onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue defaultValue={field.value} placeholder="Select a status" />
+                        {/* <SelectValue defaultValue={field.value} placeholder="Select a status" /> */}
+                        <SelectValue defaultValue={field.value} placeholder="Chọn trạng thái" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -165,11 +174,13 @@ const FormComponent: FC<FormProps> = ({ initialData, roomTypes }) => {
               name="roomTypeId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Select Room Type</FormLabel>
+                  {/* <FormLabel>Select Room Type</FormLabel> */}
+                  <FormLabel>Chọn loại phòng</FormLabel>
                   <Select disabled={loading} onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue defaultValue={field.value} placeholder="Select room type" />
+                        {/* <SelectValue defaultValue={field.value} placeholder="Select room type" /> */}
+                        <SelectValue defaultValue={field.value} placeholder="Chọn loại phòng" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>

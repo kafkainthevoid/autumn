@@ -35,37 +35,43 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
   const routers: IRoute[] = [
     {
       href: "/user/profile",
-      label: "Profile Info",
+      // label: "Profile Info",
+      label: "Thông tin cá nhân",
       active: pathname === "/user/profile",
       Icon: UserIcon,
     },
     {
       href: "/user/change-password",
-      label: "Change Password",
+      // label: "Change Password",
+      label: "Thay đổi mật khẩu",
       active: pathname === "/user/change-password",
       Icon: KeyRoundIcon,
     },
     {
       href: "/user/booking",
-      label: "Booking Room",
+      // label: "Booking Room",
+      label: "Danh sách đặt phòng",
       active: pathname === "/user/booking",
       Icon: CalendarRangeIcon,
     },
     {
       href: "/user/amenities",
-      label: "Amenities",
+      // label: "Amenities",
+      label: "Dịch vụ",
       active: pathname.includes("/user/amenities"),
       Icon: HandPlatterIcon,
     },
     {
       href: "/user/orders",
-      label: "Orders",
+      // label: "Orders",
+      label: "Dịch vụ đã đặt",
       active: pathname.includes("/user/orders"),
       Icon: ConciergeBellIcon,
     },
     {
       href: "/user/feedback",
-      label: "Feedback",
+      // label: "Feedback",
+      label: "Phản hồi",
       active: pathname === "/user/feedback",
       Icon: MailPlusIcon,
     },
@@ -76,7 +82,7 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
       <div className="flex gap-3 items-center border-zinc-200 border-[1px] px-4 py-2 rounded-2xl">
         <UserAvatar className="w-10 h-10" user={user} />
         <div>
-          <div className="text-zinc-700 text-sm">Profile of</div>
+          <div className="text-zinc-700 text-sm">Tài khoản</div>
           <div className="font-bold text-xl">{user?.name}</div>
           <div className="text-sm text-zinc-500">{user?.email}</div>
         </div>

@@ -22,7 +22,8 @@ export const columns: ColumnDef<Column>[] = [
     accessorKey: "name",
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-        Name
+        {/* Name */}
+        Tên
         {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
       </Button>
     ),
@@ -30,27 +31,34 @@ export const columns: ColumnDef<Column>[] = [
   },
   {
     accessorKey: "description",
-    header: "Description",
+    // header: "Description",
+    header: "Mô tả",
     cell: ({ row }) => <div className="line-clamp-4 w-[300px]">{row.original.description}</div>,
   },
   {
     accessorKey: "images",
-    header: "Images",
+    // header: "Images",
+    header: "Hình ảnh",
     cell: ({ row }) => (
       <div className="w-[150px]">
         <ImageCarousel images={row.original.images} />
       </div>
     ),
   },
+  // {
+  //   accessorKey: "occupancy",
+  //   header: "Số người tối đa",
+  // },
   {
-    accessorKey: "occupancy",
-    header: "Occupancy",
+    accessorKey: "numBeg",
+    header: "Số giường",
   },
   {
     accessorKey: "price",
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-        Price
+        {/* Price */}
+        Giá
         {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
       </Button>
     ),
@@ -59,7 +67,8 @@ export const columns: ColumnDef<Column>[] = [
     accessorKey: "createdAt",
     header: ({ column }) => (
       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-        Create date
+        {/* Create date */}
+        Ngày tạo
         {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
       </Button>
     ),

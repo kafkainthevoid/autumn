@@ -7,11 +7,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 
 import axios from "@/lib/axios"
-import { toast } from "@/components/ui/use-toast"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Feedback as FeedbackVm } from "@prisma/client"
+import { toast } from "sonner"
 
 interface FeedbackProps {
   userId: string
@@ -43,17 +43,19 @@ const Feedback: FC<FeedbackProps> = ({ userId, feedbacks }) => {
       form.reset()
       router.refresh()
     } catch (err) {
-      toast({
-        title: "Error",
-        description: "Something went wrong, please try again.",
-        variant: "destructive",
-      })
+      toast.error("Đã có lỗi xảy ra, hãy thử lại lần nữa")
+      // toast({
+      //   title: "Error",
+      //   description: "Something went wrong, please try again.",
+      //   variant: "destructive",
+      // })
     }
   }
 
   return (
     <div className="w-full">
-      <h1 className="tracking-tight text-3xl font-bold">Feedback</h1>
+      {/* <h1 className="tracking-tight text-3xl font-bold">Feedback</h1> */}
+      <h1 className="tracking-tight text-3xl font-bold">Phản hồi</h1>
       <div className="border-[1px] rounded-2xl mt-6 p-9 px-16 w-full">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full border-b pb-6">
@@ -63,7 +65,8 @@ const Feedback: FC<FeedbackProps> = ({ userId, feedbacks }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    <div className="font-semibold text-xl">Write your feedback</div>
+                    {/* <div className="font-semibold text-xl">Write your feedback</div> */}
+                    <div className="font-semibold text-xl">Viết phản hồi</div>
                   </FormLabel>
                   <FormControl>
                     <Textarea rows={5} placeholder="" {...field} />
@@ -74,7 +77,8 @@ const Feedback: FC<FeedbackProps> = ({ userId, feedbacks }) => {
             />
             <div className="flex justify-end">
               <Button className="mt-4" variant="teal" type="submit">
-                Send feedback
+                Gửi
+                {/* Send feedback */}
               </Button>
             </div>
           </form>

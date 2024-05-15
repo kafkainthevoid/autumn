@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { ColumnDef } from '@tanstack/react-table'
-import { ArrowDown, ArrowUp } from 'lucide-react'
-import { format } from 'date-fns'
+import { ColumnDef } from "@tanstack/react-table"
+import { ArrowDown, ArrowUp } from "lucide-react"
+import { format } from "date-fns"
 
-import { Button } from '@/components/ui/button'
-import CellAction from './cell-action'
-import ImageCarousel from '@/components/ui/image-carousel'
+import { Button } from "@/components/ui/button"
+import CellAction from "./cell-action"
+import ImageCarousel from "@/components/ui/image-carousel"
 
 export type Column = {
   id: string
@@ -20,63 +20,51 @@ export type Column = {
 
 export const columns: ColumnDef<Column>[] = [
   {
-    accessorKey: 'name',
+    accessorKey: "name",
     header: ({ column }) => (
-      <Button
-        variant='ghost'
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
-        Name
-        {column.getIsSorted() === 'asc' ? (
-          <ArrowDown className='ml-2 h-4 w-4' />
-        ) : (
-          <ArrowUp className='ml-2 h-4 w-4' />
-        )}
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+        {/* Name */}
+        Tên
+        {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
       </Button>
     ),
-    cell: ({ row }) => <div className='font-bold'>{row.original.name}</div>,
+    cell: ({ row }) => <div className="font-bold">{row.original.name}</div>,
   },
   {
-    accessorKey: 'description',
-    header: 'Description',
+    accessorKey: "description",
+    // header: 'Description',
+    header: "Mô tả",
+    cell: ({ row }) => <div className="line-clamp-4 w-[300px]">{row.original.description}</div>,
+  },
+  {
+    accessorKey: "address",
+    // header: 'Address',
+    header: "Địa chỉ",
+  },
+  {
+    accessorKey: "images",
+    // header: 'Images',
+    header: "Ảnh",
     cell: ({ row }) => (
-      <div className='line-clamp-4 w-[300px]'>{row.original.description}</div>
-    ),
-  },
-  {
-    accessorKey: 'address',
-    header: 'Address',
-  },
-  {
-    accessorKey: 'images',
-    header: 'Images',
-    cell: ({ row }) => (
-      <div className='w-[150px]'>
+      <div className="w-[150px]">
         <ImageCarousel images={row.original.images} />
       </div>
     ),
   },
   {
-    accessorKey: 'createdAt',
+    accessorKey: "createdAt",
     header: ({ column }) => (
-      <Button
-        variant='ghost'
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
-        Create date
-        {column.getIsSorted() === 'asc' ? (
-          <ArrowDown className='ml-2 h-4 w-4' />
-        ) : (
-          <ArrowUp className='ml-2 h-4 w-4' />
-        )}
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+        {/* Create date */}
+        Ngày tạo
+        {column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />}
       </Button>
     ),
-    cell: ({ row }) => format(row.original.createdAt, 'MMM do, yyyy'),
+    // cell: ({ row }) => format(row.original.createdAt, 'MMM do, yyyy'),
+    cell: ({ row }) => format(row.original.createdAt, "dd-MM-yyyy"),
   },
   {
-    id: 'actions',
-    cell: ({ row }) => (
-      <CellAction id={row.original.id} deletable={row.original.deletable} />
-    ),
+    id: "actions",
+    cell: ({ row }) => <CellAction id={row.original.id} deletable={row.original.deletable} />,
   },
 ]
