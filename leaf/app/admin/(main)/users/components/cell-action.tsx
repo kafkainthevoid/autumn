@@ -2,7 +2,7 @@
 
 import { FC } from "react"
 import { useRouter } from "next/navigation"
-import { TrashIcon } from "lucide-react"
+import { LockIcon, TrashIcon } from "lucide-react"
 import { UserRole } from "@prisma/client"
 import { toast } from "sonner"
 import axios from "axios"
@@ -45,18 +45,18 @@ const CellAction: FC<CellActionProps> = ({ id, role }) => {
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button className="p-2 h-8 w-8 bg-rose-600 hover:bg-rose-600/90" size="sm">
-            <TrashIcon className="w-4 h-4 text-white" />
+            <LockIcon className="w-4 h-4 text-white" />
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
+            <AlertDialogTitle>Bạn muốn khóa tài khoản này?</AlertDialogTitle>
+            {/* <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription> */}
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Hủy</AlertDialogCancel>
             <AlertDialogAction onClick={onConfirm} className="bg-rose-600 hover:bg-rose-600/90 text-white">
-              Delete
+              Xác nhận
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

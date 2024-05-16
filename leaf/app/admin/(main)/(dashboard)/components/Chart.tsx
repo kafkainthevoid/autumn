@@ -1,16 +1,7 @@
 "use client"
 
 import React, { FC } from "react"
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
 
 export type ChartData = {
   curr: number
@@ -25,9 +16,7 @@ interface MainChartProps {
 const Chart: FC<MainChartProps> = ({ data }) => {
   return (
     <div className="rounded-md bg-slate-100 p-3">
-      <div className="font-semibold text-xl text-center tracking-wide text-slate-700">
-        Net Profit
-      </div>
+      <div className="font-semibold text-xl text-center tracking-wide text-slate-700">Doanh thu</div>
       <div className="h-[550px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
@@ -49,7 +38,8 @@ const Chart: FC<MainChartProps> = ({ data }) => {
             <Legend />
             <Line
               type="monotone"
-              name="Last 7 day"
+              // name="Last 7 day"
+              name="7 ngày trước"
               dataKey="prev"
               stroke="#0d9488"
               activeDot={{ r: 8 }}
@@ -57,7 +47,8 @@ const Chart: FC<MainChartProps> = ({ data }) => {
             <Line
               className=""
               type="monotone"
-              name="Current"
+              // name="Current"
+              name="Hiện tại"
               dataKey="curr"
               textAnchor="curre"
               stroke="#ef4444"

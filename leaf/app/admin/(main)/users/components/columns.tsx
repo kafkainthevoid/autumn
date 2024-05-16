@@ -53,8 +53,8 @@ export const columns: ColumnDef<Column>[] = [
     // header: "Created At",
     header: "Ngày tạo",
   },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => <CellAction id={row.original.id} role={row.original.role} />,
-  // },
+  {
+    id: "actions",
+    cell: ({ row }) => <CellAction id={row.original.id} role={row.original.role} />,
+  },
 ]

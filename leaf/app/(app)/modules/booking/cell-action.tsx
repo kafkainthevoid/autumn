@@ -90,13 +90,13 @@ const CellAction: FC<CellActionProps> = ({ id, booking }) => {
       price2: "450,000 VND",
       booking3: "x1 King Bed",
       price3: "300,000 VND",
-      priceTotal: `${booking.roomCharge} VND`,
+      // priceTotal: `${booking.roomCharge} VND`,
+      priceTotal: `1,050,000 VND`,
       paymentMethod: "TECHCOMBANK via VNPAY",
     },
   ]
 
   const downloadReceipt = async () => {
-    setLoading
     const res = await axios.get("/api/template/receipt")
     console.log(res.data.data)
     const template = JSON.parse(res.data.data)

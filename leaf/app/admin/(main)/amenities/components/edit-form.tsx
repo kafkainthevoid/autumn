@@ -66,6 +66,7 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
   const onSubmit = async (data: FormValues) => {
     try {
       setLoading(true)
+      console.log(data)
       if (initialData) {
         await axios.patch(`/api/amenities/${params.amenityId}`, data)
       } else {

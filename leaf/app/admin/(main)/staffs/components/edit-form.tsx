@@ -43,10 +43,15 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
 
   const [loading, setLoading] = useState(false)
 
-  const title = initialData ? `Edit staff info` : `Create staff`
-  const description = initialData ? `Edit staff` : `Add new staff`
+  // const title = initialData ? `Edit staff info` : `Create staff`
+  // const description = initialData ? `Edit staff` : `Add new staff`
+  // const toastMessage = initialData ? `Staff info updated` : `New staff created`
+  // const action = initialData ? "Save changes" : "Create"
+
+  const title = initialData ? `Cập nhật nhân viên` : `Tạo nhân viên`
+  // const description = initialData ? `Edit staff` : `Add new staff`
   const toastMessage = initialData ? `Staff info updated` : `New staff created`
-  const action = initialData ? "Save changes" : "Create"
+  const action = initialData ? "Cập nhật" : "Tạo"
 
   const defaultValues = {
     firstName: initialData?.firstName ?? "",
@@ -105,10 +110,11 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
       <div className="flex items-center justify-between">
         <div>
           <Button variant="link" className="mb-10 px-0" size="sm" onClick={() => router.back()}>
-            <ChevronLeftIcon className="w-6 h-6" /> Back
+            {/* <ChevronLeftIcon className="w-6 h-6" /> Back */}
+            <ChevronLeftIcon className="w-6 h-6" /> Trở lại
           </Button>
           <h1 className="tracking-tight text-3xl font-semibold">{title}</h1>
-          <p>{description}</p>
+          {/* <p>{description}</p> */}
         </div>
       </div>
       <Separator className="mt-2" />
@@ -121,9 +127,11 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               name="firstName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>First Name</FormLabel>
+                  {/* <FormLabel>First Name</FormLabel> */}
+                  <FormLabel>Tên</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="First Name" {...field} />
+                    {/* <Input disabled={loading} placeholder="First Name" {...field} /> */}
+                    <Input disabled={loading} placeholder="Tên" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -135,9 +143,11 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last Name</FormLabel>
+                  {/* <FormLabel>Last Name</FormLabel> */}
+                  <FormLabel>Họ</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Last Name" {...field} />
+                    {/* <Input disabled={loading} placeholder="Last Name" {...field} /> */}
+                    <Input disabled={loading} placeholder="Họ" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -164,7 +174,8 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               render={({ field }) => {
                 return (
                   <FormItem className="flex items-center">
-                    <FormLabel className="w-32">Date of birth</FormLabel>
+                    {/* <FormLabel className="w-32">Date of birth</FormLabel> */}
+                    <FormLabel className="w-32">Ngày sinh</FormLabel>
                     <div className="w-full">
                       <FormControl>
                         <Popover>
@@ -205,7 +216,8 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               name="gender"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Gender</FormLabel>
+                  {/* <FormLabel>Gender</FormLabel> */}
+                  <FormLabel>Giới tính</FormLabel>
                   <FormControl>
                     <RadioGroup
                       defaultValue={field.value}
@@ -221,21 +233,24 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
                             value={Sex.MALE}
                           />
                         </FormControl>
-                        <FormLabel className="font-normal">Male</FormLabel>
+                        {/* <FormLabel className="font-normal">Male</FormLabel> */}
+                        <FormLabel className="font-normal">Nam</FormLabel>
                       </FormItem>
 
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
                           <RadioGroupItem checked={field.value === Sex.FEMALE} value={Sex.FEMALE} />
                         </FormControl>
-                        <FormLabel className="font-normal">Female</FormLabel>
+                        {/* <FormLabel className="font-normal">Female</FormLabel> */}
+                        <FormLabel className="font-normal">Nữ</FormLabel>
                       </FormItem>
 
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
                           <RadioGroupItem checked={field.value === Sex.UNKNOWN} value={Sex.UNKNOWN} />
                         </FormControl>
-                        <FormLabel className="font-normal">Prefer not to say</FormLabel>
+                        {/* <FormLabel className="font-normal">Prefer not to say</FormLabel> */}
+                        <FormLabel className="font-normal">Không chọn</FormLabel>
                       </FormItem>
                     </RadioGroup>
                   </FormControl>
@@ -248,9 +263,11 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
+                  {/* <FormLabel>Phone Number</FormLabel> */}
+                  <FormLabel>Số điện thoại</FormLabel>
                   <FormControl>
-                    <Input placeholder="Phone number" {...field} />
+                    {/* <Input placeholder="Phone number" {...field} /> */}
+                    <Input placeholder="Số điện thoại" {...field} />
                   </FormControl>
                   <FormMessage className="block" />
                 </FormItem>
@@ -262,9 +279,11 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               name="addressLine"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Address</FormLabel>
+                  {/* <FormLabel>Address</FormLabel> */}
+                  <FormLabel>Địa chỉ</FormLabel>
                   <FormControl>
-                    <Input placeholder="Address" {...field} />
+                    {/* <Input placeholder="Address" {...field} /> */}
+                    <Input placeholder="Địa chỉ" {...field} />
                   </FormControl>
                   <FormMessage className="block" />
                 </FormItem>
@@ -276,9 +295,11 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  {/* <FormLabel>Password</FormLabel> */}
+                  <FormLabel>Mật khẩu</FormLabel>
                   <FormControl>
-                    <Input placeholder="Password" {...field} type="password" />
+                    {/* <Input placeholder="Password" {...field} type="password" /> */}
+                    <Input placeholder="Mật khẩu" {...field} type="password" />
                   </FormControl>
                   <FormMessage className="block" />
                 </FormItem>
@@ -290,9 +311,11 @@ const EditForm: FC<FormProps> = ({ initialData }) => {
               name="passwordConfirm"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password Confirm</FormLabel>
+                  {/* <FormLabel>Password Confirm</FormLabel> */}
+                  <FormLabel>Xác nhận mật khẩu</FormLabel>
                   <FormControl>
-                    <Input placeholder="Password Confirm" {...field} type="password" />
+                    {/* <Input placeholder="Password Confirm" {...field} type="password" /> */}
+                    <Input placeholder="Xác nhận mật khẩu" {...field} type="password" />
                   </FormControl>
                   <FormMessage className="block" />
                 </FormItem>

@@ -7,7 +7,7 @@ export default async function AppLayout({ children }: Readonly<{ children: React
     <PaypalProvider>
       <Navbar />
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </PaypalProvider>
   )
 }

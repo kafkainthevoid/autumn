@@ -23,11 +23,13 @@ const UsersPage = async () => {
       name,
       email: item.email ?? "",
       sex: item.sex.toLowerCase(),
-      birthday: item.birthday ? format(new Date(item.birthday), "MMMM do, yyyy") : "",
+      // birthday: item.birthday ? format(new Date(item.birthday), "MMMM do, yyyy") : "",
+      birthday: item.birthday ? format(new Date(item.birthday), "dd-MM-yyyy") : "",
       phoneNo: item.address?.phone ?? "",
       address: item.address?.addressLine ?? "",
       role: item.role,
-      createdAt: format(new Date(item.createdAt), "MMMM do, yyyy"),
+      // createdAt: format(new Date(item.createdAt), "MMMM do, yyyy"),
+      createdAt: format(new Date(item.createdAt), "dd-MM-yyyy"),
     }
   })
 

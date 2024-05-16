@@ -5,7 +5,7 @@ import path from "path"
 
 export async function GET(req: Request) {
   try {
-    const dir = path.join(process.cwd(), "resources/template", "receipt.json")
+    const dir = path.join(process.cwd(), "resources/template", "receipt2.json")
     const dataRaw = fs.readFileSync(dir)
     const template = dataRaw.toString("utf-8")
 

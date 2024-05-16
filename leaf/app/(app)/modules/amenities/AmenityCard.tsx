@@ -45,7 +45,7 @@ const AmenityCard: FC<AmenityProps> = ({ amenity, toggleSelect }) => {
               {amenity.isSelected ? "Đã chọn" : "Chọn"}
             </h2>
             <div>
-              <h2 className="font-bold block  text-sm xl:text-xl mr-2">$ {amenity.price}</h2>
+              <h2 className="font-bold block  text-sm xl:text-xl mr-2"> {amenity.price} VND</h2>
             </div>
           </div>
         </div>

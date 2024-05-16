@@ -41,7 +41,7 @@ const ResetForm = ({}: ResetFormProps) => {
   }
 
   return (
-    <CardWrapper headerLabel="" backButtonLabel="Quay lại đăng nhập" backButtonHref="/login">
+    <CardWrapper headerLabel="Quên mật khẩu" backButtonLabel="Quay lại đăng nhập" backButtonHref="/login">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
